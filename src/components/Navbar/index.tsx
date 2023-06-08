@@ -37,7 +37,7 @@ const Navbar = ({ screenType, navbarType, inicials, name }: iNavbarProps) => {
       );
     } else if (navbarType === NavbarType.Authenticated) {
       return (
-        <nav className="flex center h-20 center items-center w-full justify-between pr-16 pl-16 border-b-2 ">
+        <nav className="flex center h-20 items-center w-full justify-between pr-16 pl-16 border-b-2 ">
           <Image alt="logo" src="/images/logo.svg" width={153} height={26} />
           <div className=" flex border-l-2 space-x-1 h-20 items-center pl-10">
             <p className="bg-brand-1 rounded-full h-8 w-8 text-center text-white pt-1">
@@ -49,7 +49,20 @@ const Navbar = ({ screenType, navbarType, inicials, name }: iNavbarProps) => {
       );
     }
   } else {
-    return <nav></nav>;
+    return (
+      <nav className="h-20 border-b-2 flex items-center w-full justify-between pr-4 pl-4 ">
+        <Image alt="logo" src="/images/logo.svg" width={153} height={26} />
+        <button>
+          <Image
+            alt="bars"
+            src="/images/bars.svg"
+            width={16}
+            height={21}
+            className="m-2.5"
+          />
+        </button>
+      </nav>
+    );
   }
 };
 

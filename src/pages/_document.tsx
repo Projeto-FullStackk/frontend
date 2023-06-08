@@ -6,7 +6,7 @@ const Document = () => {
       <Head />
       <body>
         <Navbar
-          screenType="desktop"
+          screenType="mobile"
           navbarType="aut"
           inicials="NP"
           name="Nome Pessoa"
