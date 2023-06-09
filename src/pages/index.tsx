@@ -1,3 +1,4 @@
+import Card from "@/components/Card/card";
 import { Footer, Header } from "@/components";
 import { Filter } from "@/components";
 

@@ -16,15 +16,6 @@ module.exports = {
         "luxury-car": "url('/images/car.png')",
       },
       colors: {
-        screens: {
-          sm: "375px",
-          md: "768px",
-          lg: "1024px",
-          xl: "1280px",
-        },
-        container: {
-          md: "1024px",
-        },
         brand: {
           1: "#4529E6",
           2: "#5126EA",
@@ -54,19 +45,34 @@ module.exports = {
           sucess3: "#DDF3E4",
         },
         random: {
-          1: "#E34D8C",
-          2: "#C04277",
-          3: "#7D2A4D",
-          4: "#7000FF",
-          5: "#6200E3",
-          6: "#36007D",
-          7: "#349974",
-          8: "#2A7D5F",
-          9: "#153D2E",
-          10: "#6100FF",
-          11: "#5700E3",
-          12: "#30007D",
+
+          1:"#E34D8C",
+          2:"#C04277",
+          3:"#7D2A4D",
+          4:"#7000FF",
+          5:"#6200E3",
+          6:"#36007D",
+          7:"#349974",
+          8:"#2A7D5F",
+          9:"#153D2E",
+          10:"#6100FF",
+          11:"#5700E3",
+          12:"#30007D"
         },
+      },
+      fontFamily: {
+        lex: ["Lexend", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
+      },
+      screens: {
+        sm: "375px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
+      },
+      container: {
+        md: "1024px",
+
       },
     },
   },
