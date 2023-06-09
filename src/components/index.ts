@@ -1,5 +1,3 @@
 import Button from "./Button";
-
-export {
-  Button,
-}
+import Filter from "./Filter";
+export { Button, Filter };
