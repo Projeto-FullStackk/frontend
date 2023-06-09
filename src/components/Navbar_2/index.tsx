@@ -18,7 +18,7 @@ interface iNavbarProps {
   name: string;
 }
 
-const Navbar = ({ screenType, navbarType, inicials, name }: iNavbarProps) => {
+const Navbar_2 = ({ screenType, navbarType, inicials, name }: iNavbarProps) => {
   if (screenType === ScreenType.Desktop) {
     if (navbarType === NavbarType.Default) {
       return (
@@ -66,4 +66,4 @@ const Navbar = ({ screenType, navbarType, inicials, name }: iNavbarProps) => {
   }
 };
 
-export default Navbar;
+export default Navbar_2;
