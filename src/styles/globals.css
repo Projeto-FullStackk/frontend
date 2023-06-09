@@ -4,58 +4,58 @@
 
 @layer components {
   .button-big {
-    @apply px-7 py-3 text-base
+    @apply px-7 py-3 text-base;
   }
 
   .button-medium {
-    @apply px-5 py-3 text-sm
+    @apply px-5 py-3 text-sm;
   }
 
   .button-black {
-    @apply bg-gray-0 border-2 border-gray-0 text-white hover:bg-gray-1 hover:border-gray-1 disabled:bg-gray-5 disabled:border-gray-5 disabled:text-white
+    @apply bg-gray-0 border-2 border-gray-0 text-white hover:bg-gray-1 hover:border-gray-1 disabled:bg-gray-5 disabled:border-gray-5 disabled:text-white;
   }
 
   .button-black-outline {
-    @apply bg-transparent border-2 border-gray-0 text-gray-0 hover:bg-gray-1 hover:border-gray-1 hover:text-white disabled:bg-gray-5 disabled:text-white disabled:border-gray-5
+    @apply bg-transparent border-2 border-gray-0 text-gray-0 hover:bg-gray-1 hover:border-gray-1 hover:text-white disabled:bg-gray-5 disabled:text-white disabled:border-gray-5;
   }
 
   .button-grey {
-    @apply bg-gray-6 border-2 border-gray-6 text-gray-2 hover:bg-gray-5 hover:border-gray-5 disabled:bg-gray-5 disabled:border-gray-5 disabled:text-white
+    @apply bg-gray-6 border-2 border-gray-6 text-gray-2 hover:bg-gray-5 hover:border-gray-5 disabled:bg-gray-5 disabled:border-gray-5 disabled:text-white;
   }
 
   .button-grey-outline {
-    @apply bg-transparent border-2 border-gray-4 text-gray-0 hover:bg-gray-1 hover:border-gray-1 hover:text-white disabled:bg-gray-5 disabled:text-white disabled:border-gray-5
+    @apply bg-transparent border-2 border-gray-4 text-gray-0 hover:bg-gray-1 hover:border-gray-1 hover:text-white disabled:bg-gray-5 disabled:text-white disabled:border-gray-5;
   }
 
   .button-brand {
-    @apply bg-brand-1 border-2 border-brand-1 text-white hover:bg-brand-2 hover:border-brand-2 disabled:bg-brand-3 disabled:border-brand-3 disabled:text-brand-4
+    @apply bg-brand-1 border-2 border-brand-1 text-white hover:bg-brand-2 hover:border-brand-2 disabled:bg-brand-3 disabled:border-brand-3 disabled:text-brand-4;
   }
 
   .button-brand-opacity {
-    @apply bg-brand-4 border-2 border-brand-4 text-brand-1 disabled:bg-brand-3 disabled:border-brand-3 disabled:text-brand-4
+    @apply bg-brand-4 border-2 border-brand-4 text-brand-1 disabled:bg-brand-3 disabled:border-brand-3 disabled:text-brand-4;
   }
 
   .button-brand-outline {
-    @apply bg-transparent border-2 border-brand-1 text-brand-1 hover:bg-brand-4 disabled:bg-brand-3 disabled:border-brand-3 disabled:text-brand-4
+    @apply bg-transparent border-2 border-brand-1 text-brand-1 hover:bg-brand-4 disabled:bg-brand-3 disabled:border-brand-3 disabled:text-brand-4;
   }
 
   .button-white {
-    @apply bg-gray-10 text-gray-1 disabled:bg-gray-5 disabled:text-white
+    @apply bg-gray-10 text-gray-1 disabled:bg-gray-5 disabled:text-white;
   }
 
   .button-white-outline {
-    @apply bg-transparent border-2 border-gray-10 text-gray-10 hover:bg-gray-10 hover:text-gray-1 disabled:bg-gray-5 disabled:border-gray-5 disabled:text-white
+    @apply bg-transparent border-2 border-gray-10 text-gray-10 hover:bg-gray-10 hover:text-gray-1 disabled:bg-gray-5 disabled:border-gray-5 disabled:text-white;
   }
 
   .button-link {
-    @apply bg-transparent text-gray-0 hover:bg-gray-8 disabled:bg-gray-5 disabled:text-white
+    @apply bg-transparent text-gray-0 hover:bg-gray-8 disabled:bg-gray-5 disabled:text-white;
   }
 
   .button-alert {
-    @apply bg-feedback-alert3 text-feedback-alert1 hover:bg-feedback-alert2 disabled:bg-gray-5 disabled:text-white
+    @apply bg-feedback-alert3 text-feedback-alert1 hover:bg-feedback-alert2 disabled:bg-gray-5 disabled:text-white;
   }
 
   .button-sucess {
-    @apply bg-feedback-sucess3 text-feedback-sucess1 hover:bg-feedback-sucess2 disabled:bg-gray-5 disabled:text-white
+    @apply bg-feedback-sucess3 text-feedback-sucess1 hover:bg-feedback-sucess2 disabled:bg-gray-5 disabled:text-white;
   }
 }
