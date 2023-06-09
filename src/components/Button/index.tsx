@@ -1,3 +1,4 @@
+import { fontInter } from "@/styles/font";
 interface iButtonProps {
   children: React.ReactNode;
   type?: "submit" | "button" | undefined;
