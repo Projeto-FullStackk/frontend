@@ -1,3 +1,10 @@
 import Button from "./Button";
-import Filter from "./Filter";
-export { Button, Filter };
+import Header from "./Header";
+import Footer from "./Footer";
+
+export {
+  Button,
+  Header,
+  Footer,
+}
+
