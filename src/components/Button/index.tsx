@@ -37,9 +37,7 @@ const Button = ({
       type={type ?? "button"}
       disabled={disabled ?? false}
       onClick={onClick ?? undefined}
-      className={`${buttonWidth} ${
-        fontInter.className
-      } h-max rounded-[0.25rem] font-semibold transition-colors ${
+      className={`${buttonWidth} h-max rounded-[0.25rem] font-semibold transition-colors ${
         size ?? "button-big"
       } ${style}`}
     >
