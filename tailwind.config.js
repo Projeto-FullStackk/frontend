@@ -13,15 +13,6 @@ module.exports = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        screens: {
-          sm: "375px",
-          md: "768px",
-          lg: "1024px",
-          xl: "1280px",
-        },
-        container: {
-          md: "1024px",
-        },
         brand: {
           1: "#4529E6",
           2: "#5126EA",
@@ -63,7 +54,20 @@ module.exports = {
           10:"#6100FF",
           11:"#5700E3",
           12:"#30007D"
-        }
+        },
+      },
+      fontFamily: {
+        lex: ["Lexend", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
+      },
+      screens: {
+        sm: "375px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
+      },
+      container: {
+        md: "1024px",
       },
     },
   },
