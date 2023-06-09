@@ -45,7 +45,6 @@ module.exports = {
           sucess3: "#DDF3E4",
         },
         random: {
-
           1:"#E34D8C",
           2:"#C04277",
           3:"#7D2A4D",
@@ -72,7 +71,6 @@ module.exports = {
       },
       container: {
         md: "1024px",
-
       },
     },
   },
