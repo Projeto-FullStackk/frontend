@@ -4,6 +4,7 @@ import {
   ExclamationTriangleIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import { useAppContext } from "@/providers/appContext";
 
 interface modalProps {
   children: React.ReactNode;
@@ -11,7 +12,7 @@ interface modalProps {
 }
 
 export default function Modal({ children, title }: modalProps) {
-  const [open, setOpen] = useState(true);
+  const { handleCloseModal, open } = useAppContext();
 
   const cancelButtonRef = useRef(null);
 
@@ -21,7 +22,7 @@ export default function Modal({ children, title }: modalProps) {
         as="div"
         className="relative z-10"
         initialFocus={cancelButtonRef}
-        onClose={setOpen}
+        onClose={handleCloseModal}
       >
         <Transition.Child
           as={Fragment}
@@ -59,7 +60,7 @@ export default function Modal({ children, title }: modalProps) {
                       <div className="mt-2">
                         <XMarkIcon
                           className="w-5 h-5 text-gray-500 cursor-pointer"
-                          onClick={() => setOpen(false)}
+                          onClick={handleCloseModal}
                         />
                       </div>
                     </div>

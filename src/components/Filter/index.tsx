@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import Button from "../Button";
 import Modal from "../Modal";
 import { useMedia } from "use-media";
+import { useAppContext } from "@/providers/appContext";
 
 interface FilterProps {
   cards: string;
 }
 
 const Filter = () => {
+  const { handleCloseModal, handleOpenModal } = useAppContext();
   const isWide: boolean = useMedia({ maxWidth: "768px" });
 
   const contentFilter = () => {
@@ -116,7 +118,12 @@ const Filter = () => {
   return (
     <>
       {isWide ? (
-        <Modal title="Filtros">{contentFilter()}</Modal>
+        <>
+          <Button style="button-brand" onClick={handleOpenModal}>
+            Filtros
+          </Button>
+          <Modal title="Filtros">{contentFilter()}</Modal>
+        </>
       ) : (
         contentFilter()
       )}
