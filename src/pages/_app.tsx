@@ -1,10 +1,10 @@
 import "@/styles/globals.css";
-import font from "@/styles/font";
 import type { AppProps } from "next/app";
+import { fontInter, fontLexend } from "@/styles/font";
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
-    <main className={font.className}>
+    <main className={`${fontLexend} ${fontInter}`}>
       <Component {...pageProps} />
     </main>
   )

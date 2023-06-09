@@ -1,17 +1,10 @@
 import Card from "@/components/Card/card";
 
+import { Header } from "@/components";
+
 const Home = () => {
   return (
-    <>
-      <main>
-        <ul className="flex flex-row gap-5 overflow-auto h-[26rem]">
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-        </ul>
-      </main>
-    </>
+    <></>
   )
 }
 
