@@ -58,4 +58,8 @@
   .button-sucess {
     @apply bg-feedback-sucess3 text-feedback-sucess1 hover:bg-feedback-sucess2 disabled:bg-gray-5 disabled:text-white;
   }
+
+  .container-app {
+    @apply lg:container lg:mx-auto lg:my-0;
+  }
 }
