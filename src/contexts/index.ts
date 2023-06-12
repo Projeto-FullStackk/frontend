@@ -1,3 +1,3 @@
 import { useAppContext } from "./appContext";
 
-export default useAppContext;
+export { useAppContext };

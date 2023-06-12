@@ -1,7 +1,7 @@
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { useAppContext } from "@/contexts/appContext";
+import { useAppContext } from "@/contexts";
 
 interface modalProps {
   children: React.ReactNode;
