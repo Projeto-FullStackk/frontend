@@ -2,7 +2,7 @@ import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-export default function ModalAside() {
+const ModalAside = () => {
   const [open, setOpen] = useState(true);
 
   return (
@@ -72,3 +72,5 @@ export default function ModalAside() {
     </Transition.Root>
   );
 }
+
+export default ModalAside;
