@@ -1,4 +1,5 @@
 import { fontInter } from "@/styles/font";
+
 interface iButtonProps {
   children: React.ReactNode;
   type?: "submit" | "button" | undefined;
@@ -37,9 +38,9 @@ const Button = ({
       type={type ?? "button"}
       disabled={disabled ?? false}
       onClick={onClick ?? undefined}
-      className={`${buttonWidth} h-max rounded-[0.25rem] font-semibold transition-colors ${
+      className={`${fontInter.className} ${buttonWidth} ${style} h-max rounded-[0.25rem] font-semibold transition-colors ${
         size ?? "button-big"
-      } ${style}`}
+      }`}
     >
       {children}
     </button>
