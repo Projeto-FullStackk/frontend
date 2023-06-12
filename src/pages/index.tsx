@@ -1,5 +1,7 @@
+import Card from "@/components/Card/card";
 import { Footer, Header } from "@/components";
 import { Filter } from "@/components";
+import Link from "next/link";
 
 const Home = () => {
   return (
@@ -16,6 +18,9 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <Link href={"/product"}>
+        <Card />
+      </Link>
       <Filter />
       <Footer />
     </>
