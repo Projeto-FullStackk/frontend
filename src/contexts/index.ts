@@ -1,3 +1,6 @@
-import { useAppContext } from "./appContext";
+import { useAppContext, AppProvider } from "./appContext";
 
-export { useAppContext };
+export {
+  useAppContext,
+  AppProvider,
+}
