@@ -1,11 +1,13 @@
-import Card from "@/components/Card/card";
+import ProductPage from "@/components/ProductPage/product";
 
-import { Header } from "@/components";
+
 
 const Home = () => {
   return (
-    <></>
-  )
-}
+    <>
+      <ProductPage/>
+    </>
+  );
+};
 
 export default Home;
