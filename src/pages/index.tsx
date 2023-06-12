@@ -1,9 +1,10 @@
-
-import { Input } from "@/components/Input";
-import Card from "@/components/Card/card";
-import { Footer, Header } from "@/components";
-import { Filter } from "@/components";
 import Link from "next/link";
+import {
+  Header,
+  Card,
+  Filter,
+  Footer,
+} from "@/components";
 
 const Home = () => {
   return (
