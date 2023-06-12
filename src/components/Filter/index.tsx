@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-
-import Button from "../Button";
-import Modal from "../Modal";
 import { useMedia } from "use-media";
 import { useAppContext } from "@/contexts";
+import Button from "../Button";
+import Modal from "../Modal";
 
 interface FilterProps {
   cards: string;

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import product from "../../assets/product.png";
+import product from "@/assets/product.png";
 
 const ProductPage = () => {
     return(
@@ -89,4 +89,4 @@ const ProductPage = () => {
     )
 }
 
-export default ProductPage
+export default ProductPage;

@@ -1,6 +1,5 @@
 import Image from "next/image";
-import car from "../../assets/car.png";
-
+import car from "@/assets/car.png";
 
 const Card = () => {
   return (

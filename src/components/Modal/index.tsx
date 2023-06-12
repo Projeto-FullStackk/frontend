@@ -8,7 +8,7 @@ interface modalProps {
   title: string;
 }
 
-export default function Modal({ children, title }: modalProps) {
+const Modal = ({ children, title }: modalProps) => {
   const { handleCloseModal, open } = useAppContext();
 
   const cancelButtonRef = useRef(null);
@@ -94,3 +94,5 @@ export default function Modal({ children, title }: modalProps) {
     </Transition.Root>
   );
 }
+
+export default Modal;
