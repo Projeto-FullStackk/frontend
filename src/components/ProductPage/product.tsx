@@ -45,8 +45,8 @@ const ProductPage = () => {
             </div>
           </section>
 
-          <section className="px-3 lg:mt-[23.375rem]">
-            <div className="w-[21.9375rem] h-auto py-9 px-10 bg-gray-10 mb-[3.25rem] rounded">
+          <section className="px-3 lg:mt-[23.6875rem]">
+            <div className="w-[21.9375rem] h-auto py-9 px-10 bg-gray-10 mb-[2.5rem] rounded">
               <h2 className="mb-8 text-gray-1 font-semibold text-[1.1rem] font-lex">
                 Fotos
               </h2>
@@ -72,7 +72,7 @@ const ProductPage = () => {
               </ul>
             </div>
 
-            <div className="w-[21.9375rem] h-[25rem] bg-gray-10 rounded px-7 pb-10 flex flex-col gap-5 justify-center items-center">
+            <div className="w-[21.9375rem] h-[26rem] bg-gray-10 rounded px-7 pb-10 flex flex-col gap-5 justify-center items-center">
               <h2 className="rounded-[9.375rem] h-[4rem] w-[4rem] mt-4 bg-random-4 text-white flex items-center justify-center">SL</h2>
               <h3 className="text-gray-1 font-semibold text-[1.1rem] font-lex">Samuel Leão</h3>
               <p className="font-inter text-base text-gray-2">
