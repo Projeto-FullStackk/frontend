@@ -13,7 +13,7 @@ const Header = () => {
 
   return (
     <header
-      className={`${fontInter.className} w-full px-4 py-5 bg-gray-10 border-2 border-gray-6 sticky top-0 left-0 md:py-0 z-50`}
+      className={`${fontInter.className} w-full px-4 py-5 bg-gray-10 border-2 border-gray-6 sticky top-0 left-0 md:py-0 z-40`}
     >
       <div className="w-full max-w-7xl mx-auto flex flex-wrap justify-between items-center">
         <Title />
