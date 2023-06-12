@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Button from "../Button";
 import Modal from "../Modal";
 import { useMedia } from "use-media";
-import { useAppContext } from "@/providers/appContext";
+import { useAppContext } from "@/contexts/appContext";
 
 interface FilterProps {
   cards: string;

@@ -1,10 +1,7 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import {
-  ExclamationTriangleIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import { useAppContext } from "@/providers/appContext";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import { useAppContext } from "@/contexts/appContext";
 
 interface modalProps {
   children: React.ReactNode;
