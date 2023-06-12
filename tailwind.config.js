@@ -1,3 +1,5 @@
+const plugin = require("tailwindcss/plugin");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -11,6 +13,7 @@ module.exports = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "luxury-car": "url('/images/car.png')",
       },
       colors: {
         brand: {
@@ -33,13 +36,13 @@ module.exports = {
           10: "#FDFDFD",
           white: "#ffffff",
         },
-        feedback:{
-          alert1:"#CD2B31",
-          alert2:"#FDD8D8",
-          alert3:"#FFE5E5",
-          sucess1:"#18794E",
-          sucess2:"#CCEBD7",
-          sucess3:"#DDF3E4"
+        feedback: {
+          alert1: "#CD2B31",
+          alert2: "#FDD8D8",
+          alert3: "#FFE5E5",
+          sucess1: "#18794E",
+          sucess2: "#CCEBD7",
+          sucess3: "#DDF3E4",
         },
         random: {
           1:"#E34D8C",
@@ -71,5 +74,15 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(({ addUtilities }) => {
+      const newUtilities = {
+        ".bg-gradient-black": {
+          background:
+            "linear-gradient(180deg, rgba(0, 0, 0, 0.29) 0%, #000000 100%)",
+        },
+      };
+      addUtilities(newUtilities);
+    }),
+  ],
 };
