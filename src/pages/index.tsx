@@ -1,11 +1,9 @@
-import { Header, Card, Filter, Footer } from "@/components";
-import { useMedia } from "use-media";
+import { Card, Filter } from "@/components";
 
 const Home = () => {
   return (
     <>
       <div className="flex flex-col w-full items-center">
-        <Header />
         <div className="relative w-full h-[400px] mb-8">
           <div className="absolute inset-0 bg-center bg-no-repeat z-0 flex items-end md:items-center lg:items-center justify-center overflow-hidden">
             <img
@@ -29,7 +27,7 @@ const Home = () => {
 
         <div className="flex w-full items-center justify-between max-w-7xl mx-auto flex-col-reverse gap-8 lg:items-start lg:flex-row lg:gap-0">
           <Filter />
-          <ul className="list-none w-full h-fit  px-5 flex overflow-x-auto lg:grid lg:grid-cols-2 lg:max-w-[1429px] xl:grid-cols-3 lg:pr-0 gap-8 pb-10 ">
+          <ul className="list-none w-full h-fit px-5 flex overflow-x-auto lg:grid lg:grid-cols-2 lg:max-w-[1429px] xl:grid-cols-3 lg:pr-0 gap-8 pb-10 ">
             <Card />
             <Card />
             <Card />
@@ -56,8 +54,6 @@ const Home = () => {
             Seguinte {">"}
           </button>
         </div>
-
-        <Footer />
       </div>
     </>
   );
