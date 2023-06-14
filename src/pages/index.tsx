@@ -1,10 +1,9 @@
-import { Header, Card, Filter, Footer } from "@/components";
+import { Card, Filter } from "@/components";
 
 const Home = () => {
   return (
     <>
       <div className="flex flex-col w-full items-center">
-        <Header />
         <div className="relative w-full h-[400px] mb-8">
           <div className="absolute inset-0 bg-center bg-no-repeat z-0 flex items-end md:items-center lg:items-center justify-center overflow-hidden">
             <img
@@ -55,8 +54,6 @@ const Home = () => {
             Seguinte {">"}
           </button>
         </div>
-
-        <Footer />
       </div>
     </>
   );

@@ -1,7 +1,12 @@
 import Image from "next/image";
 import car from "@/assets/car.png";
+import { useRouter } from "next/router";
 
 const Card = () => {
+  const router = useRouter();
+  const handleClick = () => {
+    router.push("/profile/samuelleao");
+  };
   return (
     <>
       <li className="group w-[19.5rem] max-h-[400px] cursor-pointer ">
@@ -18,7 +23,7 @@ const Card = () => {
           reiciendis!
         </p>
 
-        <div className="flex items-center gap-2 mt-5">
+        <div className="flex items-center gap-2 mt-5" onClick={handleClick}>
           <span className="rounded-[9.375rem] bg-random-5 w-[2rem] h-[2rem] text-gray-white flex justify-center items-center text-sm font-inter">
             SL
           </span>
