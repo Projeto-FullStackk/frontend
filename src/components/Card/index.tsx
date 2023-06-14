@@ -9,7 +9,7 @@ const Card = () => {
   };
   return (
     <>
-      <li className="group w-[19.5rem] max-h-[400px] cursor-pointer ">
+      <li className="group w-[18rem] max-h-[400px] cursor-pointer ">
         <figure className="bg-gray-7 h-[9.5rem] mb-4 flex justify-center items-center border-2 group-hover:border-[#4529E6]">
           <Image src={car} alt="car" width={250} height={250} />
         </figure>
