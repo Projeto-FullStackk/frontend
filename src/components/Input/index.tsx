@@ -3,15 +3,16 @@ interface iInputProps {
   name: string;
   id: string;
   placeholder: string;
+  width: string;
 }
 
-export const Input = ({ labelName, name, id, placeholder }: iInputProps) => {
+const Input = ({ labelName, name, id, placeholder, width }: iInputProps) => {
   return (
-    <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+    <div className="flex flex-col gap-x-6 gap-y-8 sm:grid-cols-6">
       <div className="sm:col-span-4">
         <label
           htmlFor="username"
-          className="block text-sm font-medium leading-6 text-gray-900"
+          className="block text-sm font-medium leading-6 text-gray-900 font-inter"
         >
           {labelName}
         </label>
@@ -22,7 +23,7 @@ export const Input = ({ labelName, name, id, placeholder }: iInputProps) => {
               name={name}
               id={id}
               autoComplete="username"
-              className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+              className={`block ${width} px-4 flex-1 border-0 bg-transparent py-3 font-inter text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6`}
               placeholder={placeholder}
             />
           </div>
@@ -31,3 +32,5 @@ export const Input = ({ labelName, name, id, placeholder }: iInputProps) => {
     </div>
   );
 };
+
+export default Input;

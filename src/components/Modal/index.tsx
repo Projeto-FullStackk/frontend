@@ -1,17 +1,14 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import {
-  ExclamationTriangleIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import { useAppContext } from "@/providers/appContext";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import { useAppContext } from "@/contexts";
 
 interface modalProps {
   children: React.ReactNode;
   title: string;
 }
 
-export default function Modal({ children, title }: modalProps) {
+const Modal = ({ children, title }: modalProps) => {
   const { handleCloseModal, open } = useAppContext();
 
   const cancelButtonRef = useRef(null);
@@ -97,3 +94,5 @@ export default function Modal({ children, title }: modalProps) {
     </Transition.Root>
   );
 }
+
+export default Modal;

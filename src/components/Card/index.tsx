@@ -1,6 +1,5 @@
 import Image from "next/image";
-import car from "../../assets/car.png";
-
+import car from "@/assets/car.png";
 
 const Card = () => {
   return (
@@ -26,8 +25,8 @@ const Card = () => {
 
         <div className="flex justify-between items-center mt-4">
           <div className="flex gap-2">
-            <span className="w-[2.875rem] h-[1.875rem] flex justify-center items-center bg-brand-3 rounded font-inter font-medium text-brand-1 text-sm">0 km</span>
-            <span className="w-[2.875rem] h-[1.875rem] flex justify-center items-center bg-brand-3 rounded font-inter font-medium text-brand-1 text-sm">2019</span>
+            <span className="w-[2.875rem] h-[1.875rem] flex justify-center items-center bg-brand-4 rounded font-inter font-medium text-brand-1 text-sm">0 km</span>
+            <span className="w-[2.875rem] h-[1.875rem] flex justify-center items-center bg-brand-4 rounded font-inter font-medium text-brand-1 text-sm">2019</span>
           </div>
           <span className="whitespace-nowrap text-ellipsis overflow-hidden">R$ 00000</span>
         </div>
