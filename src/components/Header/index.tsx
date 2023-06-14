@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { fontInter } from "@/styles/font";
 import useMedia from "use-media";
+import { fontInter } from "@/styles/font";
 import Title from "./Title";
 import MobileButton from "./MobileButton";
 import Navbar from "./Navbar";

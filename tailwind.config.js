@@ -13,7 +13,7 @@ module.exports = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        "luxury-car": "url('/images/car.png')",
+        "luxury-car": "url('/images/car.jpg')",
       },
       colors: {
         brand: {
@@ -79,7 +79,7 @@ module.exports = {
       const newUtilities = {
         ".bg-gradient-black": {
           background:
-            "linear-gradient(180deg, rgba(0, 0, 0, 0.29) 0%, #000000 75%)",
+            "linear-gradient(180deg, rgba(0, 0, 0, 0.29) 0%, #000000 80%)",
         },
       };
       addUtilities(newUtilities);
