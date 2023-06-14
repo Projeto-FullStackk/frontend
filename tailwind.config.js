@@ -13,7 +13,7 @@ module.exports = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        "luxury-car": "url('/images/car.png')",
+        "luxury-car": "url('/images/car.jpg')",
       },
       colors: {
         brand: {
@@ -45,18 +45,18 @@ module.exports = {
           sucess3: "#DDF3E4",
         },
         random: {
-          1:"#E34D8C",
-          2:"#C04277",
-          3:"#7D2A4D",
-          4:"#7000FF",
-          5:"#6200E3",
-          6:"#36007D",
-          7:"#349974",
-          8:"#2A7D5F",
-          9:"#153D2E",
-          10:"#6100FF",
-          11:"#5700E3",
-          12:"#30007D"
+          1: "#E34D8C",
+          2: "#C04277",
+          3: "#7D2A4D",
+          4: "#7000FF",
+          5: "#6200E3",
+          6: "#36007D",
+          7: "#349974",
+          8: "#2A7D5F",
+          9: "#153D2E",
+          10: "#6100FF",
+          11: "#5700E3",
+          12: "#30007D",
         },
       },
       fontFamily: {
@@ -79,7 +79,7 @@ module.exports = {
       const newUtilities = {
         ".bg-gradient-black": {
           background:
-            "linear-gradient(180deg, rgba(0, 0, 0, 0.29) 0%, #000000 100%)",
+            "linear-gradient(180deg, rgba(0, 0, 0, 0.29) 0%, #000000 80%)",
         },
       };
       addUtilities(newUtilities);
