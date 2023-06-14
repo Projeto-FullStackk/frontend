@@ -1,5 +1,4 @@
 import { Header, Card, Filter, Footer } from "@/components";
-import { useMedia } from "use-media";
 
 const Home = () => {
   return (
