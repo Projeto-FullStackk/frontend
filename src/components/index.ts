@@ -6,6 +6,7 @@ import Header from "./Header";
 import Input from "./Input";
 import Modal from "./Modal";
 import ProductPage from "./ProductPage";
+import ModalAdsCreate from "./ModalAdsCreate";
 
 export {
   Button,
@@ -16,4 +17,5 @@ export {
   Input,
   Modal,
   ProductPage,
+  ModalAdsCreate,
 };

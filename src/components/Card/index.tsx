@@ -34,10 +34,7 @@ const Card = ({ type, carData }: CardProps) => {
           Product title stays here - max 1 line
         </h2>
         <p className="font-inter font-normal text-xs text-gray-2">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti,
-          similique laborum. Eius enim excepturi cupiditate saepe ab. Veritatis,
-          vel? Recusandae quod magni ad esse. Assumenda aliquam illo ullam nihil
-          reiciendis!
+          {carData.description}
         </p>
 
         {type === "user" ? (
