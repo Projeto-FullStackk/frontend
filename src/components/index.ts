@@ -1,3 +1,4 @@
+import Banner from "./Banner";
 import Button from "./Button";
 import Card from "./Card";
 import Filter from "./Filter";
@@ -9,6 +10,7 @@ import ProductPage from "./ProductPage";
 import ModalAdsCreate from "./ModalAdsCreate";
 
 export {
+  Banner,
   Button,
   Card,
   Filter,
