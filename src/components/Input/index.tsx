@@ -1,30 +1,20 @@
-import { UseFormRegisterReturn } from "react-hook-form";
 import InputForm from "./InputForm";
 import TextareaForm from "./TextareaForm";
 import SelectForm from "./SelectForm";
-
-export interface iInputProps {
-  as: "input" | "textarea" | "select"
-  id: string
-  label: string
-  placeholder: string
-  register: UseFormRegisterReturn
-  errorMessage?: string
-  type?: "text" | "email" | "password" | "date" | "tel" | "number"
-  value?: string
-  options?: string[]
-}
+import { iInputProps } from "./interfaces";
 
 const Input = ({
   as,
   id,
   label,
-  placeholder,
   register,
+  disabled,
   errorMessage,
+  onChange,
+  options,
+  placeholder,
   type,
   value,
-  options,
 }: iInputProps) => {
   return (
     <div className="w-full flex flex-col gap-2">
@@ -39,6 +29,7 @@ const Input = ({
             type={type}
             value={value}
             placeholder={placeholder}
+            disabled={disabled}
             register={register}
           />
         )
@@ -49,6 +40,7 @@ const Input = ({
           <TextareaForm
             id={id}
             placeholder={placeholder}
+            disabled={disabled}
             register={register}
           />
         )
@@ -58,8 +50,11 @@ const Input = ({
         as === "select" && (
           <SelectForm
             id={id}
-            register={register}
+            placeholder={placeholder}
             options={options}
+            disabled={disabled}
+            onChange={onChange}
+            register={register}
           />
         )
       }

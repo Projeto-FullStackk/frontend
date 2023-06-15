@@ -7,7 +7,7 @@ import { Footer, Header } from "@/components";
 const App = ({ Component, pageProps }: AppProps) => {
   return (
     <AppProvider>
-      <main className={`${fontLexend} ${fontInter}`}>
+      <main className={`${fontLexend.className} ${fontInter.className}`}>
         <Header />
         <Component {...pageProps} />
         <Footer />

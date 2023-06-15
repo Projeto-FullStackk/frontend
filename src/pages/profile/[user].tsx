@@ -1,11 +1,11 @@
-import Image from "next/image";
-import { useRouter } from "next/router";
-import product from "@/assets/product.png";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import Image from "next/image";
 import { Button, Card, ModalAdsCreate } from "@/components";
 import { useAppContext, KarsProvider } from "@/contexts";
+import product from "@/assets/product.png";
 
-export default function Profile() {
+const Profile = () => {
   const router = useRouter();
   const user = router.query.slug;
 
@@ -68,3 +68,5 @@ export default function Profile() {
     </KarsProvider>
   );
 }
+
+export default Profile;
