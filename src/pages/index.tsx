@@ -1,4 +1,5 @@
-import { Card, Filter } from "@/components";
+import Link from "next/link";
+import { Header, Card, Filter, Footer } from "@/components";
 
 const Home = () => {
   return (
@@ -55,6 +56,11 @@ const Home = () => {
           </button>
         </div>
       </div>
+      <Link href={"/product"}>
+        <Card />
+      </Link>
+      <Filter />
+      <Footer />
     </>
   );
 };
