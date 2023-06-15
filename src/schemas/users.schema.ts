@@ -9,7 +9,7 @@ export const userSchema = z.object({
   name: z.string(),
   email: z.string().email(),
   password: z.string(),
-  cpf: z.string().length(11),
+  cpf: z.string().length(14),
   cellphone: z.string().length(12),
   birthdate: z.string().length(6),
   description: z.string(),
@@ -18,6 +18,7 @@ export const userSchema = z.object({
   city: z.string(),
   street: z.string(),
   number: z.string(),
+  complement: z.string(),
   confirmPass: z.string(),
 });
 

@@ -1,22 +1,39 @@
 import Link from "next/link";
 import { AuthInput as Input, Button } from "..";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoginData, loginSchema } from "@/schemas/users.schema";
+import { useAuth } from "@/contexts/AuthContext";
 
 const FormLogin = () => {
+  const { register, handleSubmit } = useForm<LoginData>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const { login } = useAuth();
+
+  const submitLogin = (formData: LoginData) => {
+    login(formData);
+  };
+
   return (
-    <form className="flex flex-col gap-6 mt-5">
+    <form
+      className="flex flex-col gap-6 mt-5"
+      onSubmit={handleSubmit(submitLogin)}
+    >
       <Input
         width="w-80"
         labelName="Email"
         placeholder="Digitar email"
-        name="email"
         id="login-email"
+        register={register("email")}
       />
       <Input
         width="w-80"
         labelName="Senha"
         placeholder="Digitar senha"
-        name="password"
         id="login-password"
+        register={register("password")}
       />
       <p className="flex text-gray-2 font-medium text-sm justify-end cursor-pointer">
         Esqueci minha senha
