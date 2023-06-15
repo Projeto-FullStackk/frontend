@@ -3,12 +3,13 @@ import { useRouter } from "next/router";
 import product from "@/assets/product.png";
 import { useState } from "react";
 import { Button, Card } from "@/components";
+import { cars } from "@/services/dataMock";
 
 export default function Profile() {
   const router = useRouter();
   const user = router.query.slug;
 
-  const [seller, setSeller] = useState(false);
+  const [seller, setSeller] = useState(true);
 
   return (
     <>
@@ -46,18 +47,12 @@ export default function Profile() {
             </h1>
           )}
           <ul className="list-none w-full h-fit px-5 flex overflow-x-auto lg:grid lg:grid-cols-3 lg:max-w-[1429px] lg:justify-items-center xl:grid-cols-4  gap-8 pb-10">
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            {cars.map((car) => {
+              if (seller) {
+                return <Card key={car.id} carData={car} type="seller" />;
+              }
+              return <Card key={car.id} carData={car} type="user" />;
+            })}
           </ul>
         </section>
       </main>
