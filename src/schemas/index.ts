@@ -15,6 +15,9 @@ import {
   loginSchema,
   userSchema,
 } from "./users";
+import {
+  Car,
+} from "./cars";
 
 export {
   adsSchema,
@@ -31,4 +34,5 @@ export type {
   iCarData,
   LoginData,
   UserData,
+  Car,
 }

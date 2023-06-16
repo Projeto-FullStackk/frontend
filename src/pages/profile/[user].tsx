@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Button, Card, ModalAdsCreate } from "@/components";
 import { useAppContext, KarsProvider } from "@/contexts";
 import product from "@/assets/product.png";
+import { cars } from "@/services/dataMock";
 
 const Profile = () => {
   const router = useRouter();
@@ -14,7 +15,7 @@ const Profile = () => {
 
   return (
     <KarsProvider>
-      <main className="bg-gray-6">
+      <main className="bg-gray-8">
         <div className="bg-brand-1 h-[15.313rem] mb-40 flex flex-col justify-center items-center lg:flex-row lg:gap-10">
           <section className="px-3 mt-[16.6875rem] flex w-full justify-center">
             <div className="w-[95%] max-w-5xl bg-gray-10 rounded p-5 md:p-10 flex flex-col gap-5 justify-center items-start">
@@ -36,7 +37,9 @@ const Profile = () => {
                 alias repellendus corrupti impedit?
               </p>
               {seller ? (
-                <Button style="button-brand-outline" onClick={handleOpenModal}>Criar Anúncio</Button>
+                <Button style="button-brand-outline" onClick={handleOpenModal}>
+                  Criar Anúncio
+                </Button>
               ) : null}
             </div>
           </section>
@@ -48,25 +51,19 @@ const Profile = () => {
             </h1>
           )}
           <ul className="list-none w-full h-fit px-5 flex overflow-x-auto lg:grid lg:grid-cols-3 lg:max-w-[1429px] lg:justify-items-center xl:grid-cols-4  gap-8 pb-10">
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            {cars.map((car) => {
+              if (seller) {
+                return <Card key={car.id} carData={car} type="seller" />;
+              }
+              return <Card key={car.id} carData={car} type="user" />;
+            })}
           </ul>
         </section>
       </main>
 
-      { open && <ModalAdsCreate />}
+      {open && <ModalAdsCreate />}
     </KarsProvider>
   );
-}
+};
 
 export default Profile;

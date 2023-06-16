@@ -13,6 +13,7 @@ import ProductPage from "./ProductPage";
 import ModalAdsCreate from "./ModalAdsCreate";
 import RegisterPage from "./RegisterPage";
 import Section from "./Section";
+import Pagination from "./Pagination";
 
 export {
   Banner,
@@ -30,4 +31,5 @@ export {
   Section,
   FormLogin,
   FormRegister,
+  Pagination,
 };
