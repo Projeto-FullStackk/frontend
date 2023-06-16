@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useMedia } from "use-media";
 import { useAppContext } from "@/contexts";
 import { Button, Modal } from "@/components";
-import { Car } from "@/pages";
+import { Car } from "@/schemas";
 
 interface FilterProps {
   cars: Car[];

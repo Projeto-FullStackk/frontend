@@ -1,8 +1,8 @@
 import Image from "next/image";
-import car from "@/assets/car.png";
 import { useRouter } from "next/router";
-import { Car } from "@/pages";
-import Button from "../Button";
+import { Button } from "@/components";
+import { Car } from "@/schemas";
+import car from "@/assets/car.png";
 
 interface CardProps {
   type: "user" | "seller";
@@ -18,7 +18,7 @@ const Card = ({ type, carData }: CardProps) => {
   return (
     <>
       <li className="group w-[18rem] max-h-[400px] cursor-pointer">
-        <figure className="relative bg-gray-7 h-[9.5rem] mb-4 flex justify-center items-center border-2 group-hover:border-[#4529E6] ">
+        <figure className="relative bg-gray-7 h-[9.5rem] mb-4 flex justify-center items-center border-2 group-hover:border-brand-1 ">
           <Image src={car} alt="car" width={250} height={250} />
           {type === "seller" ? (
             <span
