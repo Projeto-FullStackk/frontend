@@ -1,3 +1,4 @@
+import HeadApp from "./Head";
 import Banner from "./Banner";
 import Button from "./Button";
 import Card from "./Card";
@@ -16,6 +17,7 @@ import Section from "./Section";
 import Pagination from "./Pagination";
 
 export {
+  HeadApp as Head,
   Banner,
   Button,
   Card,
