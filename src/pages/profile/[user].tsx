@@ -1,17 +1,19 @@
-import Image from "next/image";
-import { useRouter } from "next/router";
-import product from "@/assets/product.png";
 import { useState } from "react";
-import { Button, Card } from "@/components";
+import { useRouter } from "next/router";
+import Image from "next/image";
+import { Button, Card, ModalAdsCreate } from "@/components";
+import { useAppContext, KarsProvider } from "@/contexts";
+import product from "@/assets/product.png";
 
-export default function Profile() {
+const Profile = () => {
   const router = useRouter();
   const user = router.query.slug;
 
-  const [seller, setSeller] = useState(false);
+  const [seller, setSeller] = useState(true);
+  const { handleOpenModal, open } = useAppContext();
 
   return (
-    <>
+    <KarsProvider>
       <main className="bg-gray-6">
         <div className="bg-brand-1 h-[15.313rem] mb-40 flex flex-col justify-center items-center lg:flex-row lg:gap-10">
           <section className="px-3 mt-[16.6875rem] flex w-full justify-center">
@@ -34,7 +36,7 @@ export default function Profile() {
                 alias repellendus corrupti impedit?
               </p>
               {seller ? (
-                <Button style="button-brand-outline">Criar Anúncio</Button>
+                <Button style="button-brand-outline" onClick={handleOpenModal}>Criar Anúncio</Button>
               ) : null}
             </div>
           </section>
@@ -61,6 +63,10 @@ export default function Profile() {
           </ul>
         </section>
       </main>
-    </>
+
+      { open && <ModalAdsCreate />}
+    </KarsProvider>
   );
 }
+
+export default Profile;

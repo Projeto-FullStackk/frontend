@@ -16,8 +16,7 @@ const FormRegister = () => {
   const { register: registerForm } = useAuth();
 
   const submitRegister = (formData: UserData) => {
-    // registerForm(formData);
-    console.log(formData);
+    registerForm(formData)
   };
 
   return (
