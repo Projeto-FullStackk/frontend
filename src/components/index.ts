@@ -5,7 +5,7 @@ import Footer from "./Footer";
 import FormLogin from "./FormLogin";
 import FormRegister from "./FormRegister";
 import Header from "./Header";
-import { Input, AuthInput } from "./Input";
+import Input from "./Input";
 import LoginPage from "./LoginPage";
 import Modal from "./Modal";
 import ProductPage from "./ProductPage";
@@ -19,7 +19,6 @@ export {
   Footer,
   Header,
   Input,
-  AuthInput,
   Modal,
   ProductPage,
   RegisterPage,

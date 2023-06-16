@@ -1,9 +1,9 @@
 import { ReactNode, createContext, useContext } from "react";
 import { useRouter } from "next/router";
-import { api } from "../services/api";
 import { toast } from "react-toastify";
 import { setCookie } from "nookies";
-import { LoginData, UserData } from "@/schemas/users.schema";
+import { LoginData, UserData } from "@/schemas";
+import { api } from "../services/api";
 
 interface iProps {
   children: ReactNode;

@@ -1,8 +1,8 @@
-import { UserData, userSchema } from "@/schemas/users.schema";
-import { Button, AuthInput as Input } from "..";
-import { useAuth } from "@/contexts/AuthContext";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { UserData, userSchema } from "@/schemas";
+import { Button, Input } from "@/components";
+import { useAuth } from "@/contexts";
 
 const FormRegister = () => {
   const {
@@ -13,11 +13,10 @@ const FormRegister = () => {
     resolver: zodResolver(userSchema),
   });
 
-  console.log(errors);
   const { register: registerForm } = useAuth();
 
   const submitRegister = (formData: UserData) => {
-    registerForm(formData);
+    // registerForm(formData);
     console.log(formData);
   };
 
@@ -29,173 +28,173 @@ const FormRegister = () => {
       <p className="font-medium text-sm justify-start cursor-pointer">
         Informações pessoais
       </p>
+
       <Input
-        width="w-80"
-        labelName="Nome"
+        id="name"
+        as="input"
+        label="Nome"
         placeholder="Ex: Samuel Leão"
-        id="register-name"
+        errorMessage={errors.name?.message}
         register={register("name")}
       />
-      <p>{errors.name?.message ? errors.name.message : null}</p>
 
       <Input
-        width="w-80"
-        labelName="Email"
+        id="email"
+        as="input"
+        label="Email"
         placeholder="Ex: samuel@kenzie.com.br"
-        id="register-email"
+        errorMessage={errors.email?.message}
         register={register("email")}
       />
-      <p>{errors.email?.message ? errors.email.message : null}</p>
+
       <Input
-        width="w-80"
-        labelName="CPF"
-        placeholder="000.000.000.-00"
+        id="cpf"
+        as="input"
+        label="CPF"
+        placeholder="000.000.000-00"
+        errorMessage={errors.cpf?.message}
         register={register("cpf")}
-        id="register-cpf"
-        mask="999.999.999-99"
       />
-      <p>{errors.cpf?.message ? errors.cpf.message : null}</p>
-
+      
       <Input
-        width="w-80"
-        labelName="Celular"
+        id="cellphone"
+        as="input"
+        type="tel"
+        label="Celular"
         placeholder="(DDD) 90000-0000"
+        errorMessage={errors.cellphone?.message}
         register={register("cellphone")}
-        id="register-cell"
-        mask="(999)999999999"
       />
-      <p>{errors.cellphone?.message ? errors.cellphone.message : null}</p>
 
       <Input
-        width="w-80"
-        labelName="Data de nascimento"
+        id="birthdate"
+        as="input"
+        type="date"
+        label="Data de nascimento"
         placeholder="00/00/00"
+        errorMessage={errors.birthdate?.message}
         register={register("birthdate")}
-        id="register-birth"
-        mask="99/99/99"
       />
-      <p>{errors.birthdate?.message ? errors.birthdate.message : null}</p>
 
       <Input
-        width="w-80"
-        labelName="Descrição"
+        id="description"
+        as="textarea"
+        label="Descrição"
         placeholder="Digitar descrição"
+        errorMessage={errors.description?.message}
         register={register("description")}
-        id="register-desc"
       />
-      <p>{errors.description?.message ? errors.description.message : null}</p>
 
       <p className="font-medium text-sm justify-start cursor-pointer">
         Informações de endereço
       </p>
+
       <Input
-        width="w-80"
-        labelName="CEP"
+        id="cep"
+        as="input"
+        label="CEP"
         placeholder="00000-000"
+        errorMessage={errors.cep?.message}
         register={register("cep")}
-        id="register-cep"
-        mask="99999-999"
       />
-      <p>{errors.cpf?.message ? errors.cpf.message : null}</p>
 
       <div className="flex gap-2.5">
         <Input
-          width="w-36"
-          labelName="Estado"
-          placeholder="Digitar estado"
+          id="state"
+          as="input"
+          label="Estado"
+          placeholder="Digitar Estado"
+          errorMessage={errors.state?.message}
           register={register("state")}
-          id="register-state"
         />
-        <p>{errors.state?.message ? errors.state.message : null}</p>
 
         <Input
-          width="w-36"
-          labelName="Cidade"
+          id="city"
+          as="input"
+          label="Cidade"
           placeholder="Digitar cidade"
+          errorMessage={errors.city?.message}
           register={register("city")}
-          id="register-city"
         />
-        <p>{errors.city?.message ? errors.city.message : null}</p>
       </div>
+
       <Input
-        width="w-80"
-        labelName="Rua"
+        id="street"
+        as="input"
+        label="Rua"
         placeholder="Digitar rua"
+        errorMessage={errors.street?.message}
         register={register("street")}
-        id="register-street"
       />
-      <p>{errors.street?.message ? errors.street.message : null}</p>
 
       <div className="flex gap-2.5">
         <Input
-          width="w-36"
-          labelName="Número"
+          id="number"
+          as="input"
+          label="Número"
           placeholder="Digitar número"
+          errorMessage={errors.number?.message}
           register={register("number")}
-          id="register-number"
         />
-        <p>{errors.number?.message ? errors.number.message : null}</p>
 
         <Input
-          width="w-36"
-          labelName="Complemento"
+          id="complement"
+          as="input"
+          label="Complemento"
           placeholder="Ex: apart 307"
+          errorMessage={errors.complement?.message}
           register={register("complement")}
-          id="register-complement"
         />
-        <p>{errors.complement?.message ? errors.complement.message : null}</p>
       </div>
 
       <p className="font-medium text-sm justify-start cursor-pointer">
         Tipo de conta
       </p>
+
       <div className="flex gap-2.5">
         <Button
           type="button"
           style="button-brand"
-          disabled={false}
           size="button-medium"
-          fullWidth={true}
+          fullWidth
         >
           Comprador
         </Button>
         <Button
           type="button"
           style="button-grey"
-          disabled={false}
           size="button-medium"
-          fullWidth={true}
+          fullWidth
         >
           Anunciante
         </Button>
       </div>
 
       <Input
-        width="w-80"
-        labelName="Senha"
-        placeholder="Digitar senha"
-        register={register("password")}
-        id="register-pass"
+        id="password"
+        as="input"
         type="password"
+        label="Senha"
+        placeholder="Digitar senha"
+        errorMessage={errors.password?.message}
+        register={register("password")}
       />
-      <p>{errors.password?.message ? errors.password.message : null}</p>
 
       <Input
-        width="w-80"
-        labelName="Confirmar senha"
-        placeholder="Confirmar senha"
-        register={register("confirmPass")}
-        id="register-confirm"
+        id="confirmPass"
+        as="input"
         type="password"
+        label="Confirmar Senha"
+        placeholder="Confirmar senha"
+        errorMessage={errors.confirmPass?.message}
+        register={register("confirmPass")}
       />
-      <p>{errors.confirmPass?.message ? errors.confirmPass.message : null}</p>
 
       <Button
         type="submit"
         style="button-brand"
-        disabled={false}
         size="button-medium"
-        fullWidth={true}
+        fullWidth
       >
         Finalizar Cadastro
       </Button>

@@ -1,12 +1,16 @@
 import Link from "next/link";
-import { AuthInput as Input, Button } from "..";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoginData, loginSchema } from "@/schemas/users.schema";
-import { useAuth } from "@/contexts/AuthContext";
+import { useForm } from "react-hook-form";
+import { LoginData, loginSchema } from "@/schemas";
+import { Input, Button } from "@/components";
+import { useAuth } from "@/contexts";
 
 const FormLogin = () => {
-  const { register, handleSubmit } = useForm<LoginData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<LoginData>({
     resolver: zodResolver(loginSchema),
   });
 
@@ -18,32 +22,37 @@ const FormLogin = () => {
 
   return (
     <form
-      className="flex flex-col gap-6 mt-5"
+      className="flex flex-col gap-6 mt-5 font-inter"
       onSubmit={handleSubmit(submitLogin)}
     >
       <Input
-        width="w-80"
-        labelName="Email"
+        id="email"
+        as="input"
+        type="email"
+        label="Email"
         placeholder="Digitar email"
-        id="login-email"
+        errorMessage={errors.email?.message}
         register={register("email")}
       />
+
       <Input
-        width="w-80"
-        labelName="Senha"
+        id="password"
+        as="input"
+        type="password"
+        label="password"
         placeholder="Digitar senha"
-        id="login-password"
+        errorMessage={errors.password?.message}
         register={register("password")}
       />
+
       <p className="flex text-gray-2 font-medium text-sm justify-end cursor-pointer">
         Esqueci minha senha
       </p>
       <Button
         type="submit"
         style="button-brand"
-        disabled={false}
         size="button-medium"
-        fullWidth={true}
+        fullWidth
       >
         Entrar
       </Button>
@@ -54,9 +63,8 @@ const FormLogin = () => {
         <Button
           type="button"
           style="button-grey-outline"
-          disabled={false}
           size="button-medium"
-          fullWidth={true}
+          fullWidth
         >
           Cadastrar
         </Button>

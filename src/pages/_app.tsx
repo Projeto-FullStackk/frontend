@@ -24,7 +24,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       />
       <AuthProvider>
         <AppProvider>
-          <main className={`${fontLexend} ${fontInter}`}>
+          <main className={`${fontLexend.className} ${fontInter.className}`}>
             <Header />
             <Component {...pageProps} />
             <Footer />
