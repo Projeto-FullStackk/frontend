@@ -20,8 +20,29 @@ const AuthProvider = ({ children }: iProps) => {
   const router = useRouter();
 
   const register = (userData: UserData) => {
+    const address = {
+      zipCode: userData.zipCode,
+      country: userData.country,
+      state: userData.state,
+      city: userData.city,
+      street: userData.street,
+      complement: userData.complement,
+      number: userData.number,
+    };
+
+    const user = {
+      name: userData.name,
+      email: userData.email,
+      cpf: userData.cpf,
+      phone: userData.phone,
+      birthDate: userData.birthDate,
+      description: userData.description,
+      password: userData.confirmPass,
+      address: address,
+    };
+
     api
-      .post("/users", userData)
+      .post("user", user)
       .then(() => {
         toast.success("Cadastro realizado com successo", {
           position: "top-right",
@@ -53,7 +74,7 @@ const AuthProvider = ({ children }: iProps) => {
 
   const login = (loginData: LoginData) => {
     api
-      .post("/login", loginData)
+      .post("auth", loginData)
       .then((response) => {
         setCookie(null, "motorShop.token", response.data.token, {
           maxAge: 60 * 30,
@@ -72,7 +93,7 @@ const AuthProvider = ({ children }: iProps) => {
           theme: "light",
         });
 
-        router.push("/login");
+        router.push("/");
       })
       .catch((err) => {
         console.log(err);
