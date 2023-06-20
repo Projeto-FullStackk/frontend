@@ -15,6 +15,7 @@ import ModalAdsCreate from "./ModalAdsCreate";
 import RegisterPage from "./RegisterPage";
 import Section from "./Section";
 import Pagination from "./Pagination";
+import Loading from "./Loading";
 
 export {
   HeadApp as Head,
@@ -34,4 +35,5 @@ export {
   FormLogin,
   FormRegister,
   Pagination,
+  Loading,
 };

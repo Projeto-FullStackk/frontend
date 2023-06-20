@@ -12,8 +12,12 @@ import {
 import {
   LoginData,
   UserData,
+  UserEmail,
+  UserResetPassword,
   loginSchema,
   userSchema,
+  userEmailSchema,
+  userResetPasswordSchema,
 } from "./users";
 import {
   Car,
@@ -25,6 +29,8 @@ export {
   adsRequestSchema,
   loginSchema,
   userSchema,
+  userEmailSchema,
+  userResetPasswordSchema,
 }
 
 export type {
@@ -35,4 +41,6 @@ export type {
   LoginData,
   UserData,
   Car,
+  UserEmail,
+  UserResetPassword,
 }

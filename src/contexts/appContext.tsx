@@ -6,6 +6,8 @@ interface AppContextInterface {
   setOpen: (open: boolean) => void;
   handleOpenModal: () => void;
   handleCloseModal: () => void;
+  isLoading: boolean;
+  setIsLoading: (bool: boolean) => void;
 }
 
 interface iAppProvider {
@@ -18,6 +20,7 @@ const AppContext = createContext<AppContextInterface>(
 
 export const AppProvider = ({ children }: iAppProvider) => {
   const [open, setOpen] = useState(false);
+  const [ isLoading, setIsLoading ] = useState(false);
 
   const handleOpenModal = () => {
     setOpen(true);
@@ -27,7 +30,7 @@ export const AppProvider = ({ children }: iAppProvider) => {
   };
   return (
     <AppContext.Provider
-      value={{ open, setOpen, handleOpenModal, handleCloseModal }}
+      value={{ open, setOpen, handleOpenModal, handleCloseModal, isLoading, setIsLoading }}
     >
       {children}
     </AppContext.Provider>
