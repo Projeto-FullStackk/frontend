@@ -81,6 +81,9 @@ module.exports = {
           background:
             "linear-gradient(180deg, rgba(0, 0, 0, 0.29) 0%, #000000 80%)",
         },
+        ".shadow-custom": {
+          boxShadow: "0px 4px 40px -10px rgba(0, 0, 0, 0.25)",
+        },
       };
       addUtilities(newUtilities);
     }),

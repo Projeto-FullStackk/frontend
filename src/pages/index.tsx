@@ -3,6 +3,7 @@ import { api } from "@/services/api";
 import { cars } from "@/services/dataMock";
 import { Banner, Card, Filter, Pagination } from "@/components";
 import { Car } from "@/schemas";
+import { NextRequest } from "next/server";
 
 interface HomeProps {
   cars: Car[];
@@ -18,7 +19,11 @@ interface HomeProps {
   };
 }; */
 
-const Home: React.FC<HomeProps> = (/* { cars } */) => {
+const Home: React.FC<HomeProps> = (
+  {
+    /* cars */
+  }
+) => {
   return (
     <>
       <div className="flex flex-col w-full items-center">

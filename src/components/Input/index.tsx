@@ -22,52 +22,44 @@ const Input = ({
         {label}
       </label>
 
-      {
-        as === "input" && (
-          <InputForm
-            id={id}
-            type={type}
-            value={value}
-            placeholder={placeholder}
-            disabled={disabled}
-            register={register}
-          />
-        )
-      }
+      {as === "input" && (
+        <InputForm
+          id={id}
+          type={type}
+          value={value}
+          placeholder={placeholder}
+          disabled={disabled}
+          register={register}
+        />
+      )}
 
-      {
-        as === "textarea" && (
-          <TextareaForm
-            id={id}
-            placeholder={placeholder}
-            disabled={disabled}
-            register={register}
-          />
-        )
-      }
+      {as === "textarea" && (
+        <TextareaForm
+          id={id}
+          placeholder={placeholder}
+          disabled={disabled}
+          register={register}
+        />
+      )}
 
-      {
-        as === "select" && (
-          <SelectForm
-            id={id}
-            placeholder={placeholder}
-            options={options}
-            disabled={disabled}
-            onChange={onChange}
-            register={register}
-          />
-        )
-      }
+      {as === "select" && (
+        <SelectForm
+          id={id}
+          placeholder={placeholder}
+          options={options}
+          disabled={disabled}
+          onChange={onChange}
+          register={register}
+        />
+      )}
 
-      {
-        errorMessage && (
-          <span className="font-normal text-xs text-feedback-alert1">
-            {errorMessage}
-          </span>
-        )
-      }
+      {errorMessage && (
+        <span className="font-normal text-xs text-feedback-alert1">
+          {errorMessage}
+        </span>
+      )}
     </div>
-  )
-}
+  );
+};
 
 export default Input;

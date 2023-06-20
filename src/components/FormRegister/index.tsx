@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { UserData, userSchema } from "@/schemas";
 import { Button, Input } from "@/components";
+import { fontInter } from "@/styles/font";
 import { useAuth } from "@/contexts";
 
 const FormRegister = () => {
@@ -13,10 +14,17 @@ const FormRegister = () => {
     resolver: zodResolver(userSchema),
   });
 
+  console.log(errors);
+
   const { register: registerForm } = useAuth();
 
   const submitRegister = (formData: UserData) => {
-    registerForm(formData)
+    formData.isSeller === "1"
+      ? (formData.isSeller = false)
+      : (formData.isSeller = true);
+
+    console.log(formData);
+    registerForm(formData);
   };
 
   return (
@@ -54,15 +62,15 @@ const FormRegister = () => {
         errorMessage={errors.cpf?.message}
         register={register("cpf")}
       />
-      
+
       <Input
         id="cellphone"
         as="input"
         type="tel"
         label="Celular"
         placeholder="(DDD) 90000-0000"
-        errorMessage={errors.cellphone?.message}
-        register={register("cellphone")}
+        errorMessage={errors.phone?.message}
+        register={register("phone")}
       />
 
       <Input
@@ -71,8 +79,8 @@ const FormRegister = () => {
         type="date"
         label="Data de nascimento"
         placeholder="00/00/00"
-        errorMessage={errors.birthdate?.message}
-        register={register("birthdate")}
+        errorMessage={errors.birthDate?.message}
+        register={register("birthDate")}
       />
 
       <Input
@@ -93,8 +101,17 @@ const FormRegister = () => {
         as="input"
         label="CEP"
         placeholder="00000-000"
-        errorMessage={errors.cep?.message}
-        register={register("cep")}
+        errorMessage={errors.zipCode?.message}
+        register={register("zipCode")}
+      />
+
+      <Input
+        id="country"
+        as="input"
+        label="País"
+        placeholder="Digitar país"
+        errorMessage={errors.country?.message}
+        register={register("country")}
       />
 
       <div className="flex gap-2.5">
@@ -151,22 +168,31 @@ const FormRegister = () => {
       </p>
 
       <div className="flex gap-2.5">
-        <Button
-          type="button"
-          style="button-brand"
-          size="button-medium"
-          fullWidth
+        <label
+          className={`${fontInter.className} text-center w-full button-brand h-max rounded-[0.25rem] font-semibold transition-colors button-medium`}
         >
-          Comprador
-        </Button>
-        <Button
-          type="button"
-          style="button-grey"
-          size="button-medium"
-          fullWidth
+          Comprador{" "}
+          <input
+            type="radio"
+            value="1"
+            id="buyer"
+            className="hidden"
+            {...register("isSeller")}
+          />
+        </label>
+
+        <label
+          className={`${fontInter.className} text-center w-full button-grey h-max rounded-[0.25rem] font-semibold transition-colors button-medium`}
         >
-          Anunciante
-        </Button>
+          Vendedor{" "}
+          <input
+            type="radio"
+            value="2"
+            id="seller"
+            className="hidden"
+            {...register("isSeller")}
+          />
+        </label>
       </div>
 
       <Input
@@ -189,12 +215,7 @@ const FormRegister = () => {
         register={register("confirmPass")}
       />
 
-      <Button
-        type="submit"
-        style="button-brand"
-        size="button-medium"
-        fullWidth
-      >
+      <Button type="submit" style="button-brand" size="button-medium" fullWidth>
         Finalizar Cadastro
       </Button>
     </form>
