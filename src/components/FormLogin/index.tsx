@@ -45,9 +45,12 @@ const FormLogin = () => {
         register={register("password")}
       />
 
-      <p className="flex text-gray-2 font-medium text-sm justify-end cursor-pointer">
-        Esqueci minha senha
+      <p className="flex text-gray-2 font-medium text-sm justify-end">
+        <Link href="/resetPassword">
+          Esqueci minha senha
+        </Link>
       </p>
+
       <Button
         type="submit"
         style="button-brand"
