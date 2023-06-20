@@ -62,23 +62,25 @@ export const userSchema = z
 
 export const userEmailSchema = loginSchema.pick({
   email: true,
-})
-export const userResetPasswordSchema = loginSchema.pick({
-  password: true,
-}).extend({
-  confirmPass: z.string().nonempty("Obrigatório confimar a senha"),
-}).superRefine(({ password, confirmPass }, ctx) => {
-  if (password !== confirmPass) {
-    ctx.addIssue({
-      code: "custom",
-      message: "Senhas estão diferentes",
-      path: ["confirmPass"],
-    });
-  }
 });
+export const userResetPasswordSchema = loginSchema
+  .pick({
+    password: true,
+  })
+  .extend({
+    confirmPass: z.string().nonempty("Obrigatório confimar a senha"),
+  })
+  .superRefine(({ password, confirmPass }, ctx) => {
+    if (password !== confirmPass) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Senhas estão diferentes",
+        path: ["confirmPass"],
+      });
+    }
+  });
 
 export type UserData = z.infer<typeof userSchema>;
 export type LoginData = z.infer<typeof loginSchema>;
 export type UserEmail = z.infer<typeof userEmailSchema>;
 export type UserResetPassword = z.infer<typeof userResetPasswordSchema>;
-

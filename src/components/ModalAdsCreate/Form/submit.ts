@@ -1,3 +1,4 @@
+import { useKarsContext } from "@/contexts";
 import { iAdsCreate, iAdsRequest } from "@/schemas";
 
 const submit = (formData: iAdsCreate) => {
@@ -10,23 +11,23 @@ const submit = (formData: iAdsCreate) => {
       case 0:
         data["firstImage"] = image;
         break;
-      
+
       case 1:
         data["secondImage"] = image;
         break;
-      
+
       case 2:
         data["thirdImage"] = image;
         break;
-      
+
       case 3:
         data["fourthImage"] = image;
         break;
-      
+
       case 4:
         data["fifthImage"] = image;
         break;
-      
+
       case 5:
         data["sixImage"] = image;
         break;
@@ -35,7 +36,7 @@ const submit = (formData: iAdsCreate) => {
 
   data = {
     ...data,
-    userId: "asdf-asdf-asdf-asdf",    // Posteriormente implementar a lógica do campo de userId
+    userId: "asdf-asdf-asdf-asdf", // Posteriormente implementar a lógica do campo de userId
     published: false,
     brand: formData.brand.toLowerCase(),
     color: formData.color,
@@ -47,9 +48,7 @@ const submit = (formData: iAdsCreate) => {
     price: formData.price,
     pricetf: formData.pricetf,
     year: formData.year,
-  }
-
-  console.log(data);
+  };
 };
 
 export default submit;

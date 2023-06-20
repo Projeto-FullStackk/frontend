@@ -1,23 +1,83 @@
-import { ReactNode, createContext, useContext } from "react";
+import {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  createContext,
+  useContext,
+  useState,
+} from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import { setCookie } from "nookies";
+import { destroyCookie, setCookie } from "nookies";
 import { LoginData, UserData } from "@/schemas";
 import { api } from "../services/api";
 
 interface iProps {
   children: ReactNode;
 }
+interface Address {
+  id: string;
+  zipCode: string;
+  state: string;
+  city: string;
+  country: string;
+  street: string;
+  number: string;
+  complement: string;
+}
+
+interface Ad {
+  id: string;
+  brand: string;
+  name: string;
+  year: number;
+  fuel: string;
+  km: string;
+  color: string;
+  priceTf: number;
+  price: number;
+  description: string;
+  coverImage: string;
+  firstImage: string;
+  secondImage: string;
+  thirdImage: null | string;
+  fourthImage: null | string;
+  fifthImage: null | string;
+  sixthImage: null | string;
+  userId: string;
+  published: boolean;
+}
+
+interface UserLogged {
+  id: string;
+  createdAt: string;
+  name: string;
+  isAdmin: boolean;
+  email: string;
+  phone: string;
+  cpf: string;
+  birthDate: string;
+  isSeller: boolean;
+  description: string;
+  addressId: string;
+  reset_token: null | string;
+  Address: Address;
+  ads: Ad[];
+}
 
 interface iAuthProvider {
   register: (userData: UserData) => void;
   login: (loginData: LoginData) => void;
+  userLogged: UserLogged | null;
+  setUserLogged: Dispatch<SetStateAction<UserLogged | null>>;
+  logout: () => void;
 }
 
 const AuthContext = createContext<iAuthProvider>({} as iAuthProvider);
 
 const AuthProvider = ({ children }: iProps) => {
   const router = useRouter();
+  const [userLogged, setUserLogged] = useState<UserLogged | null>(null);
 
   const register = (userData: UserData) => {
     const address = {
@@ -80,6 +140,19 @@ const AuthProvider = ({ children }: iProps) => {
           maxAge: 60 * 30,
           path: "/",
         });
+        return response.data.token;
+      })
+      .then((token) => {
+        api
+          .get("user", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((response) => {
+            console.log(response.data[0]);
+            setUserLogged(response.data[0]);
+          });
       })
       .then(() => {
         toast.success("Login realizado com successo", {
@@ -112,8 +185,15 @@ const AuthProvider = ({ children }: iProps) => {
         );
       });
   };
+
+  const logout = () => {
+    destroyCookie(null, "motorShop.token", { path: "/" });
+    setUserLogged(null);
+  };
   return (
-    <AuthContext.Provider value={{ register, login }}>
+    <AuthContext.Provider
+      value={{ register, login, userLogged, setUserLogged, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

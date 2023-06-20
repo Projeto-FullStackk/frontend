@@ -18,7 +18,7 @@ const Filter = ({ cars }: FilterProps) => {
   const [years, setYears] = useState<number[]>([]);
   const [fuels, setFuels] = useState<string[]>([]);
 
-  /*  useEffect(() => {
+  useEffect(() => {
     const uniqueBrands = cars
       .map((car) => car.brand)
       .filter((brand, index, array) => array.indexOf(brand) === index);
@@ -43,7 +43,7 @@ const Filter = ({ cars }: FilterProps) => {
       .map((car) => car.fuel)
       .filter((fuel, index, array) => array.indexOf(fuel) === index);
     setFuels(uniqueFuels);
-  }, [cars]); */
+  }, [cars]);
 
   const contentFilter = () => {
     return (

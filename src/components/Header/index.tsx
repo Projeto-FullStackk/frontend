@@ -1,13 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useMedia from "use-media";
 import { fontInter } from "@/styles/font";
 import Title from "./Title";
 import MobileButton from "./MobileButton";
 import Navbar from "./Navbar";
+import { parseCookies } from "nookies";
+import { useAuth } from "@/contexts";
+import { api } from "@/services/api";
 
 const Header = () => {
+  const { setUserLogged } = useAuth();
   const [isShowNavbar, setIsShowNavbar] = useState(false);
   const isWide: boolean = useMedia({ maxWidth: "768px" });
+
+  useEffect(() => {
+    const cookie = parseCookies();
+
+    if (Object.keys(cookie).length === 0) {
+      setUserLogged(null);
+    } else {
+      api
+        .get("user", {
+          headers: {
+            Authorization: `Bearer ${cookie["motorShop.token"]}`,
+          },
+        })
+        .then((response) => {
+          setUserLogged(response.data[0]);
+        });
+    }
+  }, []);
 
   const handleShowNavbar = () => setIsShowNavbar(!isShowNavbar);
 
