@@ -4,11 +4,11 @@ export const adsSchema = z.object({
   id: z.string().uuid(),
   brand: z.string().nonempty("Obrigatório selecionar um marca"),
   name: z.string().nonempty("Obrigatório selecionar um modelo"),
-  year: z.coerce.number(),
-  fuel: z.string().nonempty(),
+  year: z.coerce.number().nullish(),
+  fuel: z.string(),
   km: z.string().nonempty(),
   color: z.string().nonempty(),
-  pricetf: z
+  priceTf: z
     .string()
     .transform(price => {
       return price.slice(3)
@@ -20,16 +20,14 @@ export const adsSchema = z.object({
     .string()
     .nonempty("Obrigatório informar o preço")
     .transform(price => {
-      return price.replace("R$ ", "")
-        .replace("R$", "")
-        .replace(".", "")
-        .replace(",", ".")
+      const removeStrings = price.replace(/[^\d,]+/g, "");
+      const convertToNumber = +removeStrings.replace(",", ".");
+      return convertToNumber;
     })
     .refine(price => {
-      return !isNaN(+price)
-    }, "Valor inválido")
-    .transform(price => +price),
-  description: z.string(),
+      return !isNaN(price);
+    }, "Preço inválido"),
+  description: z.string().nonempty("Precisa haver uma descrição"),
   coverImage: z
     .string()
     .nonempty("Imagem de capa obrigatório")
@@ -47,6 +45,11 @@ export const adsSchema = z.object({
 
 export const adsCreateSchema = adsSchema.omit({
   id: true,
+}).partial({  
+  year: true,
+  fuel: true,
+  priceTf: true,
+  images: true,
 })
 
 export const adsRequestSchema = adsCreateSchema
@@ -59,7 +62,7 @@ export const adsRequestSchema = adsCreateSchema
     thirdImage: z.string().nullable(),
     fourthImage: z.string().nullable(),
     fifthImage: z.string().nullable(),
-    sixImage: z.string().nullable(),
+    sixthImage: z.string().nullable(),
     userId: z.string(),
     published: z.boolean(),
   })
