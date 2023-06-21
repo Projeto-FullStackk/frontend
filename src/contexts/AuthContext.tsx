@@ -143,12 +143,9 @@ const AuthProvider = ({ children }: iProps) => {
         return response.data.token;
       })
       .then((token) => {
+        api.defaults.headers.common.Authorization = `Bearer ${token}`;
         api
-          .get("user", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
+          .get("user")
           .then((response) => {
             console.log(response.data[0]);
             setUserLogged(response.data[0]);
