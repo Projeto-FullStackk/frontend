@@ -1,7 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { api, apiExternal } from "@/services/api";
 import { Car, iAds, iAdsRequest, iCarData } from "@/schemas";
-import submit from "@/components/ModalAdsCreate/Form/submit";
+import { useAppContext } from "@/contexts";
 
 interface iKarsContext {
   brands: string[];
@@ -17,6 +18,7 @@ interface iKarsProvider {
 const KarsContext = createContext<iKarsContext>({} as iKarsContext);
 
 export const KarsProvider = ({ children }: iKarsProvider) => {
+  const { handleCloseModal, setIsLoading } = useAppContext();
   const [brands, setBrands] = useState<string[]>([]);
   const [cars, setCars] = useState<iCarData[]>([]);
   const [ads, setAds] = useState<iAds[]>([]);
@@ -45,10 +47,19 @@ export const KarsProvider = ({ children }: iKarsProvider) => {
   };
 
   const createAd = (data: iAdsRequest) => {
-    api.post("/ads", { submit }).then((res) => {
-      console.log(res.data);
-      setAds(res.data);
-    });
+    setIsLoading(true);
+    api.post("/ads", data)
+      .then((res) => {
+        console.log(res.data);
+        setAds([...ads, res.data]);
+        handleCloseModal();
+        toast.success("Anuncio criado com sucesso")
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Não foi possível criar um anuncio!");
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (

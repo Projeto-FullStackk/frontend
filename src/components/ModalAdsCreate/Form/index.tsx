@@ -1,14 +1,16 @@
 import { ChangeEvent, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { adsCreateSchema, iAdsCreate } from "@/schemas";
-import { Button, Input } from "@/components";
-import { useKarsContext } from "@/contexts";
-import submit from "./submit";
+import { adsCreateSchema, iAdsCreate, iAdsRequest } from "@/schemas";
+import { useAppContext, useAuth, useKarsContext } from "@/contexts";
+import { Button, Input, Loading } from "@/components";
 import showError from "./showError";
+import refineBodySubmit from "./refineBodySubmit";
 
 const Form = () => {
-  const { brands, cars, getCarsDataAPI } = useKarsContext();
+  const { brands, cars, getCarsDataAPI, createAd } = useKarsContext();
+  const { userLogged } = useAuth();
+  const { isLoading } = useAppContext();
   const [ limitImages, setLimitImages ] = useState(0);
   const [ disabledNameInput, setDisabledNameInput] = useState(true);
   const [ disabledDetailsInput, setDisabledDetailsInput] = useState(true);
@@ -69,6 +71,25 @@ const Form = () => {
 
     return setDisabledDetailsInput(false);
   }
+
+  const submit = (formData: iAdsCreate) => {
+    const brand = formData.brand.toLowerCase();
+    const year = +yearCar;
+    const fuel = fuelCar;
+    const priceTf = +priceCar.replace(/[^\d,]+/g, "").replace(",", ".");
+
+    const data: iAdsRequest = {
+      ...refineBodySubmit(formData),
+      brand,
+      year,
+      fuel,
+      priceTf,
+      userId: userLogged!.id,
+      published: true,
+    };
+    
+    createAd(data);
+  };
 
   return (
     <form onSubmit={handleSubmit(submit)} className="w-full flex flex-col gap-6">
@@ -162,7 +183,7 @@ const Form = () => {
             placeholder="R$ 48.000,00"
             value={priceCar}
             disabled={disabledDetailsInput}
-            register={register("pricetf")}
+            register={register("priceTf")}
           />
         </div>
 
@@ -186,6 +207,7 @@ const Form = () => {
         label="Descrição"
         placeholder="Opcional"
         register={register("description")}
+        errorMessage={errors.description?.message}
       />
       
       <Input
@@ -250,6 +272,8 @@ const Form = () => {
           </Button>
         </div>
       </div>
+
+      { isLoading && <Loading />}
     </form>
   )
 }
