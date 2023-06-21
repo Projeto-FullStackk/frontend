@@ -23,7 +23,7 @@ const Card = ({ type, carData }: CardProps) => {
       <li className="group w-[18rem] max-h-[400px] cursor-pointer">
         <figure className="relative bg-gray-7 h-[9.5rem] mb-4 flex justify-center items-center border-2 group-hover:border-brand-1 ">
           <img
-            className="w-[250px] h-[250px]"
+            className="w-full h-full object-cover"
             src={car.coverImage}
             alt={car.name}
           />
