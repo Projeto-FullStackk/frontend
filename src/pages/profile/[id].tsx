@@ -77,25 +77,9 @@ const Profile: NextPage<ProfileProps> = ({ user }) => {
           <ul className="list-none w-full h-fit px-5 flex overflow-x-auto lg:grid lg:grid-cols-3 lg:max-w-[1429px] lg:justify-items-center xl:grid-cols-4  gap-8 pb-10">
             {user.ads.map((car) => {
               if (seller) {
-                return (
-                  <Card
-                    key={car.id}
-                    carData={car}
-                    initials={initials}
-                    user={user}
-                    type="seller"
-                  />
-                );
+                return <Card key={car.id} carData={car} type="seller" />;
               }
-              return (
-                <Card
-                  key={car.id}
-                  carData={car}
-                  initials={initials}
-                  user={user}
-                  type="user"
-                />
-              );
+              return <Card key={car.id} carData={car} type="user" />;
             })}
           </ul>
         </section>

@@ -4,11 +4,12 @@ import { cars } from "@/services/dataMock";
 import { Banner, Card, Filter, Pagination } from "@/components";
 import { Car } from "@/schemas";
 import { NextRequest } from "next/server";
+import { Ad, UserLogged } from "@/contexts/AuthContext";
 
 interface HomeProps {
-  cars: Car[];
+  cars: Ad[];
 }
-/* export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
+export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
   const response = await api.get("/ads");
   const cars = response.data;
 
@@ -17,13 +18,9 @@ interface HomeProps {
       cars,
     },
   };
-}; */
+};
 
-const Home: React.FC<HomeProps> = (
-  {
-    /* cars */
-  }
-) => {
+const Home: React.FC<HomeProps> = ({ cars }) => {
   return (
     <>
       <div className="flex flex-col w-full items-center">

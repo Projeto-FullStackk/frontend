@@ -3,9 +3,10 @@ import { useMedia } from "use-media";
 import { useAppContext } from "@/contexts";
 import { Button, Modal } from "@/components";
 import { Car } from "@/schemas";
+import { Ad } from "@/contexts/AuthContext";
 
 interface FilterProps {
-  cars: Car[];
+  cars: Ad[];
 }
 
 const Filter = ({ cars }: FilterProps) => {

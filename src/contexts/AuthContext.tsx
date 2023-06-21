@@ -45,6 +45,7 @@ export interface Ad {
   fifthImage: null | string;
   sixthImage: null | string;
   userId: string;
+  user: UserLogged;
   published: boolean;
 }
 
@@ -144,12 +145,10 @@ const AuthProvider = ({ children }: iProps) => {
       })
       .then((token) => {
         api.defaults.headers.common.Authorization = `Bearer ${token}`;
-        api
-          .get("user")
-          .then((response) => {
-            console.log(response.data[0]);
-            setUserLogged(response.data[0]);
-          });
+        api.get("user").then((response) => {
+          console.log(response.data[0]);
+          setUserLogged(response.data[0]);
+        });
       })
       .then(() => {
         toast.success("Login realizado com successo", {

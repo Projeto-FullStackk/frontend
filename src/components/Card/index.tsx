@@ -1,46 +1,53 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Button } from "@/components";
-import { Car } from "@/schemas";
-import car from "@/assets/car.png";
-import { Ad, UserLogged } from "@/contexts/AuthContext";
+import { Ad } from "@/contexts/AuthContext";
 
 interface CardProps {
   type: "user" | "seller";
   carData: Ad;
-  user: UserLogged;
-  initials: String;
 }
 
-const Card = ({ type, carData, user, initials }: CardProps) => {
+const Card = ({ type, carData }: CardProps) => {
+  const { user, ...car } = carData;
   const router = useRouter();
+
+  let initials = "";
+  if (user.name) {
+    const names = user.name.split(" ");
+    initials = names[0][0] + names[1][0];
+  }
 
   return (
     <>
       <li className="group w-[18rem] max-h-[400px] cursor-pointer">
         <figure className="relative bg-gray-7 h-[9.5rem] mb-4 flex justify-center items-center border-2 group-hover:border-brand-1 ">
-          <Image src={car} alt="car" width={250} height={250} />
+          <img
+            className="w-[250px] h-[250px]"
+            src={car.coverImage}
+            alt={car.name}
+          />
           {type === "seller" ? (
             <span
               className={`absolute top-2 left-2 text-xs px-2 py-1 text-white ${
-                carData.published ? "bg-brand-1" : "bg-gray-4"
+                car.published ? "bg-brand-1" : "bg-gray-4"
               } `}
             >
-              {carData.published ? "Ativo" : "Inativo"}
+              {car.published ? "Ativo" : "Inativo"}
             </span>
           ) : null}
         </figure>
         <h2 className=" whitespace-nowrap font-lex font-semibold mb-4 text-ellipsis overflow-hidden ">
-          {carData.name}
+          {car.name}
         </h2>
         <p className="font-inter font-normal text-xs text-gray-2">
-          {carData.description}
+          {car.description}
         </p>
 
         {type === "user" ? (
           <div
             className="flex items-center gap-2 mt-5"
-            onClick={() => router.push(`/profile/${carData.userId}`)}
+            onClick={() => router.push(`/profile/${car.userId}`)}
           >
             <span className="rounded-[9.375rem] bg-random-5 w-[2rem] h-[2rem] text-gray-white flex justify-center items-center text-sm font-inter">
               {initials}
@@ -55,18 +62,18 @@ const Card = ({ type, carData, user, initials }: CardProps) => {
           <div className="flex gap-2">
             <span className="w-auto h-[1.875rem] px-2 flex justify-center items-center bg-brand-4 rounded font-inter font-medium text-brand-1 text-sm">
               <span className="w-auto h-[1.875rem] px-2 flex justify-center items-center bg-brand-4 rounded font-inter font-medium text-brand-1 text-sm">
-                {new Intl.NumberFormat("pt-BR").format(+carData.km)} km
+                {new Intl.NumberFormat("pt-BR").format(+car.km)} km
               </span>
             </span>
             <span className="w-[2.875rem] h-[1.875rem] flex justify-center items-center bg-brand-4 rounded font-inter font-medium text-brand-1 text-sm">
-              {carData.year}
+              {car.year}
             </span>
           </div>
           <span className="whitespace-nowrap text-ellipsis overflow-hidden">
             {new Intl.NumberFormat("pt-BR", {
               style: "currency",
               currency: "BRL",
-            }).format(carData.price)}
+            }).format(car.price)}
           </span>
         </div>
 
