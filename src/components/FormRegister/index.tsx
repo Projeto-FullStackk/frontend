@@ -23,7 +23,6 @@ const FormRegister = () => {
       ? (formData.isSeller = false)
       : (formData.isSeller = true);
 
-    console.log(formData);
     registerForm(formData);
   };
 

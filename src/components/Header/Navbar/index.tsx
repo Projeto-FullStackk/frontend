@@ -7,12 +7,6 @@ const Navbar = () => {
   const { userLogged, setUserLogged, logout } = useAuth();
   const [meuDropOpen, setMenuDropOpen] = useState(false);
 
-  // Gerando uma cor de fundo aleatória
-  /* const backgroundColors = ["red", "blue", "green", "orange", "purple"];
-  const randomIndex = Math.floor(Math.random() * backgroundColors.length);
-  const backgroundColor = backgroundColors[randomIndex]; */
-
-  // iniciais do nome do usuário
   let initials = "";
   if (userLogged && userLogged.name) {
     const names = userLogged.name.split(" ");

@@ -15,7 +15,7 @@ import { api } from "../services/api";
 interface iProps {
   children: ReactNode;
 }
-interface Address {
+export interface Address {
   id: string;
   zipCode: string;
   state: string;
@@ -26,7 +26,7 @@ interface Address {
   complement: string;
 }
 
-interface Ad {
+export interface Ad {
   id: string;
   brand: string;
   name: string;
@@ -48,7 +48,7 @@ interface Ad {
   published: boolean;
 }
 
-interface UserLogged {
+export interface UserLogged {
   id: string;
   createdAt: string;
   name: string;
