@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
-
-import { Button, Card, ModalAdsCreate } from "@/components";
+import { GetServerSideProps, NextPage } from "next";
 import { useAppContext, KarsProvider, useAuth } from "@/contexts";
-
-import { cars } from "@/services/dataMock";
-import { api } from "@/services/api";
-import { GetServerSideProps, GetStaticProps, NextPage } from "next";
 import { UserLogged } from "@/contexts/AuthContext";
+import { Button, Card, ModalAdsCreate } from "@/components";
+import { api } from "@/services/api";
 
 interface ProfileProps {
   user: UserLogged;
