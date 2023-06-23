@@ -13,8 +13,8 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async (
 ) => {
   const { query } = context;
 
-  const response = await api.get("/ads", { params: query });
-  const cars = response.data;
+  const response = await api.get("/ads/filter", { params: query });
+  const cars = response.data.ads;
 
   return {
     props: {
@@ -29,8 +29,8 @@ const Home: React.FC<HomeProps> = ({ cars }) => {
 
   useEffect(() => {
     const fetchCars = async () => {
-      const response = await api.get("/ads", { params: router.query });
-      setCarsData(response.data);
+      const response = await api.get("/ads/filter", { params: router.query });
+      setCarsData(response.data.ads);
     };
 
     fetchCars();
