@@ -21,7 +21,6 @@ interface AppContextInterface {
   handleCloseModal: () => void;
   isLoading: boolean;
   setIsLoading: (bool: boolean) => void;
-  initialUrlValues: InitialUrlValues;
 }
 
 interface iAppProvider {
@@ -37,7 +36,7 @@ export const AppProvider = ({ children }: iAppProvider) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
-  const [initialUrlValues] = useState({
+  /* const [initialUrlValues, setInitialUrlValues] = useState({
     brand: router.query.brand || "all",
     model: router.query.model || "all",
     color: router.query.color || "all",
@@ -47,8 +46,10 @@ export const AppProvider = ({ children }: iAppProvider) => {
     maxKm: router.query.maxKm || "all",
     minPrice: router.query.minPrice || "all",
     maxPrice: router.query.maxPrice || "all",
-  });
-  console.log(initialUrlValues);
+  }); */
+  /* const resetParams = () => {
+    setInitialUrlValues();
+  }; */
   const handleOpenModal = () => {
     setOpen(true);
   };
@@ -64,7 +65,6 @@ export const AppProvider = ({ children }: iAppProvider) => {
         handleCloseModal,
         isLoading,
         setIsLoading,
-        initialUrlValues,
       }}
     >
       {children}
