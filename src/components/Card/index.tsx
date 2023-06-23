@@ -20,7 +20,10 @@ const Card = ({ type, carData }: CardProps) => {
 
   return (
     <>
-      <li className="group w-[18rem] max-h-[400px] cursor-pointer">
+      <li
+        className="group w-[18rem] max-h-[400px] cursor-pointer"
+        onClick={() => router.push(`/product/${car?.id}`)}
+      >
         <figure className="relative bg-gray-7 h-[9.5rem] mb-4 flex justify-center items-center border-2 group-hover:border-brand-1 ">
           <img
             className="w-full h-full object-cover"
@@ -47,7 +50,10 @@ const Card = ({ type, carData }: CardProps) => {
         {type === "user" ? (
           <div
             className="flex items-center gap-2 mt-5"
-            onClick={() => router.push(`/profile/${car.userId}`)}
+            onClick={(event) => {
+              event.stopPropagation();
+              router.push(`/profile/${car.userId}`);
+            }}
           >
             <span className="rounded-[9.375rem] bg-random-5 w-[2rem] h-[2rem] text-gray-white flex justify-center items-center text-sm font-inter">
               {initials}
