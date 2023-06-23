@@ -13,8 +13,8 @@ const Card = ({ type, carData }: CardProps) => {
   const router = useRouter();
 
   let initials = "";
-  if (user.name) {
-    const names = user.name.split(" ");
+  if (user?.name) {
+    const names = user?.name.split(" ");
     initials = names[0][0] + names[1][0];
   }
 

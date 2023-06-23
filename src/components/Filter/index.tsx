@@ -2,16 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useMedia } from "use-media";
 import { useAppContext } from "@/contexts";
 import { Button, Modal } from "@/components";
-import { Car } from "@/schemas";
 import { Ad } from "@/contexts/AuthContext";
+import { useRouter } from "next/router";
 
 interface FilterProps {
   cars: Ad[];
 }
 
 const Filter = ({ cars }: FilterProps) => {
-  const { handleOpenModal, handleCloseModal } = useAppContext();
+  const { handleOpenModal, handleCloseModal, initialUrlValues } =
+    useAppContext();
   const isWide: boolean = useMedia({ maxWidth: "1024px" });
+  const router = useRouter();
 
   const [brands, setBrands] = useState<string[]>([]);
   const [models, setModels] = useState<string[]>([]);
@@ -46,6 +48,17 @@ const Filter = ({ cars }: FilterProps) => {
     setFuels(uniqueFuels);
   }, [cars]);
 
+  const handleFilter = (key: string, value: string | number) => {
+    router.push(
+      {
+        pathname: "/",
+        query: { ...initialUrlValues, [key]: value },
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
+
   const contentFilter = () => {
     return (
       <div className="w-full max-w-[255px]  pl-2 flex flex-col gap-8 py-5">
@@ -53,7 +66,11 @@ const Filter = ({ cars }: FilterProps) => {
           <h2 className="font-bold text-xl">Marca</h2>
           <ul className="font-medium text-base text-gray-3 ml-1">
             {brands.map((brand) => (
-              <li key={brand} className="cursor-pointer">
+              <li
+                key={brand}
+                className="cursor-pointer"
+                onClick={() => handleFilter("brand", brand)}
+              >
                 {brand}
               </li>
             ))}
@@ -63,7 +80,11 @@ const Filter = ({ cars }: FilterProps) => {
           <h2 className="font-bold text-xl">Modelo</h2>
           <ul className="font-medium text-base text-gray-3 ml-1">
             {models.map((model) => (
-              <li key={model} className="cursor-pointer">
+              <li
+                key={model}
+                className="cursor-pointer"
+                onClick={() => handleFilter("model", model)}
+              >
                 {model}
               </li>
             ))}
@@ -73,7 +94,11 @@ const Filter = ({ cars }: FilterProps) => {
           <h2 className="font-bold text-xl">Cor</h2>
           <ul className="font-medium text-base text-gray-3 ml-1">
             {colors.map((color) => (
-              <li key={color} className="cursor-pointer">
+              <li
+                key={color}
+                className="cursor-pointer"
+                onClick={() => handleFilter("color", color)}
+              >
                 {color}
               </li>
             ))}
@@ -83,7 +108,11 @@ const Filter = ({ cars }: FilterProps) => {
           <h2 className="font-bold text-xl">Ano</h2>
           <ul className="font-medium text-base text-gray-3 ml-1">
             {years.map((year) => (
-              <li key={year} className="cursor-pointer">
+              <li
+                key={year}
+                className="cursor-pointer"
+                onClick={() => handleFilter("year", year)}
+              >
                 {year}
               </li>
             ))}
@@ -93,7 +122,11 @@ const Filter = ({ cars }: FilterProps) => {
           <h2 className="font-bold text-xl">Combustível</h2>
           <ul className="font-medium text-base text-gray-3 ml-1">
             {fuels.map((fuel) => (
-              <li key={fuel} className="cursor-pointer">
+              <li
+                key={fuel}
+                className="cursor-pointer"
+                onClick={() => handleFilter("fuel", fuel)}
+              >
                 {fuel}
               </li>
             ))}
@@ -103,14 +136,16 @@ const Filter = ({ cars }: FilterProps) => {
           <h2 className="font-bold text-xl">Km</h2>
           <div className="flex gap-6">
             <input
+              onChange={(e) => handleFilter("minKm", e.target.value)}
               type="number"
               id="min-km"
               placeholder="Mínima"
               className="w-full bg-[#CED4DA] px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-[#868E96] focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
             <input
+              onChange={(e) => handleFilter("maxKm", e.target.value)}
               type="number"
-              id="min-km"
+              id="max-km"
               placeholder="Máxima"
               className="w-full bg-[#CED4DA] px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-[#868E96] focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
@@ -120,14 +155,16 @@ const Filter = ({ cars }: FilterProps) => {
           <h2 className="font-bold text-xl">Preço</h2>
           <div className="flex gap-6">
             <input
+              onChange={(e) => handleFilter("minPrice", e.target.value)}
               type="number"
-              id="min-km"
+              id="min-price"
               placeholder="Mínimo"
               className="w-full bg-[#CED4DA] px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-[#868E96] focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
             <input
+              onChange={(e) => handleFilter("maxPrice", e.target.value)}
               type="number"
-              id="min-km"
+              id="max-price"
               placeholder="Máximo"
               className="w-full bg-[#CED4DA] px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-[#868E96] focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
