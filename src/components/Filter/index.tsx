@@ -10,8 +10,7 @@ interface FilterProps {
 }
 
 const Filter = ({ cars }: FilterProps) => {
-  const { handleOpenModal, handleCloseModal, initialUrlValues } =
-    useAppContext();
+  const { handleOpenModal, handleCloseModal } = useAppContext();
   const isWide: boolean = useMedia({ maxWidth: "1024px" });
   const router = useRouter();
 
@@ -48,11 +47,14 @@ const Filter = ({ cars }: FilterProps) => {
     setFuels(uniqueFuels);
   }, [cars]);
 
-  const handleFilter = (key: string, value: string | number) => {
+  const handleFilter = (key: string, value: string | number, reset = false) => {
+    const newQuery = reset
+      ? { [key]: value }
+      : { ...router.query, [key]: value };
     router.push(
       {
         pathname: "/",
-        query: { ...initialUrlValues, [key]: value },
+        query: newQuery,
       },
       undefined,
       { shallow: true }
@@ -69,7 +71,7 @@ const Filter = ({ cars }: FilterProps) => {
               <li
                 key={brand}
                 className="cursor-pointer"
-                onClick={() => handleFilter("brand", brand)}
+                onClick={() => handleFilter("brand", brand, true)}
               >
                 {brand}
               </li>
@@ -136,14 +138,14 @@ const Filter = ({ cars }: FilterProps) => {
           <h2 className="font-bold text-xl">Km</h2>
           <div className="flex gap-6">
             <input
-              onChange={(e) => handleFilter("minKm", e.target.value)}
+              onBlur={(e) => handleFilter("minKm", e.target.value)}
               type="number"
               id="min-km"
               placeholder="Mínima"
               className="w-full bg-[#CED4DA] px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-[#868E96] focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
             <input
-              onChange={(e) => handleFilter("maxKm", e.target.value)}
+              onBlur={(e) => handleFilter("maxKm", e.target.value)}
               type="number"
               id="max-km"
               placeholder="Máxima"
@@ -155,14 +157,14 @@ const Filter = ({ cars }: FilterProps) => {
           <h2 className="font-bold text-xl">Preço</h2>
           <div className="flex gap-6">
             <input
-              onChange={(e) => handleFilter("minPrice", e.target.value)}
+              onBlur={(e) => handleFilter("minPrice", e.target.value)}
               type="number"
               id="min-price"
               placeholder="Mínimo"
               className="w-full bg-[#CED4DA] px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-[#868E96] focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
             <input
-              onChange={(e) => handleFilter("maxPrice", e.target.value)}
+              onBlur={(e) => handleFilter("maxPrice", e.target.value)}
               type="number"
               id="max-price"
               placeholder="Máximo"
