@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { Button } from "@/components";
-import { useAuth } from "@/contexts";
+import { useAppContext, useAuth } from "@/contexts";
 import { useCallback, useState } from "react";
 
 const Navbar = () => {
   const { userLogged, setUserLogged, logout } = useAuth();
   const [meuDropOpen, setMenuDropOpen] = useState(false);
+  const { handleOpenModal } = useAppContext();
 
   let initials = "";
   if (userLogged && userLogged.name) {
@@ -58,6 +59,7 @@ const Navbar = () => {
           {meuDropOpen ? (
             <div className="bg-gray-9 shadow-custom w-48 absolute left-0 top-10 p-5 rounded-lg flex flex-col gap-3  justify-start items-start">
               <button
+                onClick={handleOpenModal}
                 type="button"
                 className="text-base font-normal text-gray-2 transition  hover:text-gray-3 hover:underline"
               >
