@@ -29,9 +29,8 @@ const Home: React.FC<HomeProps> = ({ cars }) => {
 
   useEffect(() => {
     const fetchCars = async () => {
-      console.log("chamando aqui", router.query);
       const response = await api.get("/ads", { params: router.query });
-      console.log(response);
+
       setCarsData(response.data);
     };
 
