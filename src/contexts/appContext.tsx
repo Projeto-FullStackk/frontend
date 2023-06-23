@@ -35,21 +35,6 @@ export const AppProvider = ({ children }: iAppProvider) => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const router = useRouter();
-  /* const [initialUrlValues, setInitialUrlValues] = useState({
-    brand: router.query.brand || "all",
-    model: router.query.model || "all",
-    color: router.query.color || "all",
-    year: router.query.year || "all",
-    fuel: router.query.fuel || "all",
-    minKm: router.query.minKm || "all",
-    maxKm: router.query.maxKm || "all",
-    minPrice: router.query.minPrice || "all",
-    maxPrice: router.query.maxPrice || "all",
-  }); */
-  /* const resetParams = () => {
-    setInitialUrlValues();
-  }; */
   const handleOpenModal = () => {
     setOpen(true);
   };
