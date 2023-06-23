@@ -148,7 +148,7 @@ const Form = () => {
           <Input
             id="km"
             as="input"
-            type="text"
+            type="number"
             label="Quilometragem"
             placeholder="30.000"
             register={register("km")}

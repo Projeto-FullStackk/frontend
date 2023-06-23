@@ -20,14 +20,20 @@ const Filter = ({ cars }: FilterProps) => {
   const [years, setYears] = useState<number[]>([]);
   const [fuels, setFuels] = useState<string[]>([]);
 
+  const transformCapitalize = (word: string): string => {
+    const firstWord = word.split(" ")[0];
+    const firstLetterUpperCase = firstWord[0].toUpperCase();
+    return firstLetterUpperCase + firstWord.slice(1);
+  }
+
   useEffect(() => {
     const uniqueBrands = cars
-      .map((car) => car.brand)
+      .map((car) => transformCapitalize(car.brand))
       .filter((brand, index, array) => array.indexOf(brand) === index);
     setBrands(uniqueBrands);
 
     const uniqueModels = cars
-      .map((car) => car.name)
+      .map((car) => transformCapitalize(car.name))
       .filter((model, index, array) => array.indexOf(model) === index);
     setModels(uniqueModels);
 

@@ -6,7 +6,7 @@ export const adsSchema = z.object({
   name: z.string().nonempty("Obrigatório selecionar um modelo"),
   year: z.coerce.number().nullish(),
   fuel: z.string(),
-  km: z.string().nonempty(),
+  km: z.coerce.number(),
   color: z.string().nonempty(),
   priceTf: z
     .string()
