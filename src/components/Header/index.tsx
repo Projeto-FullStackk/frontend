@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
+import { parseCookies } from "nookies";
 import useMedia from "use-media";
+import { api } from "@/services/api";
+import { useAuth } from "@/contexts";
 import { fontInter } from "@/styles/font";
 import Title from "./Title";
-import MobileButton from "./MobileButton";
 import Navbar from "./Navbar";
-import { parseCookies } from "nookies";
-import { useAuth } from "@/contexts";
-import { api } from "@/services/api";
+import MobileButton from "./MobileButton";
 
 const Header = () => {
   const { setUserLogged } = useAuth();
@@ -16,18 +16,16 @@ const Header = () => {
   useEffect(() => {
     const cookie = parseCookies();
 
-    if (Object.keys(cookie).length === 0) {
+    const token = cookie["motorShop.token"];
+
+    if (token) {
+      api.defaults.headers.common.Authorization = `Bearer ${token}`;
+      api.get("user")
+        .then(({ data }) => setUserLogged(data[0]))
+        .catch((error) => console.log(error));
+    }
+    else {
       setUserLogged(null);
-    } else {
-      api
-        .get("user", {
-          headers: {
-            Authorization: `Bearer ${cookie["motorShop.token"]}`,
-          },
-        })
-        .then((response) => {
-          setUserLogged(response.data[0]);
-        });
     }
   }, []);
 

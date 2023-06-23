@@ -17,15 +17,17 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
 const Profile: NextPage<ProfileProps> = ({ user }) => {
   const { handleOpenModal, open } = useAppContext();
-  const [seller, setSeller] = useState(true);
+  const [seller, setSeller] = useState(false);
   const { userLogged } = useAuth();
 
   useEffect(() => {
     const sellerOruser = () => {
-      if (!userLogged) {
-        setSeller(false);
-      }
-      if (userLogged?.id !== user.id) {
+      const isUserSeller = user.isSeller;
+      const isSameId = userLogged?.id === user.id;
+      if (isUserSeller && isSameId) {
+        setSeller(true);
+      } 
+      else {
         setSeller(false);
       }
     };
