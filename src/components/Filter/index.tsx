@@ -24,7 +24,7 @@ const Filter = ({ cars }: FilterProps) => {
     const firstWord = word.split(" ")[0];
     const firstLetterUpperCase = firstWord[0].toUpperCase();
     return firstLetterUpperCase + firstWord.slice(1);
-  }
+  };
 
   useEffect(() => {
     const uniqueBrands = cars
@@ -61,6 +61,16 @@ const Filter = ({ cars }: FilterProps) => {
       {
         pathname: "/",
         query: newQuery,
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
+  const handleClearFilters = () => {
+    router.push(
+      {
+        pathname: "/",
+        query: {},
       },
       undefined,
       { shallow: true }
@@ -178,6 +188,15 @@ const Filter = ({ cars }: FilterProps) => {
             />
           </div>
         </div>
+        {Object.keys(router.query).length > 0 && (
+          <Button
+            style="button-brand"
+            fullWidth={true}
+            onClick={handleClearFilters}
+          >
+            Limpar Filtros
+          </Button>
+        )}
         {isWide ? (
           <div className="w-full max-w-[279px] flex items-center justify-center">
             <Button

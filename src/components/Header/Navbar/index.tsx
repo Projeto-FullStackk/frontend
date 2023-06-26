@@ -2,11 +2,12 @@ import Link from "next/link";
 import { Button } from "@/components";
 import { useAuth } from "@/contexts";
 import { useCallback, useState } from "react";
+import { Router, useRouter } from "next/router";
 
 const Navbar = () => {
-  const { userLogged, setUserLogged, logout } = useAuth();
+  const { userLogged, logout } = useAuth();
   const [meuDropOpen, setMenuDropOpen] = useState(false);
-
+  const router = useRouter();
   let initials = "";
   if (userLogged && userLogged.name) {
     const names = userLogged.name.split(" ");
@@ -73,6 +74,7 @@ const Navbar = () => {
                 <button
                   type="button"
                   className="text-base font-normal text-gray-2 transition  hover:text-gray-3 hover:underline"
+                  onClick={() => router.push(`/profile/${userLogged?.id}`)}
                 >
                   Meus Anúncios
                 </button>

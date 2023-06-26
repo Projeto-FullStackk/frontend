@@ -71,11 +71,11 @@ const Card = ({ type, carData }: CardProps) => {
                 {new Intl.NumberFormat("pt-BR").format(+car.km)} km
               </span>
             </span>
-            <span className="w-[2.875rem] h-[1.875rem] flex justify-center items-center bg-brand-4 rounded font-inter font-medium text-brand-1 text-sm">
+            <span className="w-auto h-[1.875rem] flex justify-center items-center bg-brand-4 rounded font-inter font-medium text-brand-1 text-sm">
               {car.year}
             </span>
           </div>
-          <span className="whitespace-nowrap text-ellipsis overflow-hidden">
+          <span className="w-auto whitespace-nowrap text-ellipsis overflow-hidden">
             {new Intl.NumberFormat("pt-BR", {
               style: "currency",
               currency: "BRL",
