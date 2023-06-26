@@ -26,8 +26,7 @@ const Profile: NextPage<ProfileProps> = ({ user }) => {
       const isSameId = userLogged?.id === user.id;
       if (isUserSeller && isSameId) {
         setSeller(true);
-      } 
-      else {
+      } else {
         setSeller(false);
       }
     };
@@ -84,7 +83,7 @@ const Profile: NextPage<ProfileProps> = ({ user }) => {
         </section>
       </main>
 
-      {open && <ModalAdsCreate />}
+      {/* {open && <ModalAdsCreate />} */}
     </KarsProvider>
   );
 };

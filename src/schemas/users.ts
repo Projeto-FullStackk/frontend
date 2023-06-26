@@ -62,41 +62,43 @@ export const userSchema = z
 export const userUpdateSchema = z.object({
   name: z
     .string()
-    .nonempty("Obrigatório informar o nome")
+
     .refine(
       (name) => name.trim().split(" ").length > 1,
       "Deve passar nome e sobrenome"
-    ),
+    )
+    .optional(),
   email: z
     .string()
-    .nonempty("Obrigatório informar o email")
-    .email("Email informado inválido"),
+
+    .email("Email informado inválido")
+    .optional(),
   cpf: z
     .string()
-    .nonempty("Obrigatório informar CPF")
     .regex(
       /[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}/,
       "CPF informado inválido"
-    ),
+    )
+    .optional(),
   phone: z
     .string()
-    .nonempty("Obrigatório informar o celular")
-    .regex(/\(\d{2,3}\)\s\9\d{4}\-\d{4}/g, "Número de celular inválido"),
-  birthDate: z.string().nonempty("Obrigatório informar sua data de nascimento"),
-  description: z.string(),
+    .regex(/\(\d{2,3}\)\s\9\d{4}\-\d{4}/g, "Número de celular inválido")
+    .optional(),
+  birthDate: z.string().optional(),
+  description: z.string().optional(),
 });
 
 export const userAdressSchema = z.object({
   zipCode: z
     .string()
-    .nonempty("Obrigatório informar o CEP")
-    .regex(/\d{5}-\d{3}/, "CEP informado inválido"),
-  country: z.string().nonempty("Obrigatório informar o país"),
-  state: z.string().nonempty("Obrigatório informar o estado"),
-  city: z.string().nonempty("Obrigatório informar a cidade"),
-  street: z.string().nonempty("Obrigatório informar a rua"),
-  number: z.string().nonempty("Obrigatório informar o número"),
-  complement: z.string(),
+    .regex(/\d{5}-\d{3}/, "CEP informado inválido")
+    .optional(),
+  country: z.string().optional(),
+  state: z.string().optional(),
+  city: z.string().optional(),
+  street: z.string().optional(),
+  number: z.string().optional(),
+  complement: z.string().optional(),
 });
 
 export const userEmailSchema = loginSchema.pick({
