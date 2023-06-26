@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { Button } from "@/components";
 import { Ad } from "@/contexts/AuthContext";
+import Badge from "./Badge";
 
 interface CardProps {
   type: "user" | "seller";
@@ -18,10 +19,12 @@ const Card = ({ type, carData }: CardProps) => {
     initials = names[0][0] + names[1][0];
   }
 
+  const isBelowPrice: boolean = (car.priceTf * 0.95) > car.price;
+
   return (
     <>
       <li
-        className="group w-[18rem] max-h-[400px] cursor-pointer"
+        className="group w-[18rem] min-w-[18rem] max-h-[400px] cursor-pointer relative"
         onClick={() => router.push(`/product/${car?.id}`)}
       >
         <figure className="relative bg-gray-7 h-[9.5rem] mb-4 flex justify-center items-center border-2 group-hover:border-brand-1 ">
@@ -63,6 +66,8 @@ const Card = ({ type, carData }: CardProps) => {
             </span>
           </div>
         ) : null}
+
+        {type === "user" && isBelowPrice && <Badge />}
 
         <div className="flex container justify-between items-center mt-4">
           <div className="flex gap-2">
