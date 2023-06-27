@@ -23,6 +23,7 @@ export interface iInputProps {
   placeholder?: string;
   type?: tInputType;
   value?: string;
+  defaultValue?: string;
 }
 
 export type iInputFormProps = Pick<
