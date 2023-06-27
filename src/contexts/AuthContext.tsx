@@ -8,8 +8,16 @@ import {
 } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import { destroyCookie, setCookie } from "nookies";
-import { LoginData, UserData } from "@/schemas";
+
+import { destroyCookie, parseCookies, setCookie } from "nookies";
+import {
+  LoginData,
+  UserData,
+  UserAdress,
+  UserUpdate,
+  userUpdateSchema,
+  userAdressSchema,
+} from "@/schemas";
 import { api } from "../services/api";
 
 interface iProps {
@@ -72,6 +80,9 @@ interface iAuthProvider {
   userLogged: UserLogged | null;
   setUserLogged: Dispatch<SetStateAction<UserLogged | null>>;
   logout: () => void;
+  updateUser: (userData: UserUpdate) => void;
+  updateAdress: (userData: UserAdress) => void;
+  deleteUser: () => void;
 }
 
 const AuthContext = createContext<iAuthProvider>({} as iAuthProvider);
@@ -79,6 +90,9 @@ const AuthContext = createContext<iAuthProvider>({} as iAuthProvider);
 const AuthProvider = ({ children }: iProps) => {
   const router = useRouter();
   const [userLogged, setUserLogged] = useState<UserLogged | null>(null);
+  const cookie = parseCookies();
+
+  const token = cookie["motorShop.token"];
 
   const register = (userData: UserData) => {
     const address = {
@@ -121,6 +135,84 @@ const AuthProvider = ({ children }: iProps) => {
       .catch((err) => {
         console.log(err);
         toast.error("Falha no cadastro", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      });
+  };
+  const updateAdress = (userData: UserAdress) => {
+    console.log(userData, "userData");
+
+    const data = { ...userLogged, address: userData };
+
+    delete data.Address;
+    console.log(data, "data before send");
+    api
+      .patch(`user/${userLogged?.id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response, "response update");
+        toast.success("Atualização realizada com successo", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        /* router.push("/"); */
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Falha na atualização", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      });
+  };
+  const updateUser = (userData: UserUpdate) => {
+    const validData = userUpdateSchema.parse(userData);
+
+    api
+      .patch(`user/${userLogged?.id}`, validData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        window.location.reload();
+        toast.success("Atualização realizada com successo", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        router.push("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Falha na atualização", {
           position: "top-right",
           autoClose: 2000,
           hideProgressBar: false,
@@ -181,6 +273,37 @@ const AuthProvider = ({ children }: iProps) => {
         );
       });
   };
+  const deleteUser = () => {
+    api
+      .delete(`user/${userLogged?.id}`)
+      .then(() => {
+        toast.success("Deletado com sucesso", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("User não deletado", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      });
+  };
 
   const logout = () => {
     destroyCookie(null, "motorShop.token", { path: "/" });
@@ -188,7 +311,16 @@ const AuthProvider = ({ children }: iProps) => {
   };
   return (
     <AuthContext.Provider
-      value={{ register, login, userLogged, setUserLogged, logout }}
+      value={{
+        register,
+        login,
+        userLogged,
+        setUserLogged,
+        logout,
+        updateUser,
+        updateAdress,
+        deleteUser,
+      }}
     >
       {children}
     </AuthContext.Provider>
