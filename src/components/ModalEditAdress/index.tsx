@@ -1,28 +1,45 @@
 import Modal from "../Modal";
 import { UserAdress } from "@/schemas";
-import FormRegister from "../FormRegister";
 import { Button, Input } from "@/components";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { userSchema } from "@/schemas";
-import { fontInter } from "@/styles/font";
+import { useForm, useFormState } from "react-hook-form";
+
 import { useAppContext } from "@/contexts";
 import { useAuth } from "@/contexts";
 
+import { userAdressSchema } from "@/schemas";
+
 const ModalEditAdress = () => {
-  const { userLogged } = useAuth();
+  const { userLogged, updateAdress } = useAuth();
   const { handleCloseModal } = useAppContext();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<UserAdress>({
-    resolver: zodResolver(userSchema),
+
+  const { register, handleSubmit } = useForm<UserAdress>({
+    resolver: zodResolver(userAdressSchema.partial()),
+    defaultValues: {
+      zipCode: userLogged?.Address.zipCode,
+      country: userLogged?.Address.country,
+      city: userLogged?.Address.city,
+      complement: userLogged?.Address.complement,
+      street: userLogged?.Address.street,
+      number: userLogged?.Address.number,
+      state: userLogged?.Address.state,
+    },
   });
+
+  const submitUpdate = async (userData: UserAdress) => {
+    try {
+      await updateAdress(userData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Modal title="Editar Endereço">
-      <form className="flex flex-col gap-6 mt-5">
+      <form
+        className="flex flex-col gap-6 mt-5"
+        onSubmit={handleSubmit(submitUpdate)}
+      >
         <p className="font-medium text-sm justify-start cursor-pointer">
           Informações de endereço
         </p>
@@ -31,18 +48,17 @@ const ModalEditAdress = () => {
           id="cep"
           as="input"
           label="CEP"
-          placeholder={userLogged?.Address.zipCode}
-          errorMessage={errors.zipCode?.message}
+          type="text"
           register={register("zipCode")}
+          placeholder={userLogged?.Address.zipCode}
         />
 
         <Input
           id="country"
           as="input"
           label="País"
-          placeholder={userLogged?.Address.country}
-          errorMessage={errors.country?.message}
           register={register("country")}
+          placeholder={userLogged?.Address.country}
         />
 
         <div className="flex gap-2.5">
@@ -50,18 +66,16 @@ const ModalEditAdress = () => {
             id="state"
             as="input"
             label="Estado"
-            placeholder={userLogged?.Address.state}
-            errorMessage={errors.state?.message}
             register={register("state")}
+            placeholder={userLogged?.Address.state}
           />
 
           <Input
             id="city"
             as="input"
             label="Cidade"
-            placeholder={userLogged?.Address.city}
-            errorMessage={errors.city?.message}
             register={register("city")}
+            placeholder={userLogged?.Address.city}
           />
         </div>
 
@@ -69,9 +83,8 @@ const ModalEditAdress = () => {
           id="street"
           as="input"
           label="Rua"
-          placeholder="Digitar rua"
-          errorMessage={errors.street?.message}
           register={register("street")}
+          placeholder={userLogged?.Address.street}
         />
 
         <div className="flex gap-2.5">
@@ -79,25 +92,28 @@ const ModalEditAdress = () => {
             id="number"
             as="input"
             label="Número"
-            placeholder="Digitar número"
-            errorMessage={errors.number?.message}
             register={register("number")}
+            placeholder={userLogged?.Address.number}
           />
 
           <Input
             id="complement"
             as="input"
             label="Complemento"
-            placeholder={userLogged?.Address.complement}
-            errorMessage={errors.complement?.message}
             register={register("complement")}
+            placeholder={userLogged?.Address.complement}
           />
         </div>
-        <div className="flex gap-2.5">
-          <Button style="button-grey" size="button-medium" type="button">
+        <div className="flex gap-2.5 justify-end ">
+          <Button
+            style="button-grey"
+            size="button-medium"
+            type="button"
+            onClick={handleCloseModal}
+          >
             Cancelar
           </Button>
-          <Button style="button-brand" size="button-medium" type="button">
+          <Button style="button-brand" size="button-medium" type="submit">
             Salvar alterações
           </Button>
         </div>

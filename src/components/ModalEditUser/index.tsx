@@ -1,28 +1,42 @@
 import Modal from "../Modal";
-import FormRegister from "../FormRegister";
+
 import { Button, Input } from "@/components";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { UserData, userSchema } from "@/schemas";
-import { fontInter } from "@/styles/font";
 import { useAppContext } from "@/contexts";
 import { useAuth } from "@/contexts";
 import { UserUpdate } from "@/schemas";
+import { userUpdateSchema } from "@/schemas";
 
 const ModalEditUser = () => {
-  const { userLogged } = useAuth();
+  const { userLogged, updateUser, deleteUser } = useAuth();
   const { handleCloseModal } = useAppContext();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<UserUpdate>({
-    resolver: zodResolver(userSchema),
+  const { register, handleSubmit } = useForm<UserUpdate>({
+    resolver: zodResolver(userUpdateSchema.partial()),
+    defaultValues: {
+      name: userLogged?.name,
+      email: userLogged?.email,
+      cpf: userLogged?.cpf,
+      phone: userLogged?.phone,
+      birthDate: userLogged?.birthDate,
+      description: userLogged?.description,
+    },
   });
+  const submitUpdate = async (userData: any) => {
+    try {
+      await updateUser(userData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Modal title="Editar Usuário">
-      <form className="flex flex-col gap-6 mt-5">
+      <form
+        className="flex flex-col gap-6 mt-5"
+        onSubmit={handleSubmit(submitUpdate)}
+      >
         <p className="font-medium text-sm justify-start cursor-pointer">
           Informações pessoais
         </p>
@@ -31,27 +45,24 @@ const ModalEditUser = () => {
           id="name"
           as="input"
           label="Nome"
-          placeholder={userLogged?.name}
-          errorMessage={errors.name?.message}
           register={register("name")}
+          placeholder={userLogged?.name}
         />
 
         <Input
           id="email"
           as="input"
           label="Email"
-          placeholder={userLogged?.email}
-          errorMessage={errors.email?.message}
           register={register("email")}
+          placeholder={userLogged?.email}
         />
 
         <Input
           id="cpf"
           as="input"
           label="CPF"
-          placeholder={userLogged?.cpf}
-          errorMessage={errors.cpf?.message}
           register={register("cpf")}
+          placeholder={userLogged?.cpf}
         />
 
         <Input
@@ -59,9 +70,8 @@ const ModalEditUser = () => {
           as="input"
           type="tel"
           label="Celular"
-          placeholder={userLogged?.phone}
-          errorMessage={errors.phone?.message}
           register={register("phone")}
+          placeholder={userLogged?.phone}
         />
 
         <Input
@@ -69,18 +79,16 @@ const ModalEditUser = () => {
           as="input"
           type="date"
           label="Data de nascimento"
-          placeholder={userLogged?.birthDate}
-          errorMessage={errors.birthDate?.message}
           register={register("birthDate")}
+          placeholder={userLogged?.birthDate}
         />
 
         <Input
           id="description"
           as="textarea"
           label="Descrição"
-          placeholder={userLogged?.description}
-          errorMessage={errors.description?.message}
           register={register("description")}
+          placeholder={userLogged?.description}
         />
         <div className="flex flex-row justify-between">
           <Button
@@ -91,7 +99,12 @@ const ModalEditUser = () => {
           >
             Cancelar
           </Button>
-          <Button style="button-alert" size="button-medium" type="button">
+          <Button
+            style="button-alert"
+            size="button-medium"
+            type="button"
+            onClick={() => deleteUser()}
+          >
             Excluir Perfil
           </Button>
           <Button type="submit" style="button-brand" size="button-medium">
