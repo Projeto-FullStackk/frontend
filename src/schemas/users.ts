@@ -59,6 +59,43 @@ export const userSchema = z
       });
     }
   });
+export const userUpdateSchema = z
+  .object({
+    name: z
+      .string()
+      .refine(
+        (name) => name.trim().split(" ").length > 1,
+        "Deve passar nome e sobrenome"
+      )
+      .optional(),
+    email: z.string().email("Email informado inválido").optional(),
+    cpf: z
+      .string()
+      .regex(
+        /[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}/,
+        "CPF informado inválido"
+      )
+      .optional(),
+    phone: z
+      .string()
+      .regex(/\(\d{2,3}\)\s\9\d{4}\-\d{4}/g, "Número de celular inválido")
+      .optional(),
+    birthDate: z.string().optional(),
+    description: z.string().optional(),
+  })
+  .partial();
+
+export const userAdressSchema = z
+  .object({
+    zipCode: z.string().regex(/\d{5}-\d{3}/, "CEP informado inválido"),
+    country: z.string(),
+    state: z.string(),
+    city: z.string(),
+    street: z.string(),
+    number: z.string(),
+    complement: z.string(),
+  })
+  .partial();
 
 export const userEmailSchema = loginSchema.pick({
   email: true,
@@ -80,6 +117,8 @@ export const userResetPasswordSchema = loginSchema
     }
   });
 
+export type UserUpdate = z.infer<typeof userUpdateSchema>;
+export type UserAdress = z.infer<typeof userAdressSchema>;
 export type UserData = z.infer<typeof userSchema>;
 export type LoginData = z.infer<typeof loginSchema>;
 export type UserEmail = z.infer<typeof userEmailSchema>;

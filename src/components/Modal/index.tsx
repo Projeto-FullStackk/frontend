@@ -13,6 +13,8 @@ const Modal = ({ children, title }: modalProps) => {
 
   const cancelButtonRef = useRef(null);
 
+  console.log(open, "open is true?");
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -62,9 +64,7 @@ const Modal = ({ children, title }: modalProps) => {
                       </div>
                     </div>
                     <div className="mt-3 text-left sm:mt-0 sm:text-left">
-                      <Dialog.Panel>
-                        {children}
-                      </Dialog.Panel>
+                      <Dialog.Panel>{children}</Dialog.Panel>
                     </div>
                   </div>
                 </div>
@@ -75,6 +75,6 @@ const Modal = ({ children, title }: modalProps) => {
       </Dialog>
     </Transition.Root>
   );
-}
+};
 
 export default Modal;

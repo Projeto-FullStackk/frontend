@@ -89,7 +89,7 @@ const Profile: NextPage<ProfileProps> = ({ user }) => {
         </section>
       </main>
 
-      {open && <ModalAdsCreate />}
+      {/* {open && <ModalAdsCreate />} */}
     </KarsProvider>
   );
 };

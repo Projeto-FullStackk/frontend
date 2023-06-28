@@ -6,9 +6,7 @@ import {
   iAdsCreate,
   iAdsRequest,
 } from "./ads";
-import {
-  iCarData,
-} from "./apiExternal";
+import { iCarData } from "./apiExternal";
 import {
   LoginData,
   UserData,
@@ -18,10 +16,12 @@ import {
   userSchema,
   userEmailSchema,
   userResetPasswordSchema,
+  userAdressSchema,
+  userUpdateSchema,
+  UserAdress,
+  UserUpdate,
 } from "./users";
-import {
-  Car,
-} from "./cars";
+import { Car } from "./cars";
 
 export {
   adsSchema,
@@ -31,7 +31,9 @@ export {
   userSchema,
   userEmailSchema,
   userResetPasswordSchema,
-}
+  userAdressSchema,
+  userUpdateSchema,
+};
 
 export type {
   iAds,
@@ -43,4 +45,6 @@ export type {
   Car,
   UserEmail,
   UserResetPassword,
-}
+  UserAdress,
+  UserUpdate,
+};
