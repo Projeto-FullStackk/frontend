@@ -13,8 +13,6 @@ const Modal = ({ children, title }: modalProps) => {
 
   const cancelButtonRef = useRef(null);
 
-  console.log(open, "open is true?");
-
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog

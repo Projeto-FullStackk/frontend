@@ -16,6 +16,7 @@ import RegisterPage from "./RegisterPage";
 import Section from "./Section";
 import Pagination from "./Pagination";
 import Loading from "./Loading";
+import ModalOpenImage from "./ModalOpenImage";
 
 export {
   HeadApp as Head,
@@ -36,4 +37,5 @@ export {
   FormRegister,
   Pagination,
   Loading,
+  ModalOpenImage,
 };
