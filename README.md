@@ -1,6 +1,4 @@
 
-
-=======
 <h1 align="center"> Motors Shop </h1>
 
 <div align="center">
