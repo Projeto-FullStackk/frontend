@@ -1,5 +1,11 @@
 <h1 align="center"> Motors Shop </h1>
 
+<div align="center">
+  
+![Next.js](https://img.shields.io/badge/Next-000?style=for-the-badge&logo=next.js&logoColor=) ![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=fff) ![Tailwindcss](https://img.shields.io/badge/tailwindcss-023?style=for-the-badge&logo=tailwindcss&logoColor=) 
+
+</div>
+
 <p align="center">
 
   ![image](https://github.com/Projeto-FullStackk/frontend/assets/110180304/0928456f-4653-4c1a-b511-d77711cdcfe5)
@@ -61,11 +67,11 @@ Execute ``npm run dev`` ou ``yarn dev`` para iniciar um servidor de desenvolvime
 
 ## 4. Deselvolvedores
 
-- <a name="Gyovanna" href="https://github.com/gyo-almeida" target="_blank">Gyovanna Almeida</a>
-- <a name="Joao" href="https://github.com/joaobuga35" target="_blank">João Bugati</a>
-- <a name="kelly" href="https://github.com/kellygalliani" target="_blank">Kelly Cristina</a>
-- <a name="luan" href="https://github.com/LuanFlorencioo" target="_blank">Luan Florêncio</a>
-- <a name="milena" href="https://github.com/milenarodarte" target="_blank">Milena Rodarte</a>
+- <img src="https://github.com/gyo-almeida.png" width="40" height="40" style="border-radius: 20px;"> <a name="Gyovanna" href="https://github.com/gyo-almeida" target="_blank">Gyovanna Almeida</a>
+- <img src="https://github.com/joaobuga35.png" width="40" height="40" style="border-radius: 20px;"> <a name="Joao" href="https://github.com/joaobuga35" target="_blank">João Bugati</a>
+- <img src="https://github.com/kellygalliani.png" width="40" height="40" style="border-radius: 20px"> <a name="kelly" href="https://github.com/kellygalliani" target="_blank">Kelly Cristina</a>
+- <img src="https://github.com/LuanFlorencioo.png" width="40" height="40" style="border-radius: 20px;"> <a name="luan" href="https://github.com/LuanFlorencioo" target="_blank">Luan Florêncio</a>
+- <img src="https://github.com/milenarodarte.png" width="40" height="40" style="border-radius: 20px;"> <a name="milena" href="https://github.com/milenarodarte" target="_blank">Milena Rodarte</a>
 
 <a name="termos"></a>
 
