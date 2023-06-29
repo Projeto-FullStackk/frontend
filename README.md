@@ -1,5 +1,6 @@
-<h1 align="center"> Motors Shop </h1>
+<h1 align="center"> Motors Shop </>
 
+  ![Next.js](https://img.shields.io/badge/Next-000?style=for-the-badge&logo=next.js&logoColor=) ![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=fff) ![Tailwindcss](https://img.shields.io/badge/tailwindcss-023?style=for-the-badge&logo=tailwindcss&logoColor=)
 <p align="center">
 
   ![image](https://github.com/Projeto-FullStackk/frontend/assets/110180304/0928456f-4653-4c1a-b511-d77711cdcfe5)
