@@ -5,7 +5,7 @@
 </p>
 
 
-<h2>Tabela de Conteúdos</h2>
+<h2>Índice</h2>
 
 1. [ Sobre ](#sobre)
 2. [ Tecnologias](#techs)
