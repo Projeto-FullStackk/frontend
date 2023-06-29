@@ -1,4 +1,4 @@
-<h1 align="center"> Car Shop </h1>
+<h1 align="center"> Motors Shop </h1>
 
 <h2>Tabela de Conteúdos</h2>
 
