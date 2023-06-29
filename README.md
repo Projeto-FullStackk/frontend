@@ -37,9 +37,16 @@ O aplicativo possui autenticação de usuário e permite que os usuários gerenc
 ## 3. Instalação e uso
 
 ### 3.1 Pré-Requisitos:
+  <h4>1º Passo</h4>
+  <h5>Antes de começar, certifique-se de ter instalado o Node.js em sua máquina.</h3>
 
-Antes de começar, certifique-se de ter instalado o Node.js em sua máquina.
+  <h4>2º Passo - Configurando o Backend</h4>
+  Antes de rodar o frontend, é necessário clonar e configurar o backend. Siga os passos abaixo:
 
+  1. Acesse o repositório do backend em https://github.com/Projeto-FullStackk/backend.
+  2. Siga as instruções na seção "Instalação e Uso" do README para clonar e configurar o backend.
+  
+  
 ### 3.2 Instalação:
 
 1- Clone este repositório em sua máquina local usando git clone ``git@github.com:Projeto-FullStackk/frontend.git``.
