@@ -1,5 +1,7 @@
 <h1 align="center"> Motors Shop </h1>
 
+![image](https://github.com/Projeto-FullStackk/frontend/assets/110180304/f93cbe48-eeec-4354-992c-3efb731b1136)
+
 <h2>Tabela de Conteúdos</h2>
 
 1. [ Sobre ](#sobre)
