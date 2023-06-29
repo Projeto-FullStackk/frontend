@@ -1,0 +1,60 @@
+import { useRouter } from "next/router";
+import { NextRequest } from "next/server";
+import { createContext, useContext, useState } from "react";
+
+interface InitialUrlValues {
+  brand: string | string[];
+  model: string | string[];
+  color: string | string[];
+  year: string | string[];
+  fuel: string | string[];
+  minKm: string | string[];
+  maxKm: string | string[];
+  minPrice: string | string[];
+  maxPrice: string | string[];
+}
+
+interface AppContextInterface {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  handleOpenModal: () => void;
+  handleCloseModal: () => void;
+  isLoading: boolean;
+  setIsLoading: (bool: boolean) => void;
+}
+
+interface iAppProvider {
+  children: React.ReactNode;
+}
+
+const AppContext = createContext<AppContextInterface>(
+  {} as AppContextInterface
+);
+
+export const AppProvider = ({ children }: iAppProvider) => {
+  const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleOpenModal = () => {
+    setOpen(true);
+  };
+  const handleCloseModal = () => {
+    setOpen(false);
+  };
+  return (
+    <AppContext.Provider
+      value={{
+        open,
+        setOpen,
+        handleOpenModal,
+        handleCloseModal,
+        isLoading,
+        setIsLoading,
+      }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
+};
+
+export const useAppContext = () => useContext(AppContext);
