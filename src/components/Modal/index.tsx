@@ -62,9 +62,7 @@ const Modal = ({ children, title }: modalProps) => {
                       </div>
                     </div>
                     <div className="mt-3 text-left sm:mt-0 sm:text-left">
-                      <Dialog.Panel>
-                        {children}
-                      </Dialog.Panel>
+                      <Dialog.Panel>{children}</Dialog.Panel>
                     </div>
                   </div>
                 </div>
@@ -75,6 +73,6 @@ const Modal = ({ children, title }: modalProps) => {
       </Dialog>
     </Transition.Root>
   );
-}
+};
 
 export default Modal;

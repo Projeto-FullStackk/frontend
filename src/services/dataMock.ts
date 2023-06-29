@@ -1,4 +1,4 @@
-import { Car } from "@/pages";
+import { Car } from "@/schemas";
 
 export const cars: Car[] = [
   {

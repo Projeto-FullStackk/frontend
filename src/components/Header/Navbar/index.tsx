@@ -1,12 +1,17 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { Button } from "@/components";
-import { useAuth } from "@/contexts";
+import { useAppContext, useAuth } from "@/contexts";
 import { useCallback, useState } from "react";
+import ModalEditUser from "@/components/ModalEditUser";
+import ModalEditAdress from "@/components/ModalEditAdress";
+import { Modal } from "@/components";
 
 const Navbar = () => {
-  const { userLogged, setUserLogged, logout } = useAuth();
-  const [meuDropOpen, setMenuDropOpen] = useState(false);
-
+  const { userLogged, logout } = useAuth();
+  const [meuDropOpen, setMenuDropOpen] = useState<boolean>(false);
+  const { handleOpenModal, open } = useAppContext();
+  const [modalType, setModalType] = useState<String>("");
   let initials = "";
   if (userLogged && userLogged.name) {
     const names = userLogged.name.split(" ");
@@ -15,8 +20,13 @@ const Navbar = () => {
   const toggleMenuDropDown = useCallback(() => {
     setMenuDropOpen((curr) => !curr);
   }, []);
+
+  const router = useRouter();
+
   return (
     <nav className="w-full py-8 flex flex-col gap-11 md:w-max md:py-3 md:pl-11 md:border-l-2 md:border-gray-6 md:flex-row md:items-center">
+      {open && modalType === "user" ? <ModalEditUser /> : null}
+      {open && modalType === "adress" ? <ModalEditAdress /> : null}
       {userLogged ? (
         <div
           onClick={toggleMenuDropDown}
@@ -58,12 +68,20 @@ const Navbar = () => {
           {meuDropOpen ? (
             <div className="bg-gray-9 shadow-custom w-48 absolute left-0 top-10 p-5 rounded-lg flex flex-col gap-3  justify-start items-start">
               <button
+                onClick={() => {
+                  handleOpenModal();
+                  setModalType("user");
+                }}
                 type="button"
                 className="text-base font-normal text-gray-2 transition  hover:text-gray-3 hover:underline"
               >
                 Editar Perfil
               </button>
               <button
+                onClick={() => {
+                  handleOpenModal();
+                  setModalType("adress");
+                }}
                 type="button"
                 className="text-base font-normal text-gray-2 transition  hover:text-gray-3 hover:underline"
               >
@@ -73,6 +91,7 @@ const Navbar = () => {
                 <button
                   type="button"
                   className="text-base font-normal text-gray-2 transition  hover:text-gray-3 hover:underline"
+                  onClick={() => router.push(`/profile/${userLogged?.id}`)}
                 >
                   Meus Anúncios
                 </button>

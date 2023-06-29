@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { Button } from "@/components";
 import { Ad } from "@/contexts/AuthContext";
+import Badge from "./Badge";
 
 interface CardProps {
   type: "user" | "seller";
@@ -18,9 +19,14 @@ const Card = ({ type, carData }: CardProps) => {
     initials = names[0][0] + names[1][0];
   }
 
+  const isBelowPrice: boolean = (car.priceTf * 0.95) > car.price;
+
   return (
     <>
-      <li className="group w-[18rem] max-h-[400px] cursor-pointer">
+      <li
+        className="group w-[18rem] min-w-[18rem] max-h-[400px] cursor-pointer relative"
+        onClick={() => router.push(`/product/${car?.id}`)}
+      >
         <figure className="relative bg-gray-7 h-[9.5rem] mb-4 flex justify-center items-center border-2 group-hover:border-brand-1 ">
           <img
             className="w-full h-full object-cover"
@@ -47,7 +53,10 @@ const Card = ({ type, carData }: CardProps) => {
         {type === "user" ? (
           <div
             className="flex items-center gap-2 mt-5"
-            onClick={() => router.push(`/profile/${car.userId}`)}
+            onClick={(event) => {
+              event.stopPropagation();
+              router.push(`/profile/${car.userId}`);
+            }}
           >
             <span className="rounded-[9.375rem] bg-random-5 w-[2rem] h-[2rem] text-gray-white flex justify-center items-center text-sm font-inter">
               {initials}
@@ -58,6 +67,8 @@ const Card = ({ type, carData }: CardProps) => {
           </div>
         ) : null}
 
+        {type === "user" && isBelowPrice && <Badge />}
+
         <div className="flex container justify-between items-center mt-4">
           <div className="flex gap-2">
             <span className="w-auto h-[1.875rem] px-2 flex justify-center items-center bg-brand-4 rounded font-inter font-medium text-brand-1 text-sm">
@@ -65,11 +76,11 @@ const Card = ({ type, carData }: CardProps) => {
                 {new Intl.NumberFormat("pt-BR").format(+car.km)} km
               </span>
             </span>
-            <span className="w-[2.875rem] h-[1.875rem] flex justify-center items-center bg-brand-4 rounded font-inter font-medium text-brand-1 text-sm">
+            <span className="w-auto h-[1.875rem] flex justify-center items-center bg-brand-4 rounded font-inter font-medium text-brand-1 text-sm">
               {car.year}
             </span>
           </div>
-          <span className="whitespace-nowrap text-ellipsis overflow-hidden">
+          <span className="w-auto whitespace-nowrap text-ellipsis overflow-hidden">
             {new Intl.NumberFormat("pt-BR", {
               style: "currency",
               currency: "BRL",

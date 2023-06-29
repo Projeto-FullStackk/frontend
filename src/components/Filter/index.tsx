@@ -10,8 +10,7 @@ interface FilterProps {
 }
 
 const Filter = ({ cars }: FilterProps) => {
-  const { handleOpenModal, handleCloseModal, initialUrlValues } =
-    useAppContext();
+  const { handleOpenModal, handleCloseModal } = useAppContext();
   const isWide: boolean = useMedia({ maxWidth: "1024px" });
   const router = useRouter();
 
@@ -21,14 +20,20 @@ const Filter = ({ cars }: FilterProps) => {
   const [years, setYears] = useState<number[]>([]);
   const [fuels, setFuels] = useState<string[]>([]);
 
+  const transformCapitalize = (word: string): string => {
+    const firstWord = word.split(" ")[0];
+    const firstLetterUpperCase = firstWord[0].toUpperCase();
+    return firstLetterUpperCase + firstWord.slice(1);
+  };
+
   useEffect(() => {
     const uniqueBrands = cars
-      .map((car) => car.brand)
+      .map((car) => transformCapitalize(car.brand))
       .filter((brand, index, array) => array.indexOf(brand) === index);
     setBrands(uniqueBrands);
 
     const uniqueModels = cars
-      .map((car) => car.name)
+      .map((car) => transformCapitalize(car.name))
       .filter((model, index, array) => array.indexOf(model) === index);
     setModels(uniqueModels);
 
@@ -48,11 +53,24 @@ const Filter = ({ cars }: FilterProps) => {
     setFuels(uniqueFuels);
   }, [cars]);
 
-  const handleFilter = (key: string, value: string | number) => {
+  const handleFilter = (key: string, value: string | number, reset = false) => {
+    const newQuery = reset
+      ? { [key]: value }
+      : { ...router.query, [key]: value };
     router.push(
       {
         pathname: "/",
-        query: { ...initialUrlValues, [key]: value },
+        query: newQuery,
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
+  const handleClearFilters = () => {
+    router.push(
+      {
+        pathname: "/",
+        query: {},
       },
       undefined,
       { shallow: true }
@@ -69,7 +87,7 @@ const Filter = ({ cars }: FilterProps) => {
               <li
                 key={brand}
                 className="cursor-pointer"
-                onClick={() => handleFilter("brand", brand)}
+                onClick={() => handleFilter("brand", brand, true)}
               >
                 {brand}
               </li>
@@ -136,14 +154,14 @@ const Filter = ({ cars }: FilterProps) => {
           <h2 className="font-bold text-xl">Km</h2>
           <div className="flex gap-6">
             <input
-              onChange={(e) => handleFilter("minKm", e.target.value)}
+              onBlur={(e) => handleFilter("minKm", e.target.value)}
               type="number"
               id="min-km"
               placeholder="Mínima"
               className="w-full bg-[#CED4DA] px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-[#868E96] focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
             <input
-              onChange={(e) => handleFilter("maxKm", e.target.value)}
+              onBlur={(e) => handleFilter("maxKm", e.target.value)}
               type="number"
               id="max-km"
               placeholder="Máxima"
@@ -155,14 +173,14 @@ const Filter = ({ cars }: FilterProps) => {
           <h2 className="font-bold text-xl">Preço</h2>
           <div className="flex gap-6">
             <input
-              onChange={(e) => handleFilter("minPrice", e.target.value)}
+              onBlur={(e) => handleFilter("minPrice", e.target.value)}
               type="number"
               id="min-price"
               placeholder="Mínimo"
               className="w-full bg-[#CED4DA] px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-[#868E96] focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
             <input
-              onChange={(e) => handleFilter("maxPrice", e.target.value)}
+              onBlur={(e) => handleFilter("maxPrice", e.target.value)}
               type="number"
               id="max-price"
               placeholder="Máximo"
@@ -170,6 +188,15 @@ const Filter = ({ cars }: FilterProps) => {
             />
           </div>
         </div>
+        {Object.keys(router.query).length > 0 && (
+          <Button
+            style="button-brand"
+            fullWidth={true}
+            onClick={handleClearFilters}
+          >
+            Limpar Filtros
+          </Button>
+        )}
         {isWide ? (
           <div className="w-full max-w-[279px] flex items-center justify-center">
             <Button

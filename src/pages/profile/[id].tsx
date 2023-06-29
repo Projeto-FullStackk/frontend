@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { GetServerSideProps, NextPage } from "next";
-import { useAppContext, KarsProvider, useAuth } from "@/contexts";
+import {
+  useAppContext,
+  KarsProvider,
+  useAuth,
+  useKarsContext,
+} from "@/contexts";
 import { UserLogged } from "@/contexts/AuthContext";
 import { Button, Card, ModalAdsCreate } from "@/components";
 import { api } from "@/services/api";
@@ -17,6 +22,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
 const Profile: NextPage<ProfileProps> = ({ user }) => {
   const { handleOpenModal, open } = useAppContext();
+  const { ads, setAds } = useKarsContext();
   const [seller, setSeller] = useState(false);
   const { userLogged } = useAuth();
 
@@ -26,8 +32,7 @@ const Profile: NextPage<ProfileProps> = ({ user }) => {
       const isSameId = userLogged?.id === user.id;
       if (isUserSeller && isSameId) {
         setSeller(true);
-      } 
-      else {
+      } else {
         setSeller(false);
       }
     };
@@ -84,7 +89,7 @@ const Profile: NextPage<ProfileProps> = ({ user }) => {
         </section>
       </main>
 
-      {open && <ModalAdsCreate />}
+      {/* {open && <ModalAdsCreate />} */}
     </KarsProvider>
   );
 };
