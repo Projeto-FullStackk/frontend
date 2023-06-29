@@ -16,6 +16,8 @@ import RegisterPage from "./RegisterPage";
 import Section from "./Section";
 import Pagination from "./Pagination";
 import Loading from "./Loading";
+import CommentsList from "./Comments/list";
+import UserComment from "./Comments/user";
 
 export {
   HeadApp as Head,
@@ -36,4 +38,6 @@ export {
   FormRegister,
   Pagination,
   Loading,
+  CommentsList,
+  UserComment,
 };

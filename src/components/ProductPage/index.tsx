@@ -1,12 +1,17 @@
 import Image from "next/image";
 import product from "@/assets/product.png";
-import { Ad } from "@/contexts/AuthContext";
+import { Ad, useAuth } from "@/contexts/AuthContext";
+import { CommentsList, UserComment } from "..";
+import { useComments } from "@/contexts/commentsContext";
 
 interface ProductPageProps {
   car: Ad;
 }
 
 const ProductPage = ({ car }: ProductPageProps) => {
+  const { userLogged } = useAuth();
+  const { comments } = useComments();
+
   return (
     <main className="h-[5000px] bg-gray-6">
       <div className="bg-brand-1 h-[28.125rem] mb-40 flex flex-col justify-center items-center lg:flex-row lg:gap-10">
@@ -55,6 +60,22 @@ const ProductPage = ({ car }: ProductPageProps) => {
               possimus id aliquam ad ab perspiciatis sunt!
             </p>
           </div>
+
+          <div className="lg:w-[47rem] mt-4 lg:h-auto w-[21.9375rem] h-[18.375rem] bg-gray-10 pt-9 pb-1 px-7 rounded">
+            <h2 className="text-gray-1 font-semibold text-[1.1rem] font-lex mb-8">
+              Comentários
+            </h2>
+            <ul>
+              {comments.map((element) => (
+                <CommentsList comment={element} key={element.id} />
+              ))}
+            </ul>
+          </div>
+          {userLogged ? (
+            <div className="lg:w-[47rem] mt-4 lg:h-auto w-[21.9375rem] h-[18.375rem] bg-gray-10 py-9 px-7 rounded">
+              <UserComment />
+            </div>
+          ) : null}
         </section>
 
         <section className="px-3 lg:mt-[23.6875rem]">

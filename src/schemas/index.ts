@@ -22,6 +22,14 @@ import {
   UserUpdate,
 } from "./users";
 import { Car } from "./cars";
+import {
+  CommentData,
+  commentSchema,
+  commentResponse,
+  CommentResponse,
+  CommentList,
+  commentList,
+} from "./comments";
 
 export {
   adsSchema,
@@ -33,6 +41,9 @@ export {
   userResetPasswordSchema,
   userAdressSchema,
   userUpdateSchema,
+  commentSchema,
+  commentResponse,
+  commentList,
 };
 
 export type {
@@ -47,4 +58,7 @@ export type {
   UserResetPassword,
   UserAdress,
   UserUpdate,
+  CommentData,
+  CommentResponse,
+  CommentList,
 };
