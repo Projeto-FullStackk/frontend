@@ -1,7 +1,7 @@
 <h1 align="center"> Motors Shop </h1>
 
 <p align="center">
-  <img src="https://github.com/Projeto-FullStackk/frontend/assets/110180304/0613fea0-b72d-40d2-8c16-cc1f7e4c4d1b">
+  <img src="https://github.com/Projeto-FullStackk/frontend/assets/110180304/4c0ffd7a-3167-45e7-974e-d05514b7ed55">
 </p>
 
 
