@@ -3,12 +3,15 @@ import { toast } from "react-toastify";
 import { api, apiExternal } from "@/services/api";
 import { Car, iAds, iAdsRequest, iCarData } from "@/schemas";
 import { useAppContext } from "@/contexts";
+import { Ad } from "./AuthContext";
 
 interface iKarsContext {
   brands: string[];
   cars: iCarData[];
   getCarsDataAPI: (brand: string) => void;
   createAd: (data: iAdsRequest) => void;
+  ads: Ad[];
+  setAds: (ads: Ad[]) => void;
 }
 
 interface iKarsProvider {
@@ -21,7 +24,7 @@ export const KarsProvider = ({ children }: iKarsProvider) => {
   const { handleCloseModal, setIsLoading } = useAppContext();
   const [brands, setBrands] = useState<string[]>([]);
   const [cars, setCars] = useState<iCarData[]>([]);
-  const [ads, setAds] = useState<iAds[]>([]);
+  const [ads, setAds] = useState<Ad[]>([]);
 
   useEffect(() => {
     apiExternal.get("/cars").then((res) => {
@@ -48,12 +51,12 @@ export const KarsProvider = ({ children }: iKarsProvider) => {
 
   const createAd = (data: iAdsRequest) => {
     setIsLoading(true);
-    api.post("/ads", data)
+    api
+      .post("/ads", data)
       .then((res) => {
-        console.log(res.data);
         setAds([...ads, res.data]);
         handleCloseModal();
-        toast.success("Anuncio criado com sucesso")
+        toast.success("Anuncio criado com sucesso");
       })
       .catch((err) => {
         console.log(err);
@@ -63,7 +66,9 @@ export const KarsProvider = ({ children }: iKarsProvider) => {
   };
 
   return (
-    <KarsContext.Provider value={{ brands, cars, getCarsDataAPI, createAd }}>
+    <KarsContext.Provider
+      value={{ brands, cars, getCarsDataAPI, createAd, ads, setAds }}
+    >
       {children}
     </KarsContext.Provider>
   );

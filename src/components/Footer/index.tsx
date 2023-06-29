@@ -2,7 +2,6 @@ import { MdKeyboardArrowUp } from "react-icons/md";
 import { fontInter } from "@/styles/font";
 
 const Footer = () => {
-  
   const returnToTop = () => window.scroll(0, 0);
 
   return (
@@ -16,12 +15,15 @@ const Footer = () => {
           &copy; 2023 - Todos os direitos reservados.
         </p>
 
-        <button onClick={returnToTop} className="w-[50px] h-[50px] bg-gray-1 rounded text-white flex justify-center items-center">
+        <button
+          onClick={returnToTop}
+          className="w-[50px] h-[50px] bg-gray-1 rounded text-white flex justify-center items-center"
+        >
           <MdKeyboardArrowUp size={24} />
         </button>
       </div>
     </footer>
-  )
-}
+  );
+};
 
 export default Footer;

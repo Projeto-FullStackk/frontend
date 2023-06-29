@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import { AuthProvider } from "@/contexts/AuthContext";
 import "react-toastify/dist/ReactToastify.css";
 import { CommentsProvider } from "@/contexts/commentsContext";
+import { KarsProvider } from "@/contexts";
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
@@ -26,12 +27,16 @@ const App = ({ Component, pageProps }: AppProps) => {
       <AuthProvider>
         <CommentsProvider>
           <AppProvider>
-            <main className={`${fontLexend.className} ${fontInter.className}`}>
-              <Head />
-              <Header />
-              <Component {...pageProps} />
-              <Footer />
-            </main>
+            <KarsProvider>
+              <main
+                className={`${fontLexend.className} ${fontInter.className}`}
+              >
+                <Head />
+                <Header />
+                <Component {...pageProps} />
+                <Footer />
+              </main>
+            </KarsProvider>
           </AppProvider>
         </CommentsProvider>
       </AuthProvider>

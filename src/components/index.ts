@@ -18,6 +18,7 @@ import Pagination from "./Pagination";
 import Loading from "./Loading";
 import CommentsList from "./Comments/list";
 import UserComment from "./Comments/user";
+import ModalOpenImage from "./ModalOpenImage";
 
 export {
   HeadApp as Head,
@@ -40,4 +41,5 @@ export {
   Loading,
   CommentsList,
   UserComment,
+  ModalOpenImage,
 };
