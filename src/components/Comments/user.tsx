@@ -20,20 +20,11 @@ const UserComment = () => {
 
   const submitComments = (formData: CommentData) => {
     createComment(formData);
+    setValue("comment", "");
   };
 
-  const predeterminedComment1 = () => {
-    const newValue = "Gostei muito";
-    setValue("comment", newValue);
-  };
-
-  const predeterminedComment2 = () => {
-    const newValue = "Incrível";
-    setValue("comment", newValue);
-  };
-
-  const predeterminedComment3 = () => {
-    const newValue = "Recomendarei para meus amigos";
+  const predeterminedComment = (event) => {
+    const newValue = event.target.value;
     setValue("comment", newValue);
   };
 
@@ -96,19 +87,22 @@ const UserComment = () => {
 
       <div className="flex gap-2 font-medium">
         <button
-          onClick={predeterminedComment1}
+          value="Gostei muito"
+          onClick={predeterminedComment}
           className="button-grey px-3 rounded-3xl text-gray-3 text-xs font-medium h-6"
         >
           Gostei muito
         </button>
         <button
-          onClick={predeterminedComment2}
+          value="Incrível"
+          onClick={predeterminedComment}
           className="button-grey px-3 rounded-3xl text-gray-3 text-xs font-medium h-6"
         >
           Incrível
         </button>
         <button
-          onClick={predeterminedComment3}
+          value="Recomendarei para meus amigos!"
+          onClick={predeterminedComment}
           className="button-grey px-3 rounded-3xl text-gray-3 text-xs font-medium h-6"
         >
           Recomendarei para meus amigos!
