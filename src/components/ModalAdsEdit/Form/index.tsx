@@ -1,30 +1,55 @@
 import { ChangeEvent, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { adsCreateSchema, iAdsCreate, iAdsRequest } from "@/schemas";
+import {
+  adsCreateSchema,
+  Car,
+  iAdsCreate,
+  iAdsRequest,
+  iAdsUpdate,
+} from "@/schemas";
+import { adsUpdateSchema } from "@/schemas/ads";
 import { useAppContext, useAuth, useKarsContext } from "@/contexts";
 import { Button, Input, Loading } from "@/components";
-import showError from "./showError";
+import showError from "../../ModalAdsCreate/Form/showError";
 import refineBodySubmit from "./refineBodySubmit";
+import { fontInter } from "@/styles/font";
 
 const Form = () => {
-  const { brands, cars, getCarsDataAPI, createAd } = useKarsContext();
+  const { brands, cars, getCarsDataAPI, updateAd, deleteAd } = useKarsContext();
   const { userLogged } = useAuth();
-  const { isLoading } = useAppContext();
+  const { isLoading, carUpdate } = useAppContext();
   const [limitImages, setLimitImages] = useState(0);
   const [disabledNameInput, setDisabledNameInput] = useState(true);
   const [disabledDetailsInput, setDisabledDetailsInput] = useState(true);
   const [yearCar, setYearCar] = useState("");
   const [fuelCar, setFuelCar] = useState("");
   const [priceCar, setPriceCar] = useState("");
-
+  console.log(carUpdate, "carUpdate");
   const {
     register,
     handleSubmit,
     control,
-    formState: { errors },
-  } = useForm<iAdsCreate>({
-    resolver: zodResolver(adsCreateSchema),
+    formState: { errors, defaultValues },
+  } = useForm<iAdsUpdate>({
+    resolver: zodResolver(adsUpdateSchema),
+    defaultValues: {
+      brand: carUpdate?.brand,
+      name: carUpdate?.name,
+      fuel: carUpdate?.fuel,
+      km: Number(carUpdate?.km),
+      color: carUpdate?.color,
+      priceTf: carUpdate?.priceTf,
+      price: carUpdate?.price,
+      published: carUpdate?.published,
+      coverImage: carUpdate?.coverImage,
+      firstImage: carUpdate?.firstImage,
+      secondImage: carUpdate?.secondImage,
+      thirdImage: carUpdate?.thirdImage,
+      fourthImage: carUpdate?.fourthImage,
+      fifthImage: carUpdate?.fifthImage,
+      sixthImage: carUpdate?.sixthImage,
+    },
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -42,51 +67,22 @@ const Form = () => {
     remove(limitImages - 1);
   };
 
-  const handleChangeBrand = (e: ChangeEvent<HTMLSelectElement>) => {
-    const brandSelected = e.target.value.toLowerCase();
-    getCarsDataAPI(brandSelected);
-
-    return setDisabledNameInput(false);
-  };
-
-  const handleChangeNameBrand = (e: ChangeEvent<HTMLSelectElement>) => {
-    const nameBrandSelected = e.target.value;
-
-    const { fuel, year, value } = cars.find(
-      (car) => car.name === nameBrandSelected
-    )!;
-
-    setYearCar(year);
-
-    setFuelCar(fuel === 1 ? "Gasolina" : fuel === 2 ? "Etanol" : "Elétrico");
-
-    setPriceCar(
-      value.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      })
-    );
-
-    return setDisabledDetailsInput(false);
-  };
-
-  const submit = (formData: iAdsCreate) => {
-    const brand = formData.brand.toLowerCase();
+  const submit = (formData: iAdsUpdate) => {
+    const brand = carUpdate!.brand.toLowerCase();
     const year = +yearCar;
     const fuel = fuelCar;
     const priceTf = +priceCar.replace(/[^\d,]+/g, "").replace(",", ".");
 
-    const data: iAdsRequest = {
+    const data: iAdsUpdate = {
       ...refineBodySubmit(formData),
       brand,
       year,
       fuel,
       priceTf,
       userId: userLogged!.id,
-      published: true,
+      published: formData.published,
     };
-
-    createAd(data);
+    updateAd(data);
   };
 
   return (
@@ -96,23 +92,21 @@ const Form = () => {
     >
       <Input
         id="brand"
-        as="select"
+        as="input"
         label="Marca"
-        placeholder="Selecione uma Marca"
-        options={brands}
-        onChange={handleChangeBrand}
+        placeholder={carUpdate?.brand}
+        disabled={true}
         errorMessage={errors.brand?.message}
         register={register("brand")}
       />
 
       <Input
         id="name"
-        as="select"
+        as="input"
         label="Modelo"
-        placeholder="Selecione o modelo"
-        disabled={disabledNameInput}
-        options={cars.map((car) => car.name)}
-        onChange={handleChangeNameBrand}
+        placeholder={carUpdate?.name}
+        disabled={true}
+        errorMessage={errors.name?.message}
         register={register("name")}
       />
 
@@ -123,7 +117,7 @@ const Form = () => {
             as="input"
             type="number"
             label="Ano"
-            placeholder="2018"
+            placeholder={String(carUpdate?.year)}
             disabled={disabledDetailsInput}
             value={yearCar}
             register={register("year")}
@@ -151,7 +145,7 @@ const Form = () => {
             as="input"
             type="number"
             label="Quilometragem"
-            placeholder="30.000"
+            placeholder={carUpdate!.km}
             register={register("km")}
           />
         </div>
@@ -162,7 +156,7 @@ const Form = () => {
             as="input"
             type="text"
             label="Cor"
-            placeholder="Branco"
+            placeholder={carUpdate!.color}
             register={register("color")}
           />
         </div>
@@ -179,7 +173,7 @@ const Form = () => {
             as="input"
             type="text"
             label="Preço tabela FIPE"
-            placeholder="R$ 48.000,00"
+            placeholder={`R$ 48.000,00`}
             value={priceCar}
             disabled={disabledDetailsInput}
             register={register("priceTf")}
@@ -190,9 +184,9 @@ const Form = () => {
           <Input
             id="price"
             as="input"
-            type="text"
+            type="number"
             label="Preço"
-            placeholder="R$ 50.000,00"
+            placeholder={String(carUpdate!.price)}
             register={register("price")}
           />
         </div>
@@ -200,14 +194,34 @@ const Form = () => {
 
       {errors.price && showError(errors.price.message!)}
 
-      <Input
-        id="description"
-        as="textarea"
-        label="Descrição"
-        placeholder="Opcional"
-        register={register("description")}
-        errorMessage={errors.description?.message}
-      />
+      <label>Publicado </label>
+      <div className="flex gap-2.5">
+        <label
+          className={`${fontInter.className} text-center w-full button-brand h-max rounded-[0.25rem] font-semibold transition-colors button-medium`}
+        >
+          Sim{" "}
+          <input
+            type="radio"
+            value="true"
+            id="buyer"
+            className="hidden"
+            {...register("published")}
+          />
+        </label>
+
+        <label
+          className={`${fontInter.className} text-center w-full button-grey h-max rounded-[0.25rem] font-semibold transition-colors button-medium`}
+        >
+          Não{" "}
+          <input
+            type="radio"
+            value="false"
+            id="seller"
+            className="hidden"
+            {...register("published")}
+          />
+        </label>
+      </div>
 
       <Input
         id="coverImage"
@@ -219,6 +233,26 @@ const Form = () => {
         errorMessage={errors.coverImage?.message}
       />
 
+      <Input
+        id="firstImage"
+        as="input"
+        type="text"
+        label="1° Imagem da galeria"
+        placeholder="https://image.com"
+        register={register("firstImage")}
+        errorMessage={errors.coverImage?.message}
+      />
+
+      <Input
+        id="secondImage"
+        as="input"
+        type="text"
+        label="2° Imagem da galeria"
+        placeholder="https://image.com"
+        register={register("secondImage")}
+        errorMessage={errors.coverImage?.message}
+      />
+
       {fields.map((field, index) => {
         return (
           <Input
@@ -226,9 +260,9 @@ const Form = () => {
             id={field.id}
             as="input"
             type="text"
-            label={`${index + 1}° Imagem da galeria`}
+            label={`${index + 3}° Imagem da galeria`}
             placeholder="https://image.com"
-            register={register(`images.${index}.url`)}
+            register={register(`images.${index + 2}.url`)}
           />
         );
       })}
@@ -256,8 +290,13 @@ const Form = () => {
 
       <div className="w-full flex justify-between gap-2 md:justify-end">
         <div className="w-1/2 min-w-max md:w-max">
-          <Button style="button-grey" size="button-medium" fullWidth>
-            Cancelar
+          <Button
+            style="button-grey"
+            size="button-medium"
+            fullWidth
+            onClick={() => deleteAd()}
+          >
+            Excluir Anúncio
           </Button>
         </div>
 
@@ -268,7 +307,7 @@ const Form = () => {
             size="button-medium"
             fullWidth
           >
-            Criar anúncio
+            Salvar alterações
           </Button>
         </div>
       </div>

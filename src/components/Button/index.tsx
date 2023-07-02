@@ -6,7 +6,7 @@ interface iButtonProps {
   size?: "button-big" | "button-medium" | undefined;
   fullWidth?: boolean | undefined;
   disabled?: boolean | undefined;
-  onClick?: () => void | undefined;
+  onClick?: (event?: any) => void | undefined;
   style:
     | "button-brand"
     | "button-brand-opacity"
@@ -38,7 +38,9 @@ const Button = ({
       type={type ?? "button"}
       disabled={disabled ?? false}
       onClick={onClick ?? undefined}
-      className={`${fontInter.className} ${buttonWidth} ${style} h-max rounded-[0.25rem] font-semibold transition-colors ${
+      className={`${
+        fontInter.className
+      } ${buttonWidth} ${style} h-max rounded-[0.25rem] font-semibold transition-colors ${
         size ?? "button-big"
       }`}
     >

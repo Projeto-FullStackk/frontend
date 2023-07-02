@@ -5,6 +5,7 @@ import {
   iAds,
   iAdsCreate,
   iAdsRequest,
+  iAdsUpdate,
 } from "./ads";
 import { iCarData } from "./apiExternal";
 import {
@@ -40,6 +41,7 @@ export type {
   iAdsCreate,
   iAdsRequest,
   iCarData,
+  iAdsUpdate,
   LoginData,
   UserData,
   Car,

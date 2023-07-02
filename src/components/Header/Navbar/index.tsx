@@ -9,8 +9,7 @@ import { Modal } from "@/components";
 const Navbar = () => {
   const { userLogged, logout } = useAuth();
   const [meuDropOpen, setMenuDropOpen] = useState<boolean>(false);
-  const { handleOpenModal, open } = useAppContext();
-  const [modalType, setModalType] = useState<String>("");
+  const { handleOpenModal, open, modalType, setModalType } = useAppContext();
   let initials = "";
   if (userLogged && userLogged.name) {
     const names = userLogged.name.split(" ");
