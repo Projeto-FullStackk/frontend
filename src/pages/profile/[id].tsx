@@ -9,6 +9,7 @@ import {
 import { UserLogged } from "@/contexts/AuthContext";
 import { Button, Card, ModalAdsCreate } from "@/components";
 import { api } from "@/services/api";
+import ModalAdsEdit from "@/components/ModalAdsEdit";
 
 interface ProfileProps {
   user: UserLogged;
@@ -21,7 +22,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 };
 
 const Profile: NextPage<ProfileProps> = ({ user }) => {
-  const { handleOpenModal, open } = useAppContext();
+  const { handleOpenModal, open, modalType, setModalType } = useAppContext();
   const { ads, setAds } = useKarsContext();
   const [seller, setSeller] = useState(false);
   const { userLogged } = useAuth();
@@ -44,8 +45,11 @@ const Profile: NextPage<ProfileProps> = ({ user }) => {
     const names = user.name.split(" ");
     initials = names[0][0] + names[1][0];
   }
+
   return (
     <KarsProvider>
+      {open && modalType === "adsCreate" ? <ModalAdsCreate /> : null}
+      {open && modalType === "adsEdit" ? <ModalAdsEdit /> : null}
       <main className="bg-gray-8">
         <div className="bg-brand-1 h-[15.313rem] mb-40 flex flex-col justify-center items-center lg:flex-row lg:gap-10">
           <section className="px-3 mt-[16.6875rem] flex w-full justify-center">
@@ -65,7 +69,13 @@ const Profile: NextPage<ProfileProps> = ({ user }) => {
                 {user.description}
               </p>
               {seller ? (
-                <Button style="button-brand-outline" onClick={handleOpenModal}>
+                <Button
+                  style="button-brand-outline"
+                  onClick={() => {
+                    handleOpenModal();
+                    setModalType("adsCreate");
+                  }}
+                >
                   Criar Anúncio
                 </Button>
               ) : null}
@@ -88,8 +98,6 @@ const Profile: NextPage<ProfileProps> = ({ user }) => {
           </ul>
         </section>
       </main>
-
-      {/* {open && <ModalAdsCreate />} */}
     </KarsProvider>
   );
 };

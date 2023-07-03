@@ -3,7 +3,8 @@ import { useRouter } from "next/router";
 import { Button } from "@/components";
 import { Ad } from "@/contexts/AuthContext";
 import Badge from "./Badge";
-
+import { useAppContext } from "@/contexts";
+import ModalAdsEdit from "../ModalAdsEdit";
 interface CardProps {
   type: "user" | "seller";
   carData: Ad;
@@ -12,14 +13,14 @@ interface CardProps {
 const Card = ({ type, carData }: CardProps) => {
   const { user, ...car } = carData;
   const router = useRouter();
-
+  const { handleOpenModal, setModalType, setCarUpdate } = useAppContext();
   let initials = "";
   if (user?.name) {
     const names = user?.name.split(" ");
     initials = names[0][0] + names[1][0];
   }
 
-  const isBelowPrice: boolean = (car.priceTf * 0.95) > car.price;
+  const isBelowPrice: boolean = car.priceTf * 0.95 > car.price;
 
   return (
     <>
@@ -97,6 +98,12 @@ const Card = ({ type, carData }: CardProps) => {
               style="button-black-outline"
               size="button-medium"
               type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                handleOpenModal();
+                setModalType("adsEdit");
+                setCarUpdate(car);
+              }}
             >
               Editar
             </Button>
