@@ -45,7 +45,6 @@ const CommentsProvider = ({ children }: iProps) => {
         },
       })
       .then((response) => {
-        location.reload();
         return response;
       })
       .catch((err) => {
@@ -63,32 +62,32 @@ const CommentsProvider = ({ children }: iProps) => {
       });
   };
 
+  const request = api.get(`ads/${carId}`).then(async (response) => {
+    const data = response.data;
+
+    const comment = data.Comment;
+
+    const commentMap = await Promise.all(
+      comment.map(async (element: CommentResponse) => {
+        const user = await api.get(`user/${element.userId}`);
+        const response = {
+          comment: element.comment,
+          adsId: element.adsId,
+          createdAt: element.createdAt,
+          id: element.id,
+          userName: user.data.name,
+          userId: element.userId,
+        };
+        return response;
+      })
+    );
+
+    setComments(commentMap);
+  });
+
   useEffect(() => {
-    carId
-      ? api.get(`ads/${carId}`).then(async (response) => {
-          const data = response.data;
-
-          const comment = data.Comment;
-
-          const commentMap = await Promise.all(
-            comment.map(async (element: CommentResponse) => {
-              const user = await api.get(`user/${element.userId}`);
-              const response = {
-                comment: element.comment,
-                adsId: element.adsId,
-                createdAt: element.createdAt,
-                id: element.id,
-                userName: user.data.name,
-                userId: element.userId,
-              };
-              return response;
-            })
-          );
-
-          setComments(commentMap);
-        })
-      : null;
-  }, [carId]);
+    carId ? request : null;
+  }, [carId, request]);
 
   return (
     <CommentsContext.Provider value={{ createComment, comments }}>
