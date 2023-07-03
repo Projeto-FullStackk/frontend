@@ -28,11 +28,14 @@ const Card = ({ type, carData }: CardProps) => {
         onClick={() => router.push(`/product/${car?.id}`)}
       >
         <figure className="relative bg-gray-7 h-[9.5rem] mb-4 flex justify-center items-center border-2 group-hover:border-brand-1 ">
-          <img
-            className="w-full h-full object-cover"
+          <Image
             src={car.coverImage}
             alt={car.name}
+            width={1280}
+            height={720}
+            className="w-full h-full object-cover"
           />
+
           {type === "seller" ? (
             <span
               className={`absolute top-2 left-2 text-xs px-2 py-1 text-white ${
