@@ -67,21 +67,22 @@ export const KarsProvider = ({ children }: iKarsProvider) => {
       .finally(() => setIsLoading(false));
   };
   const updateAd = (data: iAdsUpdate) => {
-    setIsLoading(true);
+    /*  setIsLoading(true); */
     console.log(data, "data update");
+    console.log("ENTROU NO UPDATE AD");
     api
       .patch(`/ads/${carUpdate?.id}`, data)
       .then((res) => {
         console.log(res.data);
         setAds([...ads, res.data]);
-        handleCloseModal();
+        /*  handleCloseModal(); */
         toast.success("Anuncio editado com sucesso");
       })
       .catch((err) => {
         console.log(err);
         toast.error("Não foi possível editar um anuncio!");
-      })
-      .finally(() => setIsLoading(false));
+      });
+    /* .finally(() => setIsLoading(false)); */
   };
   const deleteAd = () => {
     api

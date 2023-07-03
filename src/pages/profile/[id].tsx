@@ -22,7 +22,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 };
 
 const Profile: NextPage<ProfileProps> = ({ user }) => {
-  const { handleOpenModal, open } = useAppContext();
+  const { handleOpenModal, open, modalType, setModalType } = useAppContext();
   const { ads, setAds } = useKarsContext();
   const [seller, setSeller] = useState(false);
   const { userLogged } = useAuth();

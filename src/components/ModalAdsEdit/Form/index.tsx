@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   adsCreateSchema,
@@ -14,6 +14,7 @@ import { Button, Input, Loading } from "@/components";
 import showError from "../../ModalAdsCreate/Form/showError";
 import refineBodySubmit from "./refineBodySubmit";
 import { fontInter } from "@/styles/font";
+import { data } from "autoprefixer";
 
 const Form = () => {
   const { brands, cars, getCarsDataAPI, updateAd, deleteAd } = useKarsContext();
@@ -25,14 +26,15 @@ const Form = () => {
   const [yearCar, setYearCar] = useState("");
   const [fuelCar, setFuelCar] = useState("");
   const [priceCar, setPriceCar] = useState("");
-  console.log(carUpdate, "carUpdate");
+  console.log(carUpdate);
+
   const {
     register,
     handleSubmit,
     control,
     formState: { errors, defaultValues },
   } = useForm<iAdsUpdate>({
-    resolver: zodResolver(adsUpdateSchema),
+    resolver: zodResolver(adsUpdateSchema.partial()),
     defaultValues: {
       brand: carUpdate?.brand,
       name: carUpdate?.name,
@@ -41,7 +43,7 @@ const Form = () => {
       color: carUpdate?.color,
       priceTf: carUpdate?.priceTf,
       price: carUpdate?.price,
-      published: carUpdate?.published,
+      published: carUpdate?.published.toString(),
       coverImage: carUpdate?.coverImage,
       firstImage: carUpdate?.firstImage,
       secondImage: carUpdate?.secondImage,
@@ -51,7 +53,7 @@ const Form = () => {
       sixthImage: carUpdate?.sixthImage,
     },
   });
-
+  console.log(errors);
   const { fields, append, remove } = useFieldArray({
     control,
     name: "images",
@@ -66,8 +68,18 @@ const Form = () => {
     setLimitImages(limitImages - 1);
     remove(limitImages - 1);
   };
+  const submitUpdate = async (userData: any) => {
+    try {
+      console.log(userData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  const submit = (formData: iAdsUpdate) => {
+  const submit = (formData: iAdsUpdate, event: any) => {
+    event.preventDefault();
+    console.log(formData, "form data submit");
+    console.log("ENTROU NA FUNCAO SUBMIT");
     const brand = carUpdate!.brand.toLowerCase();
     const year = +yearCar;
     const fuel = fuelCar;
@@ -184,7 +196,7 @@ const Form = () => {
           <Input
             id="price"
             as="input"
-            type="number"
+            type="text"
             label="Preço"
             placeholder={String(carUpdate!.price)}
             register={register("price")}
@@ -202,9 +214,8 @@ const Form = () => {
           Sim{" "}
           <input
             type="radio"
-            value="true"
-            id="buyer"
             className="hidden"
+            value="true"
             {...register("published")}
           />
         </label>
@@ -215,9 +226,8 @@ const Form = () => {
           Não{" "}
           <input
             type="radio"
-            value="false"
-            id="seller"
             className="hidden"
+            value="false"
             {...register("published")}
           />
         </label>

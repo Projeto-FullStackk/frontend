@@ -74,11 +74,20 @@ export const adsUpdateSchema = adsSchema
     fifthImage: z.string().nullable(),
     sixthImage: z.string().nullable(),
     userId: z.string(),
-    published: z.boolean(),
+    published: z.string().transform((value) => {
+      if (value === "true") {
+        return true;
+      } else {
+        return false;
+      }
+    }),
   })
   .partial();
 
-export type iAdsUpdate = z.infer<typeof adsUpdateSchema>;
+export type iAdsUpdate = Omit<z.infer<typeof adsUpdateSchema>, "price"> & {
+  price?: number | undefined;
+  published?: string | undefined;
+};
 export type iAds = z.infer<typeof adsSchema>;
 export type iAdsCreate = z.infer<typeof adsCreateSchema>;
 export type iAdsRequest = z.infer<typeof adsRequestSchema>;
