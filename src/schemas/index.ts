@@ -27,8 +27,6 @@ import {
   commentSchema,
   commentResponse,
   CommentResponse,
-  CommentList,
-  commentList,
 } from "./comments";
 
 export {
@@ -43,7 +41,6 @@ export {
   userUpdateSchema,
   commentSchema,
   commentResponse,
-  commentList,
 };
 
 export type {
@@ -60,5 +57,4 @@ export type {
   UserUpdate,
   CommentData,
   CommentResponse,
-  CommentList,
 };
