@@ -1,4 +1,4 @@
-import { CommentData, CommentList, CommentResponse } from "@/schemas";
+import { CommentData,  CommentResponse } from "@/schemas";
 import { api } from "@/services/api";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
