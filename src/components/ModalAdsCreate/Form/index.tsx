@@ -19,6 +19,28 @@ const Form = () => {
   const [fuelCar, setFuelCar] = useState("");
   const [priceCar, setPriceCar] = useState("");
 
+  /* const [uploadedImages, setUploadedImages] = useState<File[]>([]);
+  const [index, setIndex] = useState(); */
+
+  //UPLOADING IMAGES
+  /* drag and drop */
+
+  /* const onDrop = useCallback((files: File[]) => {
+    setUploadedImages((prevUploadedImages) => [
+      ...prevUploadedImages,
+      ...files,
+    ]);
+  }, []);
+
+  const dropzone = useDropzone({
+    onDrop,
+    accept: {
+      "image/jpeg": [".jpg", ".jpeg", ".png"],
+    },
+  });
+
+  const { getRootProps, getInputProps } = dropzone; */
+
   const {
     register,
     handleSubmit,
