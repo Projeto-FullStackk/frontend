@@ -91,3 +91,19 @@ export type iAdsUpdate = Omit<z.infer<typeof adsUpdateSchema>, "price"> & {
 export type iAds = z.infer<typeof adsSchema>;
 export type iAdsCreate = z.infer<typeof adsCreateSchema>;
 export type iAdsRequest = z.infer<typeof adsRequestSchema>;
+export interface iFilter {
+  allBrands: string[];
+  allModels: string[];
+  allYears: number[];
+  allFuels: string[];
+  allColors: string[];
+}
+export interface iAdsFilter {
+  page: number;
+  perPage: number;
+  limitPage: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  ads: iAdsRequest[];
+  filters: iFilter;
+}
