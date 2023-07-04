@@ -6,6 +6,7 @@ import { Footer, Head, Header } from "@/components";
 import { ToastContainer } from "react-toastify";
 import { AuthProvider } from "@/contexts/AuthContext";
 import "react-toastify/dist/ReactToastify.css";
+import { CommentsProvider } from "@/contexts/commentsContext";
 import { KarsProvider } from "@/contexts";
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -24,16 +25,20 @@ const App = ({ Component, pageProps }: AppProps) => {
         theme="light"
       />
       <AuthProvider>
-        <AppProvider>
-          <KarsProvider>
-            <main className={`${fontLexend.className} ${fontInter.className}`}>
-              <Head />
-              <Header />
-              <Component {...pageProps} />
-              <Footer />
-            </main>
-          </KarsProvider>
-        </AppProvider>
+        <CommentsProvider>
+          <AppProvider>
+            <KarsProvider>
+              <main
+                className={`${fontLexend.className} ${fontInter.className}`}
+              >
+                <Head />
+                <Header />
+                <Component {...pageProps} />
+                <Footer />
+              </main>
+            </KarsProvider>
+          </AppProvider>
+        </CommentsProvider>
       </AuthProvider>
     </>
   );

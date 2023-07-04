@@ -3,7 +3,8 @@ import { useRouter } from "next/router";
 import { Button } from "@/components";
 import { Ad } from "@/contexts/AuthContext";
 import Badge from "./Badge";
-
+import { useAppContext } from "@/contexts";
+import ModalAdsEdit from "../ModalAdsEdit";
 interface CardProps {
   type: "user" | "seller";
   carData: Ad;
@@ -12,14 +13,14 @@ interface CardProps {
 const Card = ({ type, carData }: CardProps) => {
   const { user, ...car } = carData;
   const router = useRouter();
-
+  const { handleOpenModal, setModalType, setCarUpdate } = useAppContext();
   let initials = "";
   if (user?.name) {
     const names = user?.name.split(" ");
     initials = names[0][0] + names[1][0];
   }
 
-  const isBelowPrice: boolean = (car.priceTf * 0.95) > car.price;
+  const isBelowPrice: boolean = car.priceTf * 0.95 > car.price;
 
   return (
     <>
@@ -28,11 +29,14 @@ const Card = ({ type, carData }: CardProps) => {
         onClick={() => router.push(`/product/${car?.id}`)}
       >
         <figure className="relative bg-gray-7 h-[9.5rem] mb-4 flex justify-center items-center border-2 group-hover:border-brand-1 ">
-          <img
-            className="w-full h-full object-cover"
+          <Image
             src={car.coverImage}
             alt={car.name}
+            width={1280}
+            height={720}
+            className="w-full h-full object-cover"
           />
+
           {type === "seller" ? (
             <span
               className={`absolute top-2 left-2 text-xs px-2 py-1 text-white ${
@@ -94,6 +98,12 @@ const Card = ({ type, carData }: CardProps) => {
               style="button-black-outline"
               size="button-medium"
               type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                handleOpenModal();
+                setModalType("adsEdit");
+                setCarUpdate(car);
+              }}
             >
               Editar
             </Button>

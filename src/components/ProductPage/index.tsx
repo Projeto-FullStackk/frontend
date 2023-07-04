@@ -1,4 +1,8 @@
-import { Ad } from "@/contexts/AuthContext";
+import Image from "next/image";
+import product from "@/assets/product.png";
+import { Ad, useAuth } from "@/contexts/AuthContext";
+import { CommentsList, UserComment } from "..";
+import { useComments } from "@/contexts/commentsContext";
 import { Button } from "@/components";
 import ProductImage from "./ProductImage";
 import ProductInfo from "./ProductInfo";
@@ -12,6 +16,9 @@ interface ProductPageProps {
 }
 
 const ProductPage = ({ car }: ProductPageProps) => {
+  const { userLogged } = useAuth();
+  const { comments } = useComments();
+
   return (
     <main className="w-full pb-32 min-h-screen bg-gray-6">
       <div className="w-full h-[516px] bg-brand-1 -mb-[450px]" />
@@ -37,14 +44,16 @@ const ProductPage = ({ car }: ProductPageProps) => {
         </div>
 
         <div className="w-full max-w-sm h-max flex flex-col items-center gap-4 md:max-w-3xl xl:max-w-md">
-          <ProductImages images={[
-            car.firstImage,
-            car.secondImage,
-            car.thirdImage,
-            car.fourthImage,
-            car.fifthImage,
-            car.sixthImage,
-          ]} />
+          <ProductImages
+            images={[
+              car.firstImage,
+              car.secondImage,
+              car.thirdImage,
+              car.fourthImage,
+              car.fifthImage,
+              car.sixthImage,
+            ]}
+          />
 
           <Seller
             sellerName={car.user.name}
@@ -54,8 +63,21 @@ const ProductPage = ({ car }: ProductPageProps) => {
         </div>
 
         <div className="w-full max-w-sm flex flex-col items-center gap-10 md:max-w-3xl">
-          {/* Comentários serão inseridos e implementados no componente abaixo */}
-          <Comments />
+          <div className="lg:w-[47rem] mt-4 lg:h-auto w-[21.9375rem] h-[18.375rem] bg-gray-10 pt-9 pb-1 px-7 rounded">
+            <h2 className="text-gray-1 font-semibold text-[1.1rem] font-lex mb-8">
+              Comentários
+            </h2>
+            <ul>
+              {comments.map((element) => (
+                <CommentsList comment={element} key={element.id} />
+              ))}
+            </ul>
+          </div>
+          {userLogged ? (
+            <div className="lg:w-[47rem] mt-4 lg:h-auto w-[21.9375rem] h-[18.375rem] bg-gray-10 py-9 px-7 rounded">
+              <UserComment />
+            </div>
+          ) : null}
         </div>
       </div>
     </main>

@@ -10,8 +10,7 @@ import { Modal } from "@/components";
 const Navbar = () => {
   const { userLogged, logout } = useAuth();
   const [meuDropOpen, setMenuDropOpen] = useState<boolean>(false);
-  const { handleOpenModal, open } = useAppContext();
-  const [modalType, setModalType] = useState<String>("");
+  const { handleOpenModal, open, modalType, setModalType } = useAppContext();
   let initials = "";
   if (userLogged && userLogged.name) {
     const names = userLogged.name.split(" ");
@@ -66,7 +65,7 @@ const Navbar = () => {
             {userLogged?.name}
           </div>
           {meuDropOpen ? (
-            <div className="bg-gray-9 shadow-custom w-48 absolute left-0 top-10 p-5 rounded-lg flex flex-col gap-3  justify-start items-start">
+            <div className="bg-gray-9 shadow-custom w-48 absolute -left-10 top-10 p-5 rounded-lg flex flex-col gap-3  justify-start items-start">
               <button
                 onClick={() => {
                   handleOpenModal();

@@ -80,3 +80,7 @@ Execute `npm run dev` ou `yarn dev` para iniciar um servidor de desenvolvimento.
 
 Este é um projeto Open Source para fins educacionais e não comerciais, **Tipo de licença** - <a name="mit" href="https://opensource.org/licenses/MIT" target="_blank">MIT</a>
 <a name="devs"></a>
+<<<<<<< HEAD
+=======
+
+> > > > > > > 4ab78c60e36870f631409318a9f185d93a20ca43

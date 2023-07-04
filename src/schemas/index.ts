@@ -5,6 +5,7 @@ import {
   iAds,
   iAdsCreate,
   iAdsRequest,
+  iAdsUpdate,
 } from "./ads";
 import { iCarData } from "./apiExternal";
 import {
@@ -22,6 +23,12 @@ import {
   UserUpdate,
 } from "./users";
 import { Car } from "./cars";
+import {
+  CommentData,
+  commentSchema,
+  commentResponse,
+  CommentResponse,
+} from "./comments";
 
 export {
   adsSchema,
@@ -33,6 +40,8 @@ export {
   userResetPasswordSchema,
   userAdressSchema,
   userUpdateSchema,
+  commentSchema,
+  commentResponse,
 };
 
 export type {
@@ -40,6 +49,7 @@ export type {
   iAdsCreate,
   iAdsRequest,
   iCarData,
+  iAdsUpdate,
   LoginData,
   UserData,
   Car,
@@ -47,4 +57,6 @@ export type {
   UserResetPassword,
   UserAdress,
   UserUpdate,
+  CommentData,
+  CommentResponse,
 };

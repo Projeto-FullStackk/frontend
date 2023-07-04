@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { api, apiExternal } from "@/services/api";
-import { Car, iAds, iAdsRequest, iCarData } from "@/schemas";
+import { Car, iAds, iAdsRequest, iAdsUpdate, iCarData } from "@/schemas";
 import { useAppContext } from "@/contexts";
 import { Ad } from "./AuthContext";
 
@@ -10,6 +10,8 @@ interface iKarsContext {
   cars: iCarData[];
   getCarsDataAPI: (brand: string) => void;
   createAd: (data: iAdsRequest) => void;
+  updateAd: (data: iAdsUpdate) => void;
+  deleteAd: () => void;
   ads: Ad[];
   setAds: (ads: Ad[]) => void;
 }
@@ -21,7 +23,7 @@ interface iKarsProvider {
 const KarsContext = createContext<iKarsContext>({} as iKarsContext);
 
 export const KarsProvider = ({ children }: iKarsProvider) => {
-  const { handleCloseModal, setIsLoading } = useAppContext();
+  const { handleCloseModal, setIsLoading, carUpdate } = useAppContext();
   const [brands, setBrands] = useState<string[]>([]);
   const [cars, setCars] = useState<iCarData[]>([]);
   const [ads, setAds] = useState<Ad[]>([]);
@@ -64,10 +66,68 @@ export const KarsProvider = ({ children }: iKarsProvider) => {
       })
       .finally(() => setIsLoading(false));
   };
+  const updateAd = (data: iAdsUpdate) => {
+    /*  setIsLoading(true); */
+    console.log(data, "data update");
+    console.log("ENTROU NO UPDATE AD");
+    api
+      .patch(`/ads/${carUpdate?.id}`, data)
+      .then((res) => {
+        console.log(res.data);
+        setAds([...ads, res.data]);
+        /*  handleCloseModal(); */
+        toast.success("Anuncio editado com sucesso");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Não foi possível editar um anuncio!");
+      });
+    /* .finally(() => setIsLoading(false)); */
+  };
+  const deleteAd = () => {
+    api
+      .delete(`ads/${carUpdate?.id}`)
+      .then(() => {
+        toast.success("Deletado com sucesso", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Anúncio não deletado", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      });
+  };
 
   return (
     <KarsContext.Provider
-      value={{ brands, cars, getCarsDataAPI, createAd, ads, setAds }}
+      value={{
+        brands,
+        cars,
+        getCarsDataAPI,
+        createAd,
+        updateAd,
+        deleteAd,
+        ads,
+        setAds,
+      }}
     >
       {children}
     </KarsContext.Provider>
