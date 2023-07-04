@@ -85,8 +85,8 @@ export const adsUpdateSchema = adsSchema
   .partial();
 
 export type iAdsUpdate = Omit<z.infer<typeof adsUpdateSchema>, "price"> & {
-  price?: number | undefined;
-  published?: string | undefined;
+  price?: number;
+  published?: any;
 };
 export type iAds = z.infer<typeof adsSchema>;
 export type iAdsCreate = z.infer<typeof adsCreateSchema>;

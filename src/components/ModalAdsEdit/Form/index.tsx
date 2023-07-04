@@ -17,16 +17,15 @@ import { fontInter } from "@/styles/font";
 import { data } from "autoprefixer";
 
 const Form = () => {
-  const { brands, cars, getCarsDataAPI, updateAd, deleteAd } = useKarsContext();
+  const { updateAd, deleteAd } = useKarsContext();
   const { userLogged } = useAuth();
   const { isLoading, carUpdate } = useAppContext();
   const [limitImages, setLimitImages] = useState(0);
   const [disabledNameInput, setDisabledNameInput] = useState(true);
-  const [disabledDetailsInput, setDisabledDetailsInput] = useState(true);
+  const [disabledDetailsInput] = useState(true);
   const [yearCar, setYearCar] = useState("");
   const [fuelCar, setFuelCar] = useState("");
   const [priceCar, setPriceCar] = useState("");
-  console.log(carUpdate);
 
   const {
     register,
@@ -68,18 +67,9 @@ const Form = () => {
     setLimitImages(limitImages - 1);
     remove(limitImages - 1);
   };
-  const submitUpdate = async (userData: any) => {
-    try {
-      console.log(userData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const submit = (formData: iAdsUpdate, event: any) => {
     event.preventDefault();
-    console.log(formData, "form data submit");
-    console.log("ENTROU NA FUNCAO SUBMIT");
     const brand = carUpdate!.brand.toLowerCase();
     const year = +yearCar;
     const fuel = fuelCar;

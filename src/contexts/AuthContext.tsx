@@ -147,12 +147,9 @@ const AuthProvider = ({ children }: iProps) => {
       });
   };
   const updateAdress = (userData: UserAdress) => {
-    console.log(userData, "userData");
-
     const data = { ...userLogged, address: userData };
 
     delete data.Address;
-    console.log(data, "data before send");
     api
       .patch(`user/${userLogged?.id}`, data, {
         headers: {
@@ -160,7 +157,6 @@ const AuthProvider = ({ children }: iProps) => {
         },
       })
       .then((response) => {
-        console.log(response, "response update");
         toast.success("Atualização realizada com successo", {
           position: "top-right",
           autoClose: 2000,
