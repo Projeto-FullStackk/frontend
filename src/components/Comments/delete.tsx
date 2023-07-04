@@ -11,21 +11,13 @@ const DeleteComment = ({ commentId }: iDeleteData) => {
 
   return (
     <Modal title="Deletar comentário">
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className="flex flex-col gap-3 items-center"
-      >
+      <div className="flex flex-col gap-3 items-center">
         <h2 className={`${fontInter.className} font-bold`}>
           Deseja realmente apagar seu comentário?
         </h2>
         <div className="flex gap-2.5">
           <button
-            onClick={(e) => (
-              <>
-                {e.stopPropagation()}
-                {deleteComment(commentId)}
-              </>
-            )}
+            onClick={(e) => deleteComment(commentId)}
             className={`${fontInter.className} text-center w-full button-brand h-max rounded-[0.25rem] font-semibold transition-colors button-medium`}
           >
             Deletar

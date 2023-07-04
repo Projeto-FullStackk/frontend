@@ -8,6 +8,6 @@ export const apiExternal = axios.create({
 });
 
 export const api = axios.create({
-  baseURL: "https://motor-shop-m6.onrender.com/",
+  baseURL: "http://localhost:3000/",
   timeout: 5000,
 });

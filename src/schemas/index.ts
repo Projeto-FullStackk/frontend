@@ -6,6 +6,8 @@ import {
   iAdsCreate,
   iAdsRequest,
   iAdsUpdate,
+  iFilter,
+  iAdsFilter,
 } from "./ads";
 import { iCarData } from "./apiExternal";
 import {
@@ -61,4 +63,6 @@ export type {
   CommentData,
   CommentResponse,
   UpdateComment,
+  iFilter,
+  iAdsFilter,
 };
