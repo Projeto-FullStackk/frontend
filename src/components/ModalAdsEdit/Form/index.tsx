@@ -33,15 +33,15 @@ const Form = () => {
     control,
     formState: { errors, defaultValues },
   } = useForm<iAdsUpdate>({
-    resolver: zodResolver(adsUpdateSchema.partial()),
+    resolver: zodResolver(adsUpdateSchema.deepPartial()),
     defaultValues: {
       brand: carUpdate?.brand,
       name: carUpdate?.name,
       fuel: carUpdate?.fuel,
       km: Number(carUpdate?.km),
       color: carUpdate?.color,
-      priceTf: carUpdate?.priceTf,
-      price: carUpdate?.price,
+      priceTf: carUpdate?.priceTf.toString(),
+      price: carUpdate?.price.toString(),
       published: carUpdate?.published.toString(),
       coverImage: carUpdate?.coverImage,
       firstImage: carUpdate?.firstImage,
@@ -70,21 +70,23 @@ const Form = () => {
 
   const submit = (formData: iAdsUpdate, event: any) => {
     event.preventDefault();
+    console.log(formData.images);
     const brand = carUpdate!.brand.toLowerCase();
     const year = +yearCar;
     const fuel = fuelCar;
-    const priceTf = +priceCar.replace(/[^\d,]+/g, "").replace(",", ".");
+    /* const priceTf = +priceCar.replace(/[^\d,]+/g, "").replace(",", "."); */
 
     const data: iAdsUpdate = {
       ...refineBodySubmit(formData),
       brand,
       year,
       fuel,
-      priceTf,
+      priceTf: formData.priceTf,
       userId: userLogged!.id,
       published: formData.published,
     };
-    updateAd(data);
+
+    /* updateAd(data); */
   };
 
   return (

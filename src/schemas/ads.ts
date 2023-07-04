@@ -82,11 +82,15 @@ export const adsUpdateSchema = adsSchema
       }
     }),
   })
-  .partial();
+  .deepPartial();
 
-export type iAdsUpdate = Omit<z.infer<typeof adsUpdateSchema>, "price"> & {
-  price?: number;
+export type iAdsUpdate = Omit<
+  z.infer<typeof adsUpdateSchema>,
+  "price" | "priceTf"
+> & {
+  price?: number | string;
   published?: any;
+  priceTf?: number | string;
 };
 export type iAds = z.infer<typeof adsSchema>;
 export type iAdsCreate = z.infer<typeof adsCreateSchema>;

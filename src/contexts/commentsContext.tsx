@@ -1,4 +1,4 @@
-import { CommentData,  CommentResponse } from "@/schemas";
+import { CommentData, CommentResponse } from "@/schemas";
 import { api } from "@/services/api";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
@@ -62,7 +62,7 @@ const CommentsProvider = ({ children }: iProps) => {
       });
   };
 
-  const request = api.get(`ads/${carId}`).then(async (response) => {
+  /*  const request = api.get(`ads/${carId}`).then(async (response) => {
     const data = response.data;
 
     const comment = data.Comment;
@@ -88,7 +88,7 @@ const CommentsProvider = ({ children }: iProps) => {
   useEffect(() => {
     carId ? request : null;
   }, [carId, request]);
-
+ */
   return (
     <CommentsContext.Provider value={{ createComment, comments }}>
       {children}
