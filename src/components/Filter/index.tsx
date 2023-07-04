@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useMedia } from "use-media";
 import { useAppContext } from "@/contexts";
 import { Button, Modal } from "@/components";
-import { Ad } from "@/contexts/AuthContext";
 import { useRouter } from "next/router";
+import { iFilter } from "@/schemas";
 
 interface FilterProps {
-  cars: Ad[];
+  filters: iFilter
 }
 
-const Filter = ({ cars }: FilterProps) => {
+const Filter = ({ filters }: FilterProps) => {
   const { handleOpenModal, handleCloseModal } = useAppContext();
   const isWide: boolean = useMedia({ maxWidth: "1024px" });
   const router = useRouter();
@@ -27,36 +27,20 @@ const Filter = ({ cars }: FilterProps) => {
   };
 
   useEffect(() => {
-    const uniqueBrands = cars
-      .map((car) => transformCapitalize(car.brand))
-      .filter((brand, index, array) => array.indexOf(brand) === index);
-    setBrands(uniqueBrands);
+    const { allBrands, allModels, allYears, allFuels, allColors } = filters;
 
-    const uniqueModels = cars
-      .map((car) => transformCapitalize(car.name))
-      .filter((model, index, array) => array.indexOf(model) === index);
-    setModels(uniqueModels);
+    setBrands(allBrands.map(brand => transformCapitalize(brand)));
+    setModels(allModels.map(model => transformCapitalize(model)));
+    setYears(allYears);
+    setFuels(allFuels.map(fuel => transformCapitalize(fuel)));
+    setColors(allColors);
 
-    const uniqueColors = cars
-      .map((car) => car.color)
-      .filter((color, index, array) => array.indexOf(color) === index);
-    setColors(uniqueColors);
-
-    const uniqueYears = cars
-      .map((car) => car.year)
-      .filter((year, index, array) => array.indexOf(year) === index);
-    setYears(uniqueYears);
-
-    const uniqueFuels = cars
-      .map((car) => car.fuel)
-      .filter((fuel, index, array) => array.indexOf(fuel) === index);
-    setFuels(uniqueFuels);
-  }, [cars]);
+  }, [filters]);
 
   const handleFilter = (key: string, value: string | number, reset = false) => {
     const newQuery = reset
-      ? { [key]: value }
-      : { ...router.query, [key]: value };
+      ? { [key]: value, page: 1 }
+      : { ...router.query, [key]: value, page: 1 };
     router.push(
       {
         pathname: "/",

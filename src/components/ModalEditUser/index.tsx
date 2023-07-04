@@ -25,7 +25,7 @@ const ModalEditUser = () => {
   });
   const submitUpdate = async (userData: any) => {
     try {
-      await updateUser(userData);
+      updateUser(userData);
     } catch (error) {
       console.log(error);
     }
