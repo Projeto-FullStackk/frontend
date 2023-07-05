@@ -3,9 +3,8 @@ import { differenceInDays, parseISO } from "date-fns";
 import menu from "../../assets/menubr.png";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Modal } from "..";
 import UpdateComment from "./update";
-import { useAppContext } from "@/contexts";
+import { useAppContext, useAuth } from "@/contexts";
 import DeleteComment from "./delete";
 
 interface iCommentProps {
@@ -13,6 +12,7 @@ interface iCommentProps {
 }
 
 const CommentsList = ({ comment }: iCommentProps) => {
+  const { userLogged } = useAuth();
   const { handleOpenModal, open, modalType, setModalType } = useAppContext();
 
   const [showMenu, setShowMenu] = useState(false);
@@ -89,24 +89,25 @@ const CommentsList = ({ comment }: iCommentProps) => {
             )} dias`}</li>
           </ul>
         </div>
-        <div className="flex flex-col items-end cursor-pointer">
-          <Image
-            onClick={handleMenu}
-            src={menu}
-            alt="menu-dropdown"
-            width={24}
-            height={24}
-          />
-          {showMenu && (
-            <div className="flex flex-col gap-1 mt-1 pr-2 items-start relative">
-              <div className="flex flex-col absolute top-0 right-4 bg-gray-9 shadow-custom p-4 rounded-lg gap-3 justify-start items-start">
-                <span
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleOpenModal();
-                    setModalType(`${comment.id}+1`);
-                  }}
-                  className="
+        {userLogged?.id === comment.userId ? (
+          <div className="flex flex-col items-end cursor-pointer">
+            <Image
+              onClick={handleMenu}
+              src={menu}
+              alt="menu-dropdown"
+              width={24}
+              height={24}
+            />
+            {showMenu && (
+              <div className="flex flex-col gap-1 mt-1 pr-2 items-start relative">
+                <div className="flex flex-col absolute top-0 right-4 bg-gray-9 shadow-custom p-4 rounded-lg gap-3 justify-start items-start">
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleOpenModal();
+                      setModalType(`${comment.id}+1`);
+                    }}
+                    className="
                         group/item
                         text-gray-2
                         transition
@@ -114,18 +115,18 @@ const CommentsList = ({ comment }: iCommentProps) => {
                         text-sm
                         cursor-pointer
                         "
-                >
-                  Editar
-                </span>
-                <span
-                  onClick={(e) => (
-                    <>
-                      {e.stopPropagation()}
-                      {handleOpenModal()}
-                      {setModalType(comment.id)}
-                    </>
-                  )}
-                  className="
+                  >
+                    Editar
+                  </span>
+                  <span
+                    onClick={(e) => (
+                      <>
+                        {e.stopPropagation()}
+                        {handleOpenModal()}
+                        {setModalType(comment.id)}
+                      </>
+                    )}
+                    className="
                         group/item
                         text-gray-2
                         transition
@@ -133,13 +134,14 @@ const CommentsList = ({ comment }: iCommentProps) => {
                         text-sm
                         cursor-pointer
                         "
-                >
-                  Excluir
-                </span>
+                  >
+                    Excluir
+                  </span>
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        ) : null}
       </div>
       <p className="font-inter text-base text-gray-2">{comment.comment}</p>
     </li>
