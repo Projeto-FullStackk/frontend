@@ -5,6 +5,7 @@ import Badge from "./Badge";
 import { useAppContext } from "@/contexts";
 import ModalAdsEdit from "../ModalAdsEdit";
 import CardCoverImage from "./CardCoverImage";
+import CardPublishLabel from "./CardPublishLabel";
 
 interface CardProps {
   type: "user" | "seller";
@@ -30,16 +31,6 @@ const Card = ({ type, carData }: CardProps) => {
         onClick={() => router.push(`/product/${car?.id}`)}
       >
         <CardCoverImage coverImage={car.coverImage} />
-
-        {type === "seller" ? (
-            <span
-              className={`absolute top-2 left-2 text-xs px-2 py-1 text-white ${
-                car.published ? "bg-brand-1" : "bg-gray-4"
-              } `}
-            >
-              {car.published ? "Ativo" : "Inativo"}
-            </span>
-          ) : null}
 
         <h2 className=" whitespace-nowrap font-lex font-semibold mb-4 text-ellipsis overflow-hidden ">
           {car.name}
@@ -84,30 +75,34 @@ const Card = ({ type, carData }: CardProps) => {
           </span>
         </div>
 
-        {type === "seller" ? (
-          <div className="w-full pt-4 flex gap-4">
-            <Button
-              style="button-black-outline"
-              size="button-medium"
-              type="button"
-              onClick={(event) => {
-                event.stopPropagation();
-                handleOpenModal();
-                setModalType("adsEdit");
-                setCarUpdate(car);
-              }}
-            >
-              Editar
-            </Button>
-            <Button
-              style="button-black-outline"
-              size="button-medium"
-              type="button"
-            >
-              Ver detalhes
-            </Button>
-          </div>
-        ) : null}
+        {type === "seller" && (
+          <>
+            <div className="w-full pt-4 flex gap-4">
+              <Button
+                style="button-black-outline"
+                size="button-medium"
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleOpenModal();
+                  setModalType("adsEdit");
+                  setCarUpdate(car);
+                }}
+              >
+                Editar
+              </Button>
+              <Button
+                style="button-black-outline"
+                size="button-medium"
+                type="button"
+              >
+                Ver detalhes
+              </Button>
+            </div>
+
+            <CardPublishLabel isPublished={car.published} />
+          </>
+        )}
       </li>
     </>
   );
