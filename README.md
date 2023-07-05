@@ -32,7 +32,7 @@ O aplicativo possui autenticação de usuário e permite que os usuários gerenc
 
 ### 1.1 Deploy da Aplicação
 
-- <a name="MotorShop" href="" target="_blank">Motor Shop - Live</a>
+- <a name="MotorShop" href="https://motorshop-joaobuga35.vercel.app/" target="_blank">Motor Shop - Live</a>
 
 <a name="techs"></a>
 
