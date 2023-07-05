@@ -9,6 +9,7 @@ import CardPublishLabel from "./CardPublishLabel";
 import CardTitle from "./CardTitle";
 import CardDescription from "./CardDescription";
 import CardSeller from "./CardSeller";
+import CardInfo from "./CardInfo";
 
 interface CardProps {
   type: "user" | "seller";
@@ -42,22 +43,7 @@ const Card = ({ type, carData }: CardProps) => {
           </>
         )}
 
-        <div className="flex container justify-between items-center mt-4">
-          <div className="flex gap-2">
-            <span className="w-max h-max px-2 py-1 bg-brand-4 rounded font-inter font-medium text-brand-1 text-sm">
-              {new Intl.NumberFormat("pt-BR").format(+car.km)} km
-            </span>
-            <span className="w-max h-max px-2 py-1 bg-brand-4 rounded font-inter font-medium text-brand-1 text-sm">
-              {car.year}
-            </span>
-          </div>
-          <span className="w-auto whitespace-nowrap text-ellipsis overflow-hidden">
-            {new Intl.NumberFormat("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            }).format(car.price)}
-          </span>
-        </div>
+        <CardInfo km={+car.km} price={car.price} year={car.year} />
 
         {type === "seller" && (
           <>
