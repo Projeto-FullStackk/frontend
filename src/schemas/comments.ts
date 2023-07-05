@@ -15,3 +15,4 @@ export const commentResponse = z.object({
 
 export type CommentData = z.infer<typeof commentSchema>;
 export type CommentResponse = z.infer<typeof commentResponse>;
+export type UpdateComment = z.infer<typeof commentSchema>;

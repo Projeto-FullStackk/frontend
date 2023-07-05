@@ -9,7 +9,7 @@ import ProductInfo from "./ProductInfo";
 import ProductDescription from "./ProductDescription";
 import ProductImages from "./ProductImages";
 import Seller from "./Seller";
-import Comments from "./Comments";
+import NoContent from "../NoContent";
 import Link from "next/link";
 
 interface ProductPageProps {
@@ -84,9 +84,13 @@ const ProductPage = ({ car }: ProductPageProps) => {
               Comentários
             </h2>
             <ul>
-              {comments.map((element) => (
-                <CommentsList comment={element} key={element.id} />
-              ))}
+              {comments.length === 0 ? (
+                <NoContent message="Seja o primeiro a comentar!" />
+              ) : (
+                comments.map((element) => (
+                  <CommentsList comment={element} key={element.id} />
+                ))
+              )}
             </ul>
           </div>
           {userLogged ? (
