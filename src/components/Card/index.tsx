@@ -7,6 +7,7 @@ import ModalAdsEdit from "../ModalAdsEdit";
 import CardCoverImage from "./CardCoverImage";
 import CardPublishLabel from "./CardPublishLabel";
 import CardTitle from "./CardTitle";
+import CardDescription from "./CardDescription";
 
 interface CardProps {
   type: "user" | "seller";
@@ -35,9 +36,7 @@ const Card = ({ type, carData }: CardProps) => {
 
         <CardTitle brand={car.brand} name={car.name} />
 
-        <p className="font-inter font-normal text-xs text-gray-2">
-          {car.description}
-        </p>
+        <CardDescription description={car.description} />
 
         {type === "user" ? (
           <div
