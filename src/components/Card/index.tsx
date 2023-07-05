@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { Button } from "@/components";
 import { Ad } from "@/contexts/AuthContext";
 import Badge from "./Badge";
-import { useAppContext } from "@/contexts";
 import ModalAdsEdit from "../ModalAdsEdit";
 import CardCoverImage from "./CardCoverImage";
 import CardPublishLabel from "./CardPublishLabel";
@@ -10,6 +9,7 @@ import CardTitle from "./CardTitle";
 import CardDescription from "./CardDescription";
 import CardSeller from "./CardSeller";
 import CardInfo from "./CardInfo";
+import CardButtons from "./CardButtons";
 
 interface CardProps {
   type: "user" | "seller";
@@ -19,7 +19,6 @@ interface CardProps {
 const Card = ({ type, carData }: CardProps) => {
   const { user, ...car } = carData;
   const router = useRouter();
-  const { handleOpenModal, setModalType, setCarUpdate } = useAppContext();
 
   const isBelowPrice: boolean = car.priceTf * 0.95 > car.price;
 
@@ -47,28 +46,7 @@ const Card = ({ type, carData }: CardProps) => {
 
         {type === "seller" && (
           <>
-            <div className="w-full pt-4 flex gap-4">
-              <Button
-                style="button-black-outline"
-                size="button-medium"
-                type="button"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  handleOpenModal();
-                  setModalType("adsEdit");
-                  setCarUpdate(car);
-                }}
-              >
-                Editar
-              </Button>
-              <Button
-                style="button-black-outline"
-                size="button-medium"
-                type="button"
-              >
-                Ver detalhes
-              </Button>
-            </div>
+            <CardButtons carData={carData} />
 
             <CardPublishLabel isPublished={car.published} />
           </>
