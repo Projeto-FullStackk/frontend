@@ -69,7 +69,7 @@ const UserComment = () => {
 
       <form
         onSubmit={handleSubmit(submitComments)}
-        className="flex flex-col items-end h-32 rounded border-gray-7 border-2 lg:w-[42rem] w-[21.9375rem]"
+        className="flex flex-col items-end h-32 rounded border-gray-7 border-2 lg:w-[42rem] w-[19rem]"
       >
         <input
           id="comment-input"
@@ -85,7 +85,7 @@ const UserComment = () => {
         </button>
       </form>
 
-      <div className="flex gap-2 font-medium">
+      <div className="flex gap-2 font-medium flex-wrap">
         <button
           value="Gostei muito"
           onClick={predeterminedComment}

@@ -62,8 +62,8 @@ const ProductPage = ({ car }: ProductPageProps) => {
           />
         </div>
 
-        <div className="w-full max-w-sm flex flex-col items-center gap-10 md:max-w-3xl">
-          <div className="lg:w-[47rem] mt-4 lg:h-auto w-[21.9375rem] h-[18.375rem] bg-gray-10 pt-9 pb-1 px-7 rounded">
+        <div className="w-full h-min max-w-sm flex flex-col items-center gap-10 md:max-w-3xl">
+          <div className="lg:w-[47rem] mt-4 lg:h-auto w-[21.9375rem] bg-gray-10 pt-9 pb-1 px-7 rounded">
             <h2 className="text-gray-1 font-semibold text-[1.1rem] font-lex mb-8">
               Comentários
             </h2>
