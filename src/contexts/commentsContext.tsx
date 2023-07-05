@@ -20,6 +20,7 @@ interface iCommentsProvider {
   comments: CommentResponse[];
   updateComment: (commentId: string, commentData: CommentData) => void;
   deleteComment: (commentId: string) => void;
+  request: () => void;
 }
 
 const CommentsContext = createContext<iCommentsProvider>(
@@ -164,7 +165,7 @@ const CommentsProvider = ({ children }: iProps) => {
 
   return (
     <CommentsContext.Provider
-      value={{ createComment, comments, updateComment, deleteComment }}
+      value={{ createComment, comments, updateComment, deleteComment, request }}
     >
       {children}
     </CommentsContext.Provider>

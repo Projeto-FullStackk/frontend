@@ -3,6 +3,7 @@ import { CommentData, UpdateComment, commentSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Modal } from "..";
+import { useAppContext } from "@/contexts";
 
 interface iUpdateData {
   commentId: string;
@@ -10,6 +11,7 @@ interface iUpdateData {
 
 const UpdateComment = ({ commentId }: iUpdateData) => {
   const { updateComment } = useComments();
+  const { handleCloseModal } = useAppContext();
 
   const { register, handleSubmit, setValue } = useForm<UpdateComment>({
     resolver: zodResolver(commentSchema),
@@ -18,6 +20,7 @@ const UpdateComment = ({ commentId }: iUpdateData) => {
   const submitComments = (formData: CommentData) => {
     updateComment(commentId, formData);
     setValue("comment", "");
+    handleCloseModal();
   };
 
   return (
