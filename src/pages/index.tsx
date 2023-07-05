@@ -17,12 +17,13 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async (
 
   const response = await api.get("/ads/filter", { params: query });
   const cars = response.data.ads;
+
   const filtersCars = response.data.filters;
 
   return {
     props: {
       cars,
-      filtersCars
+      filtersCars,
     },
   };
 };
@@ -55,7 +56,7 @@ const Home: React.FC<HomeProps> = ({ cars, filtersCars }) => {
     limitPage,
     hasNextPage,
     hasPreviousPage,
-  }
+  };
 
   return (
     <>
