@@ -110,6 +110,7 @@ const AuthProvider = ({ children }: iProps) => {
       description: userData.description,
       password: userData.confirmPass,
       address: address,
+      isSeller: userData.isSeller,
     };
 
     api
@@ -129,7 +130,8 @@ const AuthProvider = ({ children }: iProps) => {
     const data = { ...userLogged, address: userData };
 
     delete data.Address;
-    return api.patch(`user/${userLogged?.id}`, data)
+    return api
+      .patch(`user/${userLogged?.id}`, data)
       .then((response) => {
         setUserLogged(response.data);
         toast.success("Atualização realizada com successo");
@@ -146,7 +148,8 @@ const AuthProvider = ({ children }: iProps) => {
   const updateUser = async (userData: UserUpdate) => {
     const validData = userUpdateSchema.parse(userData);
 
-    return api.patch(`user/${userLogged?.id}`, validData)
+    return api
+      .patch(`user/${userLogged?.id}`, validData)
       .then((response) => {
         setUserLogged(response.data);
         toast.success("Atualização realizada com successo");
@@ -183,12 +186,15 @@ const AuthProvider = ({ children }: iProps) => {
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Erro ao logar, verifique se o e-mail e a senha estão corretos !");
+        toast.error(
+          "Erro ao logar, verifique se o e-mail e a senha estão corretos !"
+        );
       });
   };
 
   const deleteUser = async () => {
-    return api.delete(`user/${userLogged?.id}`)
+    return api
+      .delete(`user/${userLogged?.id}`)
       .then(() => {
         logout();
         toast.success("Deletado com sucesso");

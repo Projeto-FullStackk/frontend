@@ -27,7 +27,7 @@ const CommentsList = ({ comment }: iCommentProps) => {
     };
   });
 
-  const handleMenu = (e) => {
+  const handleMenu = (e: any) => {
     e.stopPropagation();
     setShowMenu(!showMenu);
   };
