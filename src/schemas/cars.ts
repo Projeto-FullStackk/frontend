@@ -6,8 +6,8 @@ export interface Car {
   fuel: string;
   km: string;
   color: string;
-  priceTf: number;
-  price: number;
+  priceTf: number | string;
+  price: number | string;
   description: string;
   coverImage: string;
   firstImage: string;
