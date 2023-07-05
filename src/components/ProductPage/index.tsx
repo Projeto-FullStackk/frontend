@@ -39,10 +39,7 @@ const ProductPage = ({ car }: ProductPageProps) => {
               price={car.price}
             />
 
-            <Link
-              target="_blank"
-              href={wppAPI + wppPhone + wppMessage}
-            >
+            <Link target="_blank" href={wppAPI + wppPhone + wppMessage}>
               <Button style="button-brand" size="button-medium">
                 Comprar
               </Button>
