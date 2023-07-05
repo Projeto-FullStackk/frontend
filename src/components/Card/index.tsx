@@ -8,6 +8,7 @@ import CardCoverImage from "./CardCoverImage";
 import CardPublishLabel from "./CardPublishLabel";
 import CardTitle from "./CardTitle";
 import CardDescription from "./CardDescription";
+import CardSeller from "./CardSeller";
 
 interface CardProps {
   type: "user" | "seller";
@@ -18,11 +19,6 @@ const Card = ({ type, carData }: CardProps) => {
   const { user, ...car } = carData;
   const router = useRouter();
   const { handleOpenModal, setModalType, setCarUpdate } = useAppContext();
-  let initials = "";
-  if (user?.name) {
-    const names = user?.name.split(" ");
-    initials = names[0][0] + names[1][0];
-  }
 
   const isBelowPrice: boolean = car.priceTf * 0.95 > car.price;
 
@@ -38,24 +34,13 @@ const Card = ({ type, carData }: CardProps) => {
 
         <CardDescription description={car.description} />
 
-        {type === "user" ? (
-          <div
-            className="flex items-center gap-2 mt-5"
-            onClick={(event) => {
-              event.stopPropagation();
-              router.push(`/profile/${car.userId}`);
-            }}
-          >
-            <span className="rounded-[9.375rem] bg-random-5 w-[2rem] h-[2rem] text-gray-white flex justify-center items-center text-sm font-inter">
-              {initials}
-            </span>
-            <span className="font-inter font-medium text-gray-2 text-sm">
-              {user?.name}
-            </span>
-          </div>
-        ) : null}
+        {type === "user" && (
+          <>
+            <CardSeller sellerId={user.id} sellerName={user.name} />
 
-        {type === "user" && isBelowPrice && <Badge />}
+            {isBelowPrice && <Badge />}
+          </>
+        )}
 
         <div className="flex container justify-between items-center mt-4">
           <div className="flex gap-2">
