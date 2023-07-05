@@ -9,7 +9,8 @@ import ProductInfo from "./ProductInfo";
 import ProductDescription from "./ProductDescription";
 import ProductImages from "./ProductImages";
 import Seller from "./Seller";
-import Comments from "./Comments";
+import NoContent from "../NoContent";
+import Link from "next/link";
 
 interface ProductPageProps {
   car: Ad;
@@ -18,6 +19,16 @@ interface ProductPageProps {
 const ProductPage = ({ car }: ProductPageProps) => {
   const { userLogged } = useAuth();
   const { comments } = useComments();
+
+  const transformCapitalize = (word: string): string => {
+    const firstWord = word.split(" ")[0];
+    const firstLetterUpperCase = firstWord[0].toUpperCase();
+    return firstLetterUpperCase + firstWord.slice(1);
+  };
+
+  const wppAPI = "https://api.whatsapp.com/send?";
+  const wppPhone = `phone=+55${car.user.phone.split("").filter(char => !isNaN(+char) && char !== " ").join("")}`;
+  const wppMessage = `&text=Olá, ${car.user.name}! Vi seu anúncio no Motors shop do ${transformCapitalize(car.brand)} ${transformCapitalize(car.name)} e estou interessado na compra. \nLink: https://motor-shop-m6.onrender.com/product/${car.id}`;
 
   return (
     <main className="w-full pb-32 min-h-screen bg-gray-6">
@@ -35,9 +46,14 @@ const ProductPage = ({ car }: ProductPageProps) => {
               price={car.price}
             />
 
-            <Button style="button-brand" size="button-medium">
-              Comprar
-            </Button>
+            <Link
+              target="_blank"
+              href={wppAPI + wppPhone + wppMessage}
+            >
+              <Button style="button-brand" size="button-medium">
+                Comprar
+              </Button>
+            </Link>
           </div>
 
           <ProductDescription description={car.description} />
@@ -68,9 +84,13 @@ const ProductPage = ({ car }: ProductPageProps) => {
               Comentários
             </h2>
             <ul>
-              {comments.map((element) => (
-                <CommentsList comment={element} key={element.id} />
-              ))}
+              {comments.length === 0 ? (
+                <NoContent message="Seja o primeiro a comentar!" />
+              ) : (
+                comments.map((element) => (
+                  <CommentsList comment={element} key={element.id} />
+                ))
+              )}
             </ul>
           </div>
           {userLogged ? (

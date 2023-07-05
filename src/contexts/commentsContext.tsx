@@ -18,6 +18,8 @@ interface iProps {
 interface iCommentsProvider {
   createComment: (commentData: CommentData) => void;
   comments: CommentResponse[];
+  updateComment: (commentId: string, commentData: CommentData) => void;
+  deleteComment: (commentId: string) => void;
 }
 
 const CommentsContext = createContext<iCommentsProvider>(
@@ -62,35 +64,108 @@ const CommentsProvider = ({ children }: iProps) => {
       });
   };
 
-  /*  const request = api.get(`ads/${carId}`).then(async (response) => {
-    const data = response.data;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const request = () => {
+    api.get(`ads/${carId}`).then(async (response) => {
+      const data = response.data;
 
-    const comment = data.Comment;
+      const comment = data.Comment;
 
-    const commentMap = await Promise.all(
-      comment.map(async (element: CommentResponse) => {
-        const user = await api.get(`user/${element.userId}`);
-        const response = {
-          comment: element.comment,
-          adsId: element.adsId,
-          createdAt: element.createdAt,
-          id: element.id,
-          userName: user.data.name,
-          userId: element.userId,
-        };
-        return response;
-      })
-    );
+      const commentMap = await Promise.all(
+        comment.map(async (element: CommentResponse) => {
+          const user = await api.get(`user/${element.userId}`);
+          const response = {
+            comment: element.comment,
+            adsId: element.adsId,
+            createdAt: element.createdAt,
+            id: element.id,
+            userName: user.data.name,
+            userId: element.userId,
+          };
+          return response;
+        })
+      );
 
-    setComments(commentMap);
-  });
+      setComments(commentMap);
+    });
+  };
 
   useEffect(() => {
-    carId ? request : null;
+    carId ? request() : null;
   }, [carId, request]);
- */
+
+  const updateComment = (commentId: string, commentData: CommentData) => {
+    api
+      .patch(`comments/${commentId}`, commentData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        toast.success("Atualização realizada com successo", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Falha ao atualizar comentário", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      });
+  };
+
+  const deleteComment = (commentId: string) => {
+    api
+      .delete(`comments/${commentId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        toast.success("Comentário apagado", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Falha ao deletar comentário", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      });
+  };
+
   return (
-    <CommentsContext.Provider value={{ createComment, comments }}>
+    <CommentsContext.Provider
+      value={{ createComment, comments, updateComment, deleteComment }}
+    >
       {children}
     </CommentsContext.Provider>
   );
