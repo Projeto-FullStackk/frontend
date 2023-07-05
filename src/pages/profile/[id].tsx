@@ -10,6 +10,7 @@ import { UserLogged } from "@/contexts/AuthContext";
 import { Button, Card, ModalAdsCreate } from "@/components";
 import { api } from "@/services/api";
 import ModalAdsEdit from "@/components/ModalAdsEdit";
+import NoContent from "@/components/NoContent";
 
 interface ProfileProps {
   user: UserLogged;
@@ -88,14 +89,18 @@ const Profile: NextPage<ProfileProps> = ({ user }) => {
               Anúncios
             </h1>
           )}
-          <ul className="list-none w-full h-fit px-5 flex overflow-x-auto lg:grid lg:grid-cols-3 lg:max-w-[1429px] lg:justify-items-center xl:grid-cols-4  gap-8 pb-10">
-            {user.ads.map((car) => {
-              if (seller) {
-                return <Card key={car.id} carData={car} type="seller" />;
-              }
-              return <Card key={car.id} carData={car} type="user" />;
-            })}
-          </ul>
+          {user.ads.length > 0 ? (
+            <ul className="list-none w-full h-fit px-5 flex overflow-x-auto lg:grid lg:grid-cols-3 lg:max-w-[1429px] lg:justify-items-center xl:grid-cols-4  gap-8 pb-10">
+              {user.ads.map((car) => {
+                if (seller) {
+                  return <Card key={car.id} carData={car} type="seller" />;
+                }
+                return <Card key={car.id} carData={car} type="user" />;
+              })}
+            </ul>
+          ) : (
+            <NoContent message="Ainda existem anúncios cadastrados" />
+          )}
         </section>
       </main>
     </KarsProvider>
