@@ -1,30 +1,21 @@
-import { ChangeEvent, useState } from "react";
-import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
+import { useState } from "react";
+import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  adsCreateSchema,
-  Car,
-  iAdsCreate,
-  iAdsRequest,
-  iAdsUpdate,
-} from "@/schemas";
+import { iAdsUpdate } from "@/schemas";
 import { adsUpdateSchema } from "@/schemas/ads";
-import { useAppContext, useAuth, useKarsContext } from "@/contexts";
+import { useAppContext, useKarsContext } from "@/contexts";
 import { Button, Input, Loading } from "@/components";
 import showError from "../../ModalAdsCreate/Form/showError";
 import refineBodySubmit from "./refineBodySubmit";
 import { fontInter } from "@/styles/font";
-import { data } from "autoprefixer";
 
 const Form = () => {
   const { updateAd, deleteAd } = useKarsContext();
-  const { userLogged } = useAuth();
   const { isLoading, carUpdate } = useAppContext();
   const [limitImages, setLimitImages] = useState(0);
   const [disabledDetailsInput] = useState(true);
   const [yearCar, setYearCar] = useState("");
   const [fuelCar, setFuelCar] = useState("");
-  const [priceCar, setPriceCar] = useState("");
 
   const {
     register,
@@ -41,7 +32,7 @@ const Form = () => {
       color: carUpdate?.color,
       priceTf: carUpdate?.priceTf.toString(),
       price: carUpdate?.price.toString(),
-      published: carUpdate?.published.toString(),
+      published: carUpdate?.published ? "verdadeiro" : "falso",
     },
   });
   console.log(errors);
@@ -63,28 +54,35 @@ const Form = () => {
   const submit = (formData: iAdsUpdate, event: any) => {
     event.preventDefault();
 
-    /* const priceTf = +priceCar.replace(/[^\d,]+/g, "").replace(",", "."); */
-
-    if (formData.images) {
+    if (formData.images && formData.images.length > 0) {
+      console.log(formData.images);
       const data: iAdsUpdate = {
-        /* ...refineBodySubmit(formData), */
-
-        priceTf: formData.priceTf,
-        userId: userLogged!.id,
-        published: formData.published,
+        ...refineBodySubmit(formData),
+        coverImage: formData.coverImage
+          ? formData.coverImage
+          : carUpdate?.coverImage,
+        km: formData.km,
+        price: formData.price,
+        published: formData.published
+          ? formData.published
+          : carUpdate?.published,
       };
+
+      updateAd(data);
     }
 
     const data: iAdsUpdate = {
-      coverImage: carUpdate?.coverImage,
+      coverImage: formData.coverImage
+        ? formData.coverImage
+        : carUpdate?.coverImage,
       km: formData.km,
       price: formData.price,
-      published: formData.published,
+      published: formData.published ? formData.published : carUpdate?.published,
     };
 
     updateAd(data);
   };
-  console.log(carUpdate);
+
   return (
     <form
       onSubmit={handleSubmit(submit)}
@@ -204,7 +202,7 @@ const Form = () => {
           <input
             type="radio"
             className="hidden"
-            value="true"
+            value={"verdadeiro"}
             {...register("published")}
           />
         </label>
@@ -216,7 +214,7 @@ const Form = () => {
           <input
             type="radio"
             className="hidden"
-            value="false"
+            value={"falso"}
             {...register("published")}
           />
         </label>
@@ -239,9 +237,9 @@ const Form = () => {
             id={field.id}
             as="input"
             type="text"
-            label={`${index + 3}° Imagem da galeria`}
+            label={`${index + 1}° Imagem da galeria`}
             placeholder="https://image.com"
-            register={register(`images.${index + 2}.url`)}
+            register={register(`images.${index}.url`)}
           />
         );
       })}

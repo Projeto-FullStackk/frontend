@@ -76,7 +76,7 @@ export const adsUpdateSchema = adsSchema
     sixthImage: z.string().nullable(),
     userId: z.string(),
     published: z.string().transform((value) => {
-      if (value === "true") {
+      if (value === "verdadeiro") {
         return true;
       } else {
         return false;
