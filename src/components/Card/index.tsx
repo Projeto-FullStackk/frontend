@@ -1,10 +1,11 @@
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { Button } from "@/components";
 import { Ad } from "@/contexts/AuthContext";
 import Badge from "./Badge";
 import { useAppContext } from "@/contexts";
 import ModalAdsEdit from "../ModalAdsEdit";
+import CardCoverImage from "./CardCoverImage";
+
 interface CardProps {
   type: "user" | "seller";
   carData: Ad;
@@ -28,16 +29,9 @@ const Card = ({ type, carData }: CardProps) => {
         className="group w-[18rem] min-w-[18rem] max-h-[400px] cursor-pointer relative"
         onClick={() => router.push(`/product/${car?.id}`)}
       >
-        <figure className="relative bg-gray-7 h-[9.5rem] mb-4 flex justify-center items-center border-2 group-hover:border-brand-1 ">
-          <Image
-            src={car.coverImage}
-            alt={car.name}
-            width={1280}
-            height={720}
-            className="w-full h-full object-cover"
-          />
+        <CardCoverImage coverImage={car.coverImage} />
 
-          {type === "seller" ? (
+        {type === "seller" ? (
             <span
               className={`absolute top-2 left-2 text-xs px-2 py-1 text-white ${
                 car.published ? "bg-brand-1" : "bg-gray-4"
@@ -46,7 +40,7 @@ const Card = ({ type, carData }: CardProps) => {
               {car.published ? "Ativo" : "Inativo"}
             </span>
           ) : null}
-        </figure>
+
         <h2 className=" whitespace-nowrap font-lex font-semibold mb-4 text-ellipsis overflow-hidden ">
           {car.name}
         </h2>
