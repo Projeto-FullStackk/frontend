@@ -1,11 +1,18 @@
 import { useState } from "react";
 
-const Badge = () => {
+interface iCardBadgeProps {
+  price: number;
+  priceTf: number;
+}
+
+const CardBadge = ({ price, priceTf }: iCardBadgeProps) => {
   const [showMessage, setShowMessage] = useState(false);
 
   const handleMessage = () => setShowMessage(!showMessage);
 
-  return (
+  const isBelowPrice: boolean = priceTf * 0.95 > price;
+
+  return isBelowPrice && (
     <span
       onMouseOver={handleMessage}
       onMouseOut={handleMessage}
@@ -16,4 +23,4 @@ const Badge = () => {
   )
 }
 
-export default Badge;
+export default CardBadge;

@@ -1,7 +1,5 @@
 import { useRouter } from "next/router";
-import { Button } from "@/components";
 import { Ad } from "@/contexts/AuthContext";
-import Badge from "./Badge";
 import ModalAdsEdit from "../ModalAdsEdit";
 import CardCoverImage from "./CardCoverImage";
 import CardPublishLabel from "./CardPublishLabel";
@@ -10,6 +8,7 @@ import CardDescription from "./CardDescription";
 import CardSeller from "./CardSeller";
 import CardInfo from "./CardInfo";
 import CardButtons from "./CardButtons";
+import CardBadge from "./CardBadge";
 
 interface CardProps {
   type: "user" | "seller";
@@ -19,8 +18,6 @@ interface CardProps {
 const Card = ({ type, carData }: CardProps) => {
   const { user, ...car } = carData;
   const router = useRouter();
-
-  const isBelowPrice: boolean = car.priceTf * 0.95 > car.price;
 
   return (
     <>
@@ -38,7 +35,7 @@ const Card = ({ type, carData }: CardProps) => {
           <>
             <CardSeller sellerId={user.id} sellerName={user.name} />
 
-            {isBelowPrice && <Badge />}
+            <CardBadge price={car.price} priceTf={car.priceTf} />
           </>
         )}
 
