@@ -11,6 +11,7 @@ import ProductImages from "./ProductImages";
 import Seller from "./Seller";
 import NoContent from "../NoContent";
 import Link from "next/link";
+import { useEffect } from "react";
 
 interface ProductPageProps {
   car: Ad;
@@ -18,7 +19,7 @@ interface ProductPageProps {
 
 const ProductPage = ({ car }: ProductPageProps) => {
   const { userLogged } = useAuth();
-  const { comments } = useComments();
+  const { comments, request } = useComments();
 
   const transformCapitalize = (word: string): string => {
     const firstWord = word.split(" ")[0];
@@ -27,8 +28,19 @@ const ProductPage = ({ car }: ProductPageProps) => {
   };
 
   const wppAPI = "https://api.whatsapp.com/send?";
-  const wppPhone = `phone=+55${car.user.phone.split("").filter(char => !isNaN(+char) && char !== " ").join("")}`;
-  const wppMessage = `&text=Olá, ${car.user.name}! Vi seu anúncio no Motors shop do ${transformCapitalize(car.brand)} ${transformCapitalize(car.name)} e estou interessado na compra. \nLink: https://motor-shop-m6.onrender.com/product/${car.id}`;
+  const wppPhone = `phone=+55${car.user.phone
+    .split("")
+    .filter((char) => !isNaN(+char) && char !== " ")
+    .join("")}`;
+  const wppMessage = `&text=Olá, ${
+    car.user.name
+  }! Vi seu anúncio no Motors shop do ${transformCapitalize(
+    car.brand
+  )} ${transformCapitalize(
+    car.name
+  )} e estou interessado na compra. \nLink: https://motor-shop-m6.onrender.com/product/${
+    car.id
+  }`;
 
   return (
     <main className="w-full pb-32 min-h-screen bg-gray-6">
@@ -46,10 +58,7 @@ const ProductPage = ({ car }: ProductPageProps) => {
               price={car.price}
             />
 
-            <Link
-              target="_blank"
-              href={wppAPI + wppPhone + wppMessage}
-            >
+            <Link target="_blank" href={wppAPI + wppPhone + wppMessage}>
               <Button style="button-brand" size="button-medium">
                 Comprar
               </Button>
