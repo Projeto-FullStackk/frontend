@@ -55,7 +55,6 @@ const Form = () => {
     event.preventDefault();
 
     if (formData.images && formData.images.length > 0) {
-      console.log(formData.images);
       const data: iAdsUpdate = {
         ...refineBodySubmit(formData),
         coverImage: formData.coverImage
