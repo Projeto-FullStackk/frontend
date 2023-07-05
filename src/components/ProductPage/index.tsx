@@ -1,17 +1,15 @@
-import Image from "next/image";
-import product from "@/assets/product.png";
+import Link from "next/link";
 import { Ad, useAuth } from "@/contexts/AuthContext";
 import { CommentsList, UserComment } from "..";
 import { useComments } from "@/contexts/commentsContext";
 import { Button } from "@/components";
+import { transformCapitalize } from "@/utils";
 import ProductImage from "./ProductImage";
 import ProductInfo from "./ProductInfo";
 import ProductDescription from "./ProductDescription";
 import ProductImages from "./ProductImages";
 import Seller from "./Seller";
 import NoContent from "../NoContent";
-import Link from "next/link";
-import { useEffect } from "react";
 
 interface ProductPageProps {
   car: Ad;
@@ -19,28 +17,11 @@ interface ProductPageProps {
 
 const ProductPage = ({ car }: ProductPageProps) => {
   const { userLogged } = useAuth();
-  const { comments, request } = useComments();
-
-  const transformCapitalize = (word: string): string => {
-    const firstWord = word.split(" ")[0];
-    const firstLetterUpperCase = firstWord[0].toUpperCase();
-    return firstLetterUpperCase + firstWord.slice(1);
-  };
+  const { comments } = useComments();
 
   const wppAPI = "https://api.whatsapp.com/send?";
-  const wppPhone = `phone=+55${car.user.phone
-    .split("")
-    .filter((char) => !isNaN(+char) && char !== " ")
-    .join("")}`;
-  const wppMessage = `&text=Olá, ${
-    car.user.name
-  }! Vi seu anúncio no Motors shop do ${transformCapitalize(
-    car.brand
-  )} ${transformCapitalize(
-    car.name
-  )} e estou interessado na compra. \nLink: https://motor-shop-m6.onrender.com/product/${
-    car.id
-  }`;
+  const wppPhone = `phone=+55${car.user.phone.split("").filter(char => !isNaN(+char) && char !== " ").join("")}`;
+  const wppMessage = `&text=Olá, ${car.user.name}! Vi seu anúncio no Motors shop do ${transformCapitalize(car.brand)} ${transformCapitalize(car.name)} e estou interessado na compra. Link: https://frontend-joaobuga35.vercel.app/product/${car.id}`;
 
   return (
     <main className="w-full pb-32 min-h-screen bg-gray-6">

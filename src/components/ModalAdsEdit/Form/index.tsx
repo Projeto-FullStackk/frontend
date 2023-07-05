@@ -69,17 +69,18 @@ const Form = () => {
 
       updateAd(data);
     }
-
-    const data: iAdsUpdate = {
-      coverImage: formData.coverImage
-        ? formData.coverImage
-        : carUpdate?.coverImage,
-      km: formData.km,
-      price: formData.price,
-      published: formData.published ? formData.published : carUpdate?.published,
-    };
-
-    updateAd(data);
+    else {
+      const data: iAdsUpdate = {
+        coverImage: formData.coverImage
+          ? formData.coverImage
+          : carUpdate?.coverImage,
+        km: formData.km,
+        price: formData.price,
+        published: formData.published ? formData.published : carUpdate?.published,
+      };
+  
+      updateAd(data);
+    }
   };
 
   return (

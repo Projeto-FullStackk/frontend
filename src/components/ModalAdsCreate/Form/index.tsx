@@ -6,7 +6,6 @@ import { useAppContext, useAuth, useKarsContext } from "@/contexts";
 import { Button, Input, Loading } from "@/components";
 import showError from "./showError";
 import refineBodySubmit from "./refineBodySubmit";
-import { useDropzone } from "react-dropzone";
 
 const Form = () => {
   const { brands, cars, getCarsDataAPI, createAd } = useKarsContext();
@@ -18,28 +17,6 @@ const Form = () => {
   const [yearCar, setYearCar] = useState("");
   const [fuelCar, setFuelCar] = useState("");
   const [priceCar, setPriceCar] = useState("");
-
-  /* const [uploadedImages, setUploadedImages] = useState<File[]>([]);
-  const [index, setIndex] = useState(); */
-
-  //UPLOADING IMAGES
-  /* drag and drop */
-
-  /* const onDrop = useCallback((files: File[]) => {
-    setUploadedImages((prevUploadedImages) => [
-      ...prevUploadedImages,
-      ...files,
-    ]);
-  }, []);
-
-  const dropzone = useDropzone({
-    onDrop,
-    accept: {
-      "image/jpeg": [".jpg", ".jpeg", ".png"],
-    },
-  });
-
-  const { getRootProps, getInputProps } = dropzone; */
 
   const {
     register,
@@ -242,17 +219,6 @@ const Form = () => {
             register={register("coverImage")}
             errorMessage={errors.coverImage?.message}
           />
-
-          {/* <div className="mt-6" {...getRootProps()}>
-            <Button
-              style="button-brand-opacity"
-              size="button-small"
-              fontSize="sm"
-            >
-              Escolher Imagem
-            </Button>
-            <input className="hidden"  {...getInputProps()} />
-          </div> */}
         </div>
 
         {fields.map((field, index) => {
@@ -268,18 +234,6 @@ const Form = () => {
                   placeholder="https://image.com"
                   register={register(`images.${index}.url`)}
                 />
-
-                {/*  <div className="mt-6" {...getRootProps()}>
-                  <Button
-                    style="button-brand-opacity"
-                    size="button-small"
-                    fontSize="sm"
-                  >
-                    Escolher Imagem
-                  </Button>
-                  <input className="hidden" {...getInputProps()} />
-                  {/* {uploadedImages.length > 0 && <p>{uploadedImages[1].name}</p>} 
-                </div> */}
               </div>
             </>
           );

@@ -27,10 +27,8 @@ const ModalEditAdress = () => {
   });
 
   const submitUpdate = async (userData: UserAdress) => {
-    try {
-      await updateAdress(userData);
-    } catch (error) {
-      console.log(error);
+    if (await updateAdress(userData)) {
+      handleCloseModal();
     }
   };
 
