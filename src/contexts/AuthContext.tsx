@@ -9,14 +9,13 @@ import {
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 
-import { destroyCookie, parseCookies, setCookie } from "nookies";
+import { destroyCookie, setCookie } from "nookies";
 import {
   LoginData,
   UserData,
   UserAdress,
   UserUpdate,
   userUpdateSchema,
-  userAdressSchema,
 } from "@/schemas";
 import { api } from "../services/api";
 
@@ -80,9 +79,9 @@ interface iAuthProvider {
   userLogged: UserLogged | null;
   setUserLogged: Dispatch<SetStateAction<UserLogged | null>>;
   logout: () => void;
-  updateUser: (userData: UserUpdate) => void;
-  updateAdress: (userData: UserAdress) => void;
-  deleteUser: () => void;
+  updateUser: (userData: UserUpdate) => Promise<boolean>;
+  updateAdress: (userData: UserAdress) => Promise<boolean>;
+  deleteUser: () => Promise<boolean>;
 }
 
 const AuthContext = createContext<iAuthProvider>({} as iAuthProvider);
@@ -90,9 +89,6 @@ const AuthContext = createContext<iAuthProvider>({} as iAuthProvider);
 const AuthProvider = ({ children }: iProps) => {
   const router = useRouter();
   const [userLogged, setUserLogged] = useState<UserLogged | null>(null);
-  const cookie = parseCookies();
-
-  const token = cookie["motorShop.token"];
 
   const register = (userData: UserData) => {
     const address = {
@@ -119,105 +115,48 @@ const AuthProvider = ({ children }: iProps) => {
     api
       .post("user", user)
       .then(() => {
-        toast.success("Cadastro realizado com successo", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.success("Cadastro realizado com successo");
 
         router.push("/login");
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Falha no cadastro", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.error("Falha no cadastro");
       });
   };
-  const updateAdress = (userData: UserAdress) => {
+
+  const updateAdress = async (userData: UserAdress) => {
     const data = { ...userLogged, address: userData };
 
     delete data.Address;
-    api
-      .patch(`user/${userLogged?.id}`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+    return api.patch(`user/${userLogged?.id}`, data)
       .then((response) => {
-        toast.success("Atualização realizada com successo", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        /* router.push("/"); */
+        setUserLogged(response.data);
+        toast.success("Atualização realizada com successo");
+        router.replace(router.asPath);
+        return true;
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Falha na atualização", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.error("Falha na atualização");
+        return false;
       });
   };
-  const updateUser = (userData: UserUpdate) => {
+
+  const updateUser = async (userData: UserUpdate) => {
     const validData = userUpdateSchema.parse(userData);
 
-    api
-      .patch(`user/${userLogged?.id}`, validData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(() => {
-        window.location.reload();
-        toast.success("Atualização realizada com successo", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        router.push("/");
+    return api.patch(`user/${userLogged?.id}`, validData)
+      .then((response) => {
+        setUserLogged(response.data);
+        toast.success("Atualização realizada com successo");
+        router.replace(router.asPath);
+        return true;
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Falha na atualização", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.error("Falha na atualização");
+        return false;
       });
   };
 
@@ -238,65 +177,28 @@ const AuthProvider = ({ children }: iProps) => {
         });
       })
       .then(() => {
-        toast.success("Login realizado com successo", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.success("Login realizado com successo");
 
         router.push("/");
       })
       .catch((err) => {
         console.log(err);
-        toast.error(
-          "Erro ao logar, verifique se o e-mail e a senha estão corretos !",
-          {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          }
-        );
+        toast.error("Erro ao logar, verifique se o e-mail e a senha estão corretos !");
       });
   };
-  const deleteUser = () => {
-    api
-      .delete(`user/${userLogged?.id}`)
-      .then(() => {
-        toast.success("Deletado com sucesso", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
 
-        window.location.reload();
+  const deleteUser = async () => {
+    return api.delete(`user/${userLogged?.id}`)
+      .then(() => {
+        logout();
+        toast.success("Deletado com sucesso");
+        router.push("/");
+        return true;
       })
       .catch((err) => {
         console.log(err);
-        toast.error("User não deletado", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.error("User não deletado");
+        return false;
       });
   };
 
@@ -304,6 +206,7 @@ const AuthProvider = ({ children }: iProps) => {
     destroyCookie(null, "motorShop.token", { path: "/" });
     setUserLogged(null);
   };
+
   return (
     <AuthContext.Provider
       value={{

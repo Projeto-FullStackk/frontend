@@ -1,7 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { api, apiExternal } from "@/services/api";
-import { Car, iAds, iAdsRequest, iAdsUpdate, iCarData } from "@/schemas";
+import { iAdsRequest, iAdsUpdate, iCarData } from "@/schemas";
 import { useAppContext } from "@/contexts";
 import { Ad } from "./AuthContext";
 
@@ -27,6 +28,7 @@ export const KarsProvider = ({ children }: iKarsProvider) => {
   const [brands, setBrands] = useState<string[]>([]);
   const [cars, setCars] = useState<iCarData[]>([]);
   const [ads, setAds] = useState<Ad[]>([]);
+  const route = useRouter();
 
   useEffect(() => {
     apiExternal.get("/cars").then((res) => {
@@ -59,6 +61,7 @@ export const KarsProvider = ({ children }: iKarsProvider) => {
         setAds([...ads, res.data]);
         handleCloseModal();
         toast.success("Anuncio criado com sucesso");
+        route.replace(route.asPath);
       })
       .catch((err) => {
         console.log(err);
@@ -76,6 +79,7 @@ export const KarsProvider = ({ children }: iKarsProvider) => {
         setAds([...ads, res.data]);
         handleCloseModal();
         toast.success("Anuncio editado com sucesso");
+        route.replace(route.asPath);
       })
       .catch((err) => {
         console.log(err);
@@ -88,31 +92,13 @@ export const KarsProvider = ({ children }: iKarsProvider) => {
     api
       .delete(`ads/${carUpdate?.id}`)
       .then(() => {
-        toast.success("Deletado com sucesso", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.success("Deletado com sucesso");
 
-        window.location.reload();
+        route.replace(route.asPath);
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Anúncio não deletado", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.error("Anúncio não deletado");
       });
   };
 
