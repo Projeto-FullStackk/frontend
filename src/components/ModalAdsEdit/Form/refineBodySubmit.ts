@@ -1,6 +1,6 @@
 import { iAdsCreate, iAdsRequest, iAdsUpdate } from "@/schemas";
 
-const refineBodySubmit = (formData: iAdsUpdate): iAdsRequest => {
+const refineBodySubmit = (formData: iAdsCreate): iAdsRequest => {
   let data: iAdsRequest = {} as iAdsRequest;
 
   for (let i = 0; i < 6; i++) {

@@ -21,7 +21,6 @@ const Form = () => {
   const { userLogged } = useAuth();
   const { isLoading, carUpdate } = useAppContext();
   const [limitImages, setLimitImages] = useState(0);
-  const [disabledNameInput, setDisabledNameInput] = useState(true);
   const [disabledDetailsInput] = useState(true);
   const [yearCar, setYearCar] = useState("");
   const [fuelCar, setFuelCar] = useState("");
@@ -31,7 +30,7 @@ const Form = () => {
     register,
     handleSubmit,
     control,
-    formState: { errors, defaultValues },
+    formState: { errors },
   } = useForm<iAdsUpdate>({
     resolver: zodResolver(adsUpdateSchema.deepPartial()),
     defaultValues: {
@@ -43,13 +42,6 @@ const Form = () => {
       priceTf: carUpdate?.priceTf.toString(),
       price: carUpdate?.price.toString(),
       published: carUpdate?.published.toString(),
-      coverImage: carUpdate?.coverImage,
-      firstImage: carUpdate?.firstImage,
-      secondImage: carUpdate?.secondImage,
-      thirdImage: carUpdate?.thirdImage,
-      fourthImage: carUpdate?.fourthImage,
-      fifthImage: carUpdate?.fifthImage,
-      sixthImage: carUpdate?.sixthImage,
     },
   });
   console.log(errors);
@@ -70,25 +62,29 @@ const Form = () => {
 
   const submit = (formData: iAdsUpdate, event: any) => {
     event.preventDefault();
-    console.log(formData.images);
-    const brand = carUpdate!.brand.toLowerCase();
-    const year = +yearCar;
-    const fuel = fuelCar;
+
     /* const priceTf = +priceCar.replace(/[^\d,]+/g, "").replace(",", "."); */
 
+    if (formData.images) {
+      const data: iAdsUpdate = {
+        /* ...refineBodySubmit(formData), */
+
+        priceTf: formData.priceTf,
+        userId: userLogged!.id,
+        published: formData.published,
+      };
+    }
+
     const data: iAdsUpdate = {
-      ...refineBodySubmit(formData),
-      brand,
-      year,
-      fuel,
-      priceTf: formData.priceTf,
-      userId: userLogged!.id,
+      coverImage: carUpdate?.coverImage,
+      km: formData.km,
+      price: formData.price,
       published: formData.published,
     };
 
-    /* updateAd(data); */
+    updateAd(data);
   };
-
+  console.log(carUpdate);
   return (
     <form
       onSubmit={handleSubmit(submit)}
@@ -161,6 +157,7 @@ const Form = () => {
             type="text"
             label="Cor"
             placeholder={carUpdate!.color}
+            disabled={disabledDetailsInput}
             register={register("color")}
           />
         </div>
@@ -178,7 +175,7 @@ const Form = () => {
             type="text"
             label="Preço tabela FIPE"
             placeholder={`R$ 48.000,00`}
-            value={priceCar}
+            value={carUpdate?.priceTf}
             disabled={disabledDetailsInput}
             register={register("priceTf")}
           />
@@ -201,7 +198,7 @@ const Form = () => {
       <label>Publicado </label>
       <div className="flex gap-2.5">
         <label
-          className={`${fontInter.className} text-center w-full button-brand h-max rounded-[0.25rem] font-semibold transition-colors button-medium`}
+          className={`${fontInter.className} cursor-pointer text-center w-full button-brand h-max rounded-[0.25rem] font-semibold transition-colors button-medium`}
         >
           Sim{" "}
           <input
@@ -213,7 +210,7 @@ const Form = () => {
         </label>
 
         <label
-          className={`${fontInter.className} text-center w-full button-grey h-max rounded-[0.25rem] font-semibold transition-colors button-medium`}
+          className={`${fontInter.className} cursor-pointer text-center w-full button-grey h-max rounded-[0.25rem] font-semibold transition-colors button-medium`}
         >
           Não{" "}
           <input
@@ -232,26 +229,6 @@ const Form = () => {
         label="Imagem de capa"
         placeholder="https://image.com"
         register={register("coverImage")}
-        errorMessage={errors.coverImage?.message}
-      />
-
-      <Input
-        id="firstImage"
-        as="input"
-        type="text"
-        label="1° Imagem da galeria"
-        placeholder="https://image.com"
-        register={register("firstImage")}
-        errorMessage={errors.coverImage?.message}
-      />
-
-      <Input
-        id="secondImage"
-        as="input"
-        type="text"
-        label="2° Imagem da galeria"
-        placeholder="https://image.com"
-        register={register("secondImage")}
         errorMessage={errors.coverImage?.message}
       />
 

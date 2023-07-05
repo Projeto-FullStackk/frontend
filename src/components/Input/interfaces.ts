@@ -22,7 +22,7 @@ export interface iInputProps {
   options?: string[];
   placeholder?: string;
   type?: tInputType;
-  value?: string;
+  value?: string | number;
   defaultValue?: string;
 }
 

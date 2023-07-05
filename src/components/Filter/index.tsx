@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { iFilter } from "@/schemas";
 
 interface FilterProps {
-  filters: iFilter
+  filters: iFilter;
 }
 
 const Filter = ({ filters }: FilterProps) => {
@@ -22,19 +22,22 @@ const Filter = ({ filters }: FilterProps) => {
 
   const transformCapitalize = (word: string): string => {
     const firstWord = word.split(" ")[0];
-    const firstLetterUpperCase = firstWord[0].toUpperCase();
-    return firstLetterUpperCase + firstWord.slice(1);
+    if (firstWord) {
+      const firstLetterUpperCase = firstWord[0].toLocaleUpperCase();
+      return firstLetterUpperCase + firstWord.slice(1);
+    } else {
+      return "";
+    }
   };
 
   useEffect(() => {
     const { allBrands, allModels, allYears, allFuels, allColors } = filters;
 
-    setBrands(allBrands.map(brand => transformCapitalize(brand)));
-    setModels(allModels.map(model => transformCapitalize(model)));
+    setBrands(allBrands.map((brand) => transformCapitalize(brand)));
+    setModels(allModels.map((model) => transformCapitalize(model)));
     setYears(allYears);
-    setFuels(allFuels.map(fuel => transformCapitalize(fuel)));
+    setFuels(allFuels.map((fuel) => transformCapitalize(fuel)));
     setColors(allColors);
-
   }, [filters]);
 
   const handleFilter = (key: string, value: string | number, reset = false) => {
