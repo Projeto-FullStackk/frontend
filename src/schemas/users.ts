@@ -27,8 +27,7 @@ export const userSchema = z
       ),
     phone: z
       .string()
-      .nonempty("Obrigatório informar o celular")
-      .regex(/\(\d{2,3}\)\s\9\d{4}\-\d{4}/g, "Número de celular inválido"),
+      .nonempty("Obrigatório informar o celular"),
     birthDate: z
       .string()
       .nonempty("Obrigatório informar sua data de nascimento"),

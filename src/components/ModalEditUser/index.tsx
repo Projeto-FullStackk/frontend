@@ -1,13 +1,8 @@
-import Modal from "../Modal";
-
-import { Button, Input } from "@/components";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { UserData, userSchema } from "@/schemas";
-import { useAppContext } from "@/contexts";
-import { useAuth } from "@/contexts";
-import { UserUpdate } from "@/schemas";
-import { userUpdateSchema } from "@/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, Input, Modal } from "@/components";
+import { useAuth, useAppContext } from "@/contexts";
+import { UserUpdate, userUpdateSchema } from "@/schemas";
 
 const ModalEditUser = () => {
   const { userLogged, updateUser, deleteUser } = useAuth();
@@ -24,12 +19,16 @@ const ModalEditUser = () => {
     },
   });
   const submitUpdate = async (userData: any) => {
-    try {
-      await updateUser(userData);
-    } catch (error) {
-      console.log(error);
+    if (await updateUser(userData)) {
+      handleCloseModal()
     }
   };
+
+  const submitDelete = async () => {
+    if (await deleteUser()) {
+      handleCloseModal();
+    }
+  }
 
   return (
     <Modal title="Editar Usuário">
@@ -103,7 +102,7 @@ const ModalEditUser = () => {
             style="button-alert"
             size="button-medium"
             type="button"
-            onClick={() => deleteUser()}
+            onClick={() => {submitDelete()}}
           >
             Excluir Perfil
           </Button>

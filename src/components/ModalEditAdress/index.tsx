@@ -2,7 +2,7 @@ import Modal from "../Modal";
 import { UserAdress } from "@/schemas";
 import { Button, Input } from "@/components";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, useFormState } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import { useAppContext } from "@/contexts";
 import { useAuth } from "@/contexts";
@@ -27,10 +27,8 @@ const ModalEditAdress = () => {
   });
 
   const submitUpdate = async (userData: UserAdress) => {
-    try {
-      await updateAdress(userData);
-    } catch (error) {
-      console.log(error);
+    if (await updateAdress(userData)) {
+      handleCloseModal();
     }
   };
 

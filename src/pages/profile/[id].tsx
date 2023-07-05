@@ -9,6 +9,8 @@ import {
 import { UserLogged } from "@/contexts/AuthContext";
 import { Button, Card, ModalAdsCreate } from "@/components";
 import { api } from "@/services/api";
+import ModalAdsEdit from "@/components/ModalAdsEdit";
+import NoContent from "@/components/NoContent";
 
 interface ProfileProps {
   user: UserLogged;
@@ -21,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 };
 
 const Profile: NextPage<ProfileProps> = ({ user }) => {
-  const { handleOpenModal, open } = useAppContext();
+  const { handleOpenModal, open, modalType, setModalType } = useAppContext();
   const { ads, setAds } = useKarsContext();
   const [seller, setSeller] = useState(false);
   const { userLogged } = useAuth();
@@ -44,8 +46,11 @@ const Profile: NextPage<ProfileProps> = ({ user }) => {
     const names = user.name.split(" ");
     initials = names[0][0] + names[1][0];
   }
+
   return (
     <KarsProvider>
+      {open && modalType === "adsCreate" ? <ModalAdsCreate /> : null}
+      {open && modalType === "adsEdit" ? <ModalAdsEdit /> : null}
       <main className="bg-gray-8">
         <div className="bg-brand-1 h-[15.313rem] mb-40 flex flex-col justify-center items-center lg:flex-row lg:gap-10">
           <section className="px-3 mt-[16.6875rem] flex w-full justify-center">
@@ -65,7 +70,13 @@ const Profile: NextPage<ProfileProps> = ({ user }) => {
                 {user.description}
               </p>
               {seller ? (
-                <Button style="button-brand-outline" onClick={handleOpenModal}>
+                <Button
+                  style="button-brand-outline"
+                  onClick={() => {
+                    handleOpenModal();
+                    setModalType("adsCreate");
+                  }}
+                >
                   Criar Anúncio
                 </Button>
               ) : null}
@@ -78,18 +89,20 @@ const Profile: NextPage<ProfileProps> = ({ user }) => {
               Anúncios
             </h1>
           )}
-          <ul className="list-none w-full h-fit px-5 flex overflow-x-auto lg:grid lg:grid-cols-3 lg:max-w-[1429px] lg:justify-items-center xl:grid-cols-4  gap-8 pb-10">
-            {user.ads.map((car) => {
-              if (seller) {
-                return <Card key={car.id} carData={car} type="seller" />;
-              }
-              return <Card key={car.id} carData={car} type="user" />;
-            })}
-          </ul>
+          {user.ads.length > 0 ? (
+            <ul className="list-none w-full h-fit px-5 flex overflow-x-auto lg:grid lg:grid-cols-3 lg:max-w-[1429px] lg:justify-items-center xl:grid-cols-4  gap-8 pb-10">
+              {user.ads.map((car) => {
+                if (seller) {
+                  return <Card key={car.id} carData={car} type="seller" />;
+                }
+                return <Card key={car.id} carData={car} type="user" />;
+              })}
+            </ul>
+          ) : (
+            <NoContent message="Ainda existem anúncios cadastrados" />
+          )}
         </section>
       </main>
-
-      {/* {open && <ModalAdsCreate />} */}
     </KarsProvider>
   );
 };

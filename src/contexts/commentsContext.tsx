@@ -1,4 +1,4 @@
-import { CommentData, CommentList, CommentResponse } from "@/schemas";
+import { CommentData, CommentResponse } from "@/schemas";
 import { api } from "@/services/api";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
@@ -18,6 +18,9 @@ interface iProps {
 interface iCommentsProvider {
   createComment: (commentData: CommentData) => void;
   comments: CommentResponse[];
+  updateComment: (commentId: string, commentData: CommentData) => void;
+  deleteComment: (commentId: string) => void;
+  request: () => void;
 }
 
 const CommentsContext = createContext<iCommentsProvider>(
@@ -45,7 +48,6 @@ const CommentsProvider = ({ children }: iProps) => {
         },
       })
       .then((response) => {
-        location.reload();
         return response;
       })
       .catch((err) => {
@@ -63,35 +65,108 @@ const CommentsProvider = ({ children }: iProps) => {
       });
   };
 
-  useEffect(() => {
-    carId
-      ? api.get(`ads/${carId}`).then(async (response) => {
-          const data = response.data;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const request = () => {
+    api.get(`ads/${carId}`).then(async (response) => {
+      const data = response.data;
 
-          const comment = data.Comment;
+      const comment = data.Comment;
 
-          const commentMap = await Promise.all(
-            comment.map(async (element: CommentResponse) => {
-              const user = await api.get(`user/${element.userId}`);
-              const response = {
-                comment: element.comment,
-                adsId: element.adsId,
-                createdAt: element.createdAt,
-                id: element.id,
-                userName: user.data.name,
-                userId: element.userId,
-              };
-              return response;
-            })
-          );
-
-          setComments(commentMap);
+      const commentMap = await Promise.all(
+        comment.map(async (element: CommentResponse) => {
+          const user = await api.get(`user/${element.userId}`);
+          const response = {
+            comment: element.comment,
+            adsId: element.adsId,
+            createdAt: element.createdAt,
+            id: element.id,
+            userName: user.data.name,
+            userId: element.userId,
+          };
+          return response;
         })
-      : null;
-  }, [carId]);
+      );
+
+      setComments(commentMap);
+    });
+  };
+
+  useEffect(() => {
+    carId ? request() : null;
+  }, [carId, request]);
+
+  const updateComment = (commentId: string, commentData: CommentData) => {
+    api
+      .patch(`comments/${commentId}`, commentData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        toast.success("Atualização realizada com successo", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Falha ao atualizar comentário", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      });
+  };
+
+  const deleteComment = (commentId: string) => {
+    api
+      .delete(`comments/${commentId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        toast.success("Comentário apagado", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Falha ao deletar comentário", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      });
+  };
 
   return (
-    <CommentsContext.Provider value={{ createComment, comments }}>
+    <CommentsContext.Provider
+      value={{ createComment, comments, updateComment, deleteComment, request }}
+    >
       {children}
     </CommentsContext.Provider>
   );

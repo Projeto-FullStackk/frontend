@@ -1,15 +1,15 @@
-import Image from "next/image";
-import product from "@/assets/product.png";
+import Link from "next/link";
 import { Ad, useAuth } from "@/contexts/AuthContext";
 import { CommentsList, UserComment } from "..";
 import { useComments } from "@/contexts/commentsContext";
 import { Button } from "@/components";
+import { transformCapitalize } from "@/utils";
 import ProductImage from "./ProductImage";
 import ProductInfo from "./ProductInfo";
 import ProductDescription from "./ProductDescription";
 import ProductImages from "./ProductImages";
 import Seller from "./Seller";
-import Comments from "./Comments";
+import NoContent from "../NoContent";
 
 interface ProductPageProps {
   car: Ad;
@@ -18,6 +18,10 @@ interface ProductPageProps {
 const ProductPage = ({ car }: ProductPageProps) => {
   const { userLogged } = useAuth();
   const { comments } = useComments();
+
+  const wppAPI = "https://api.whatsapp.com/send?";
+  const wppPhone = `phone=+55${car.user.phone.split("").filter(char => !isNaN(+char) && char !== " ").join("")}`;
+  const wppMessage = `&text=Olá, ${car.user.name}! Vi seu anúncio no Motors shop do ${transformCapitalize(car.brand)} ${transformCapitalize(car.name)} e estou interessado na compra. Link: https://frontend-joaobuga35.vercel.app/product/${car.id}`;
 
   return (
     <main className="w-full pb-32 min-h-screen bg-gray-6">
@@ -35,9 +39,11 @@ const ProductPage = ({ car }: ProductPageProps) => {
               price={car.price}
             />
 
-            <Button style="button-brand" size="button-medium">
-              Comprar
-            </Button>
+            <Link target="_blank" href={wppAPI + wppPhone + wppMessage}>
+              <Button style="button-brand" size="button-medium">
+                Comprar
+              </Button>
+            </Link>
           </div>
 
           <ProductDescription description={car.description} />
@@ -62,15 +68,19 @@ const ProductPage = ({ car }: ProductPageProps) => {
           />
         </div>
 
-        <div className="w-full max-w-sm flex flex-col items-center gap-10 md:max-w-3xl">
-          <div className="lg:w-[47rem] mt-4 lg:h-auto w-[21.9375rem] h-[18.375rem] bg-gray-10 pt-9 pb-1 px-7 rounded">
+        <div className="w-full h-min max-w-sm flex flex-col items-center gap-10 md:max-w-3xl">
+          <div className="lg:w-[47rem] mt-4 lg:h-auto w-[21.9375rem] bg-gray-10 pt-9 pb-1 px-7 rounded">
             <h2 className="text-gray-1 font-semibold text-[1.1rem] font-lex mb-8">
               Comentários
             </h2>
             <ul>
-              {comments.map((element) => (
-                <CommentsList comment={element} key={element.id} />
-              ))}
+              {comments.length === 0 ? (
+                <NoContent message="Seja o primeiro a comentar!" />
+              ) : (
+                comments.map((element) => (
+                  <CommentsList comment={element} key={element.id} />
+                ))
+              )}
             </ul>
           </div>
           {userLogged ? (

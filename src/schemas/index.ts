@@ -5,6 +5,9 @@ import {
   iAds,
   iAdsCreate,
   iAdsRequest,
+  iAdsUpdate,
+  iFilter,
+  iAdsFilter,
 } from "./ads";
 import { iCarData } from "./apiExternal";
 import {
@@ -27,8 +30,7 @@ import {
   commentSchema,
   commentResponse,
   CommentResponse,
-  CommentList,
-  commentList,
+  UpdateComment,
 } from "./comments";
 
 export {
@@ -43,7 +45,6 @@ export {
   userUpdateSchema,
   commentSchema,
   commentResponse,
-  commentList,
 };
 
 export type {
@@ -51,6 +52,7 @@ export type {
   iAdsCreate,
   iAdsRequest,
   iCarData,
+  iAdsUpdate,
   LoginData,
   UserData,
   Car,
@@ -60,5 +62,7 @@ export type {
   UserUpdate,
   CommentData,
   CommentResponse,
-  CommentList,
+  UpdateComment,
+  iFilter,
+  iAdsFilter,
 };

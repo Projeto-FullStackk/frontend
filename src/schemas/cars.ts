@@ -1,13 +1,13 @@
 export interface Car {
-  id: number;
+  id: string;
   brand: string;
   name: string;
   year: number;
   fuel: string;
   km: string;
   color: string;
-  priceTf: number;
-  price: number;
+  priceTf: number | string;
+  price: number | string;
   description: string;
   coverImage: string;
   firstImage: string;

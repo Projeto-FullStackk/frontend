@@ -1,7 +1,7 @@
-import { iAdsCreate, iAdsRequest } from "@/schemas";
+import { iAdsUpdate } from "@/schemas";
 
-const refineBodySubmit = (formData: iAdsCreate): iAdsRequest => {
-  let data: iAdsRequest = {} as iAdsRequest;
+const refineBodySubmit = (formData: iAdsUpdate): iAdsUpdate => {
+  let data: iAdsUpdate = {} as iAdsUpdate;
 
   for (let i = 0; i < 6; i++) {
     const image = formData.images![i]?.url ?? null;
