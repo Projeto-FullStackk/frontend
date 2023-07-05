@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { adsCreateSchema, iAdsCreate, iAdsRequest } from "@/schemas";
@@ -6,6 +6,7 @@ import { useAppContext, useAuth, useKarsContext } from "@/contexts";
 import { Button, Input, Loading } from "@/components";
 import showError from "./showError";
 import refineBodySubmit from "./refineBodySubmit";
+import { useDropzone } from "react-dropzone";
 
 const Form = () => {
   const { brands, cars, getCarsDataAPI, createAd } = useKarsContext();
@@ -17,6 +18,28 @@ const Form = () => {
   const [yearCar, setYearCar] = useState("");
   const [fuelCar, setFuelCar] = useState("");
   const [priceCar, setPriceCar] = useState("");
+
+  /* const [uploadedImages, setUploadedImages] = useState<File[]>([]);
+  const [index, setIndex] = useState(); */
+
+  //UPLOADING IMAGES
+  /* drag and drop */
+
+  /* const onDrop = useCallback((files: File[]) => {
+    setUploadedImages((prevUploadedImages) => [
+      ...prevUploadedImages,
+      ...files,
+    ]);
+  }, []);
+
+  const dropzone = useDropzone({
+    onDrop,
+    accept: {
+      "image/jpeg": [".jpg", ".jpeg", ".png"],
+    },
+  });
+
+  const { getRootProps, getInputProps } = dropzone; */
 
   const {
     register,
@@ -208,30 +231,60 @@ const Form = () => {
         register={register("description")}
         errorMessage={errors.description?.message}
       />
-
-      <Input
-        id="coverImage"
-        as="input"
-        type="text"
-        label="Imagem de capa"
-        placeholder="https://image.com"
-        register={register("coverImage")}
-        errorMessage={errors.coverImage?.message}
-      />
-
-      {fields.map((field, index) => {
-        return (
+      <div className="flex flex-col gap-2 items-center">
+        <div className="w-full flex gap-3 items-center">
           <Input
-            key={field.id}
-            id={field.id}
+            id="coverImage"
             as="input"
             type="text"
-            label={`${index + 1}° Imagem da galeria`}
+            label="Imagem de capa"
             placeholder="https://image.com"
-            register={register(`images.${index}.url`)}
+            register={register("coverImage")}
+            errorMessage={errors.coverImage?.message}
           />
-        );
-      })}
+
+          {/* <div className="mt-6" {...getRootProps()}>
+            <Button
+              style="button-brand-opacity"
+              size="button-small"
+              fontSize="sm"
+            >
+              Escolher Imagem
+            </Button>
+            <input className="hidden"  {...getInputProps()} />
+          </div> */}
+        </div>
+
+        {fields.map((field, index) => {
+          return (
+            <>
+              <div className="w-full flex gap-3 items-center">
+                <Input
+                  key={field.id}
+                  id={field.id}
+                  as="input"
+                  type="text"
+                  label={`${index + 1}° Imagem da galeria`}
+                  placeholder="https://image.com"
+                  register={register(`images.${index}.url`)}
+                />
+
+                {/*  <div className="mt-6" {...getRootProps()}>
+                  <Button
+                    style="button-brand-opacity"
+                    size="button-small"
+                    fontSize="sm"
+                  >
+                    Escolher Imagem
+                  </Button>
+                  <input className="hidden" {...getInputProps()} />
+                  {/* {uploadedImages.length > 0 && <p>{uploadedImages[1].name}</p>} 
+                </div> */}
+              </div>
+            </>
+          );
+        })}
+      </div>
 
       <Button
         style="button-brand-opacity"

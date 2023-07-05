@@ -2,17 +2,6 @@ import { useRouter } from "next/router";
 import { NextRequest } from "next/server";
 import { createContext, useContext, useState } from "react";
 import { Car } from "@/schemas";
-interface InitialUrlValues {
-  brand: string | string[];
-  model: string | string[];
-  color: string | string[];
-  year: string | string[];
-  fuel: string | string[];
-  minKm: string | string[];
-  maxKm: string | string[];
-  minPrice: string | string[];
-  maxPrice: string | string[];
-}
 
 interface AppContextInterface {
   open: boolean;

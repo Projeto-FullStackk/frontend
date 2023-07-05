@@ -1,55 +1,38 @@
-import { ChangeEvent, useState } from "react";
-import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
+import { useState } from "react";
+import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  adsCreateSchema,
-  Car,
-  iAdsCreate,
-  iAdsRequest,
-  iAdsUpdate,
-} from "@/schemas";
+import { iAdsUpdate } from "@/schemas";
 import { adsUpdateSchema } from "@/schemas/ads";
-import { useAppContext, useAuth, useKarsContext } from "@/contexts";
+import { useAppContext, useKarsContext } from "@/contexts";
 import { Button, Input, Loading } from "@/components";
 import showError from "../../ModalAdsCreate/Form/showError";
 import refineBodySubmit from "./refineBodySubmit";
 import { fontInter } from "@/styles/font";
-import { data } from "autoprefixer";
 
 const Form = () => {
   const { updateAd, deleteAd } = useKarsContext();
-  const { userLogged } = useAuth();
   const { isLoading, carUpdate } = useAppContext();
   const [limitImages, setLimitImages] = useState(0);
-  const [disabledNameInput, setDisabledNameInput] = useState(true);
   const [disabledDetailsInput] = useState(true);
   const [yearCar, setYearCar] = useState("");
   const [fuelCar, setFuelCar] = useState("");
-  const [priceCar, setPriceCar] = useState("");
 
   const {
     register,
     handleSubmit,
     control,
-    formState: { errors, defaultValues },
+    formState: { errors },
   } = useForm<iAdsUpdate>({
-    resolver: zodResolver(adsUpdateSchema.partial()),
+    resolver: zodResolver(adsUpdateSchema.deepPartial()),
     defaultValues: {
       brand: carUpdate?.brand,
       name: carUpdate?.name,
       fuel: carUpdate?.fuel,
       km: Number(carUpdate?.km),
       color: carUpdate?.color,
-      priceTf: carUpdate?.priceTf,
-      price: carUpdate?.price,
-      published: carUpdate?.published.toString(),
-      coverImage: carUpdate?.coverImage,
-      firstImage: carUpdate?.firstImage,
-      secondImage: carUpdate?.secondImage,
-      thirdImage: carUpdate?.thirdImage,
-      fourthImage: carUpdate?.fourthImage,
-      fifthImage: carUpdate?.fifthImage,
-      sixthImage: carUpdate?.sixthImage,
+      priceTf: carUpdate?.priceTf.toString(),
+      price: carUpdate?.price.toString(),
+      published: carUpdate?.published ? "verdadeiro" : "falso",
     },
   });
   console.log(errors);
@@ -70,20 +53,32 @@ const Form = () => {
 
   const submit = (formData: iAdsUpdate, event: any) => {
     event.preventDefault();
-    const brand = carUpdate!.brand.toLowerCase();
-    const year = +yearCar;
-    const fuel = fuelCar;
-    const priceTf = +priceCar.replace(/[^\d,]+/g, "").replace(",", ".");
+
+    if (formData.images && formData.images.length > 0) {
+      const data: iAdsUpdate = {
+        ...refineBodySubmit(formData),
+        coverImage: formData.coverImage
+          ? formData.coverImage
+          : carUpdate?.coverImage,
+        km: formData.km,
+        price: formData.price,
+        published: formData.published
+          ? formData.published
+          : carUpdate?.published,
+      };
+
+      updateAd(data);
+    }
 
     const data: iAdsUpdate = {
-      ...refineBodySubmit(formData),
-      brand,
-      year,
-      fuel,
-      priceTf,
-      userId: userLogged!.id,
-      published: formData.published,
+      coverImage: formData.coverImage
+        ? formData.coverImage
+        : carUpdate?.coverImage,
+      km: formData.km,
+      price: formData.price,
+      published: formData.published ? formData.published : carUpdate?.published,
     };
+
     updateAd(data);
   };
 
@@ -159,6 +154,7 @@ const Form = () => {
             type="text"
             label="Cor"
             placeholder={carUpdate!.color}
+            disabled={disabledDetailsInput}
             register={register("color")}
           />
         </div>
@@ -176,7 +172,7 @@ const Form = () => {
             type="text"
             label="Preço tabela FIPE"
             placeholder={`R$ 48.000,00`}
-            value={priceCar}
+            value={carUpdate?.priceTf}
             disabled={disabledDetailsInput}
             register={register("priceTf")}
           />
@@ -199,25 +195,25 @@ const Form = () => {
       <label>Publicado </label>
       <div className="flex gap-2.5">
         <label
-          className={`${fontInter.className} text-center w-full button-brand h-max rounded-[0.25rem] font-semibold transition-colors button-medium`}
+          className={`${fontInter.className} cursor-pointer text-center w-full button-brand h-max rounded-[0.25rem] font-semibold transition-colors button-medium`}
         >
           Sim{" "}
           <input
             type="radio"
             className="hidden"
-            value="true"
+            value={"verdadeiro"}
             {...register("published")}
           />
         </label>
 
         <label
-          className={`${fontInter.className} text-center w-full button-grey h-max rounded-[0.25rem] font-semibold transition-colors button-medium`}
+          className={`${fontInter.className} cursor-pointer text-center w-full button-grey h-max rounded-[0.25rem] font-semibold transition-colors button-medium`}
         >
           Não{" "}
           <input
             type="radio"
             className="hidden"
-            value="false"
+            value={"falso"}
             {...register("published")}
           />
         </label>
@@ -233,26 +229,6 @@ const Form = () => {
         errorMessage={errors.coverImage?.message}
       />
 
-      <Input
-        id="firstImage"
-        as="input"
-        type="text"
-        label="1° Imagem da galeria"
-        placeholder="https://image.com"
-        register={register("firstImage")}
-        errorMessage={errors.coverImage?.message}
-      />
-
-      <Input
-        id="secondImage"
-        as="input"
-        type="text"
-        label="2° Imagem da galeria"
-        placeholder="https://image.com"
-        register={register("secondImage")}
-        errorMessage={errors.coverImage?.message}
-      />
-
       {fields.map((field, index) => {
         return (
           <Input
@@ -260,9 +236,9 @@ const Form = () => {
             id={field.id}
             as="input"
             type="text"
-            label={`${index + 3}° Imagem da galeria`}
+            label={`${index + 1}° Imagem da galeria`}
             placeholder="https://image.com"
-            register={register(`images.${index + 2}.url`)}
+            register={register(`images.${index}.url`)}
           />
         );
       })}
